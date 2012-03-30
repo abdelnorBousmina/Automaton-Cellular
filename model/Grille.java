@@ -2,6 +2,7 @@ package model;
 
 public class Grille {
 
+<<<<<<< HEAD
 	private float[][] grille;
 	private int nbLignes;
 	private int nbColonnes;
@@ -271,4 +272,6 @@ public class Grille {
 			System.out.println();
 		}
 	}
+=======
+>>>>>>> f4bfaf0344aea8d63e2cec8b6d42fbf683de9f8f
 }
