@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import model.Grille;
+
 /**
  * @author bous
  *
@@ -42,6 +44,8 @@ public class MainWindow {
 	 */
 	public static void main(String[] args) {
 		MainWindow mw = new MainWindow();
+		Grille g = new Grille(7, 7, 3, 0);
+		g.afficherGrille();
 	}
 
 }
