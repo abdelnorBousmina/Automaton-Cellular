@@ -48,18 +48,18 @@ public class Grille {
 		else
 			if(yExit == nbColonnes - 1)
 			{
-				//TODO initGrilleHautGauche
-				//		initGrilleBasGauche
+				initGrilleHautGauche(xExit, yExit);
+				initGrilleBasGauche(xExit,yExit);
 			}
 			else if(xExit == 0)
 			{
-				//TODO initGrilleGaucheBas
-				//	initGrilleDroiteBas
+				initGrilleBasGauche(xExit,yExit);
+				initGrilleBasDroite(xExit, yExit);
 			}
 			else
 			{
-				//TODO initGrilleGaucheHaut
-				//	initGrilleDroiteHaut
+				initGrilleHautGauche(xExit, yExit);
+				initGrilleHautDroite(xExit, yExit);
 			}
 	}
 	
@@ -277,6 +277,80 @@ public class Grille {
 			
 		}
 	}
+	
+	// HautGauche - BasGauche
+	private void initGrilleHautGauche(int x,int y)
+	{
+		if(x > 0)
+		{
+			if(grille[x - 1][y] != 500)
+			{
+				if(grille[x - 1][y] > grille[x][y] + 1)
+				{
+					grille[x - 1][y] = grille[x][y] + 1;						
+				}
+				initGrilleHautGauche(x-1,y);				
+			}			
+			if(y > 0)
+			{
+				
+				if(grille[x][y - 1] != 500)
+				{		
+					if(grille[x][y - 1] > grille[x][y] + 1)
+					{
+						grille[x][y - 1] = grille[x][y] + 1;
+					}	
+					initGrilleHautGauche(x,y-1);
+				}
+				if(grille[x - 1][y - 1] != 500)
+				{					
+					if(grille[x - 1][y - 1] > grille[x][y] + lambda)
+					{
+						grille[x - 1][y - 1] = grille[x][y] + lambda;
+					}
+					initGrilleHautGauche(x-1,y-1);
+				}
+			}
+		}
+	}
+	private void initGrilleBasGauche(int x, int y)
+	{
+		
+		if(x < nbLignes)
+		{
+			if(grille[x + 1][y] != 500)
+			{	
+				if(grille[x + 1][y] > grille[x][y] + 1)
+				{
+					grille[x + 1][y] = grille[x][y] + 1;
+				}
+				initGrilleBasGauche(x+1,y);
+				
+			}
+			if(y > 0)
+			{
+				if(grille[x + 1][y - 1] != 500)
+				{
+					if(grille[x + 1][y - 1] > grille[x][y] + lambda)
+					{
+						grille[x + 1][y - 1] = grille[x][y] + lambda;
+					}
+					initGrilleBasGauche(x+1,y-1);					
+				}
+				if(grille[x][y - 1] != 500)
+				{		
+					if(grille[x][y - 1] > grille[x][y] + 1)
+					{
+						grille[x][y - 1] = grille[x][y] + 1;
+					}	
+					initGrilleBasGauche(x,y-1);
+				}
+			}		
+			
+		}
+	}
+	
+	
 	// Test
 	public void afficherGrille()
 	{
