@@ -11,27 +11,28 @@ public class Neighborhood {
 	
 	private Integer nbLignes = 3;
 	private Integer nbColonnes = 3;
-	private Integer[][] voisinage;
+	private Float[][] voisinage;
 	
 	
 	// Constructeurs
 	public Neighborhood(Grille grille, Person person)
 	{
 		int ligne,colonne;
-		voisinage = new Integer[nbLignes][nbColonnes];
+		voisinage = new Float[nbLignes][nbColonnes];
 		
 		for(ligne=0; ligne < nbLignes; ligne++)
 		{
 			for(colonne=0; colonne < nbColonnes; colonne++)
 			{
-				/*voisinage[ligne][colonne] = 
-						grille.getValue(person.getX() - (ligne - 1), person.getY() - (colonne - 1));*/
+				voisinage[ligne][colonne] = 
+						grille.getValue(person.getX() + (colonne - 1), person.getY() + (ligne - 1));
+				
 			}
 		}
 	}
 	
 	// Getters & setters
-	public Integer[][] getVoisinage()
+	public Float[][] getVoisinage()
 	{
 		return voisinage;
 	}
@@ -54,17 +55,32 @@ public class Neighborhood {
 	 * @param y Coordonnée en y de la case
 	 * @return La distance de la sortie par rapport à la case (x,y) ou -1 si la case n'existe pas
 	 */
-	public Integer getValue(Integer x, Integer y)
+	public Float getValue(Integer x, Integer y)
 	{
-		Integer retour = -1;
+		Float retour = -1.0f;
 		
-		if(x >= nbLignes && y >= nbColonnes)
+		if(x <= nbLignes && y <= nbColonnes)
 		{
 			retour = voisinage[x][y];
 		}
 		
 		return retour;
 		
+	}
+	
+	public void afficherNeighborhood()
+	{
+		int ligne,colonne;
+		
+		for(ligne=0; ligne < nbLignes; ligne++)
+		{
+			for(colonne=0; colonne < nbColonnes; colonne++)
+			{
+				System.out.print(voisinage[ligne][colonne]);
+				System.out.print("     ");
+			}
+			System.out.println();
+		}
 	}
 
 }

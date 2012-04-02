@@ -57,5 +57,15 @@ public class Person {
 	public void setY(Integer y) {
 		this.y = y;
 	}
+	
+	/**
+	 * Mets à jour la position de la personne
+	 * @param movement Tableau renvoyée par MathModel.bouger()
+	 */
+	public void updatePosition(Integer[] movement)
+	{
+		x += movement[0];
+		y += movement[1];
+	}
 
 }
