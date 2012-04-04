@@ -1,21 +1,53 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Grille {
 
 	private float[][] grille;
 	private int nbLignes;
 	private int nbColonnes;
-	private int xExit;
-	private int yExit;
+	/**
+	 * @return the nbLignes
+	 */
+	public int getNbLignes() {
+		return nbLignes;
+	}
+
+	/**
+	 * @return the nbColonnes
+	 */
+	public int getNbColonnes() {
+		return nbColonnes;
+	}
+
+
+	private int tabxExit[];
+	private int tabyExit[];
 	private static float lambda = 1.5f;
 	
-	public Grille(int lignes,int colonnes,int xExit,int yExit)
+	/**
+	 * 
+	 * @param lignes nombre de ligne
+	 * @param colonnes nombre de colonne
+	 * @param xExit numéro de ligne de la sortie
+	 * @param yExit numéro de colonne de la sortie
+	 */
+	public Grille(int lignes,int colonnes,int letabxExit[],int letabyExit[])
 	{
+		
 		nbLignes = lignes;
 		nbColonnes = colonnes;
-		this.xExit = xExit;
-		this.yExit = yExit;
+		this.tabxExit = letabxExit;
+		this.tabyExit = letabyExit;		
+		
 		grille = new float[nbLignes][nbColonnes];
+		
+		List<Obstacle> obstacles = new ArrayList<Obstacle>();
+		
+		obstacles.add(new Obstacle(4, 3, 6, 3));
+		
 		
 		// Init murs verticaux
 		for(int i = 0; i < nbLignes; i++)
@@ -37,30 +69,50 @@ public class Grille {
 			for(int j = 1; j < nbColonnes-1 ; j++ )
 				grille[i][j] = 400;
 		}
-		// Init sortie
-		grille[this.xExit][this.yExit] = 1;
 		
-		if(yExit == 0)
+		// Init sortie
+		for(int i = 0; i < tabxExit.length; i++)
+			grille[tabxExit[i]][tabyExit[i]] = 1;
+		
+		// Init obstacles
+		/*for(Obstacle o:obstacles)
 		{
-			initGrilleHautDroite(xExit, yExit);
-			initGrilleBasDroite(xExit, yExit);
-		}
-		else
-			if(yExit == nbColonnes - 1)
+			int xD = o.getxDebut();
+			int xF = o.getxFin();
+			int yD = o.getyDebut();
+			int yF = o.getyFin();
+			for(int i = xD; i <= xF;i++)
+				for(int j = yD; j <= yF;j++)
+					grille[i][j] = 500;
+		}*/
+		//TODO gérer les obstacles 
+		
+		for(int i = 0; i < tabxExit.length ; i++)
+		{		
+			if(tabyExit[i] == 0)
 			{
-				initGrilleHautGauche(xExit, yExit);
-				initGrilleBasGauche(xExit,yExit);
-			}
-			else if(xExit == 0)
-			{
-				initGrilleBasGauche(xExit,yExit);
-				initGrilleBasDroite(xExit, yExit);
+				initGrilleHautDroite(tabxExit[i], tabyExit[i]);
+				initGrilleBasDroite(tabxExit[i], tabyExit[i]);			
 			}
 			else
-			{
-				initGrilleHautGauche(xExit, yExit);
-				initGrilleHautDroite(xExit, yExit);
+			{	
+				if(tabyExit[i] == nbColonnes - 1)
+				{
+					initGrilleHautGauche(tabxExit[i], tabyExit[i]);
+					initGrilleBasGauche(tabxExit[i],tabyExit[i]);
+				}
+				else if(tabxExit[i] == 0)
+				{
+					initGrilleBasGauche(tabxExit[i],tabyExit[i]);
+					initGrilleBasDroite(tabxExit[i], tabyExit[i]);
+				}
+				else
+				{
+					initGrilleHautGauche(tabxExit[i], tabyExit[i]);
+					initGrilleHautDroite(tabxExit[i], tabyExit[i]);
+				}
 			}
+		}
 	}
 	
 	/**
@@ -76,6 +128,7 @@ public class Grille {
 	}
 	
 	/**
+	 * @deprecated
 	 * Permet de calculer les distances à la sortie de chaque cellules
 	 * @param x la ligne
 	 * @param y la colonne
@@ -207,6 +260,12 @@ public class Grille {
 		}
 	
 	}
+	
+	/**
+	 * Calcul les distances des cases positionnées au dessus et/ou à droite de la case actuelle
+	 * @param x numéro de ligne de la case actuelle
+	 * @param y indice de colonne de la actuelle
+	 */
 	private void initGrilleHautDroite(int x,int y)
 	{
 		if(x > 0)
@@ -241,6 +300,12 @@ public class Grille {
 			}
 		}
 	}
+	
+	/**
+	 * Calcul les distances des cases positionnées en dessous et/ou à droite de la case actuelle
+	 * @param x numéro de ligne de la case actuelle
+	 * @param y indice de colonne de la actuelle
+	 */
 	private void initGrilleBasDroite(int x, int y)
 	{
 		
@@ -278,7 +343,11 @@ public class Grille {
 		}
 	}
 	
-	// HautGauche - BasGauche
+	/**
+	 * Calcul les distances des cases positionnées au dessus et/ou à gauche de la case actuelle
+	 * @param x numéro de ligne de la case actuelle
+	 * @param y indice de colonne de la actuelle
+	 */
 	private void initGrilleHautGauche(int x,int y)
 	{
 		if(x > 0)
@@ -313,6 +382,12 @@ public class Grille {
 			}
 		}
 	}
+	
+	/**
+	 * Calcul les distances des cases positionnées en dessous et/ou à gauche de la case actuelle
+	 * @param x numéro de ligne de la case actuelle
+	 * @param y indice de colonne de la actuelle
+	 */
 	private void initGrilleBasGauche(int x, int y)
 	{
 		
