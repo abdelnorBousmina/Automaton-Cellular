@@ -11,8 +11,19 @@ import vue.PersonUI;
  */
 public class Person {
 	
+	/**
+	 * Dessin
+	 */
 	private PersonUI ui;
+	
+	/**
+	 * Ligne
+	 */
 	private Integer x;
+	
+	/**
+	 * Colonne
+	 */
 	private Integer y;
 	
 	

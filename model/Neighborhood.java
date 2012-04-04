@@ -25,7 +25,7 @@ public class Neighborhood {
 			for(colonne=0; colonne < nbColonnes; colonne++)
 			{
 				voisinage[ligne][colonne] = 
-						grille.getValue(person.getX() + (colonne - 1), person.getY() + (ligne - 1));
+						grille.getValue(person.getX() + (ligne - 1), person.getY() + (colonne - 1));
 				
 			}
 		}

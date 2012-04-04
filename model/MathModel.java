@@ -17,6 +17,7 @@ public class MathModel {
 	 */
 	public Integer[] bouger(Neighborhood voisinage)
 	{
+		// nextX : prochaine ligne | nextY : prochaine colonne
 		Integer nextX = 0, nextY = 0, ligne, colonne;
 		Integer[] retour = new Integer[2];
 		
@@ -24,8 +25,7 @@ public class MathModel {
 		{
 			// Parcours du voisinage
 			for (ligne = 0; ligne < voisinage.getNbLignes(); ligne++) 
-			{
-				
+			{		
 				for (colonne = 0; colonne < voisinage.getNbColonnes(); colonne++) 
 				{
 					// Si la case évaluée est plus proche de la sortie que la destination
