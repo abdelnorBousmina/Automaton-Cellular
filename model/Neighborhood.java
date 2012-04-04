@@ -9,20 +9,79 @@ package model;
  */
 public class Neighborhood {
 	
-	private Integer nbLignes = 3;
-	private Integer nbColonnes = 3;
+	public static final Integer NB_LIGNES = 3;
+	public static final Integer NB_COLONNES = 3;
+	
+	/**
+	 * Le voisinage
+	 */
 	private Float[][] voisinage;
 	
+	/**
+	 * La personne dont on considère le voisinage
+	 */
+	private Person person;
 	
-	// Constructeurs
+	/**
+	 * Constructeur par défaut. Ne fait rien de particulier
+	 */
+	public Neighborhood()
+	{
+		
+	}
+	
+	/**
+	 * Constructeur. Ce constructeur construit le voisinage en fonction de la grille
+	 * et de la personne passés en paramètres.
+	 * @param grille La grille dans laquelle le voisinage prend place
+	 * @param person La personne dont on cherche le voisinage
+	 */
 	public Neighborhood(Grille grille, Person person)
 	{
+		this.person = person;
+		construireVoisinage(grille);
+	}
+	
+	public Float[][] getVoisinage()
+	{
+		return voisinage;
+	}
+	
+	public Person getPerson()
+	{
+		return person;
+	}
+	
+	/**
+	 * Affiche le voisinage dans la console
+	 */
+	public void afficherNeighborhood()
+	{
 		int ligne,colonne;
-		voisinage = new Float[nbLignes][nbColonnes];
 		
-		for(ligne=0; ligne < nbLignes; ligne++)
+		for(ligne=0; ligne < NB_LIGNES; ligne++)
 		{
-			for(colonne=0; colonne < nbColonnes; colonne++)
+			for(colonne=0; colonne < NB_COLONNES; colonne++)
+			{
+				System.out.print(voisinage[ligne][colonne]);
+				System.out.print("     ");
+			}
+			System.out.println();
+		}
+	}
+	
+	/**
+	 * Construit le voisinage en fonction de l'attribut person
+	 * @param grille La grille dans laquelle on recherche le voisinage
+	 */
+	public void construireVoisinage(Grille grille)
+	{
+		int ligne,colonne;
+		voisinage = new Float[NB_LIGNES][NB_COLONNES];
+		
+		for(ligne=0; ligne < NB_LIGNES; ligne++)
+		{
+			for(colonne=0; colonne < NB_COLONNES; colonne++)
 			{
 				voisinage[ligne][colonne] = 
 						grille.getValue(person.getX() + (ligne - 1), person.getY() + (colonne - 1));
@@ -30,24 +89,6 @@ public class Neighborhood {
 			}
 		}
 	}
-	
-	// Getters & setters
-	public Float[][] getVoisinage()
-	{
-		return voisinage;
-	}
-	
-	public Integer getNbLignes()
-	{
-		return nbLignes;
-	}
-	
-	public Integer getNbColonnes()
-	{
-		return nbColonnes;
-	}
-	
-	// Méthodes
 	
 	/**
 	 * Retourne la distance de la sortie de la case (x,y)
@@ -59,28 +100,13 @@ public class Neighborhood {
 	{
 		Float retour = -1.0f;
 		
-		if(x <= nbLignes && y <= nbColonnes)
+		if(x <= NB_LIGNES && y <= NB_COLONNES)
 		{
 			retour = voisinage[x][y];
 		}
 		
 		return retour;
 		
-	}
-	
-	public void afficherNeighborhood()
-	{
-		int ligne,colonne;
-		
-		for(ligne=0; ligne < nbLignes; ligne++)
-		{
-			for(colonne=0; colonne < nbColonnes; colonne++)
-			{
-				System.out.print(voisinage[ligne][colonne]);
-				System.out.print("     ");
-			}
-			System.out.println();
-		}
 	}
 
 }

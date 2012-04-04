@@ -23,10 +23,11 @@ public class MathModel {
 		
 		if(Math.random() >= panic)
 		{
+			
 			// Parcours du voisinage
-			for (ligne = 0; ligne < voisinage.getNbLignes(); ligne++) 
+			for (ligne = 0; ligne < Neighborhood.NB_LIGNES; ligne++) 
 			{		
-				for (colonne = 0; colonne < voisinage.getNbColonnes(); colonne++) 
+				for (colonne = 0; colonne < Neighborhood.NB_COLONNES; colonne++) 
 				{
 					// Si la case évaluée est plus proche de la sortie que la destination
 					// déjà choisie, la prochaine case est la case évaluée
