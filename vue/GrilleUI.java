@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import sun.java2d.loops.FillRect;
+
 import model.Grille;
 
 public class GrilleUI extends Canvas {
@@ -28,7 +30,12 @@ public class GrilleUI extends Canvas {
 	 */
 	private int cols;
 	
+	private int htOfRow;
+	
+	private int wdOfRow;
+	
 	private Grille grille;
+	
 
 	/**
 	 * Constructeur
@@ -56,7 +63,10 @@ public class GrilleUI extends Canvas {
 	 */
 	public GrilleUI(Grille grille)
 	{
-		// TODO Récupérer les valeurs de la grilles.
+		this.setPreferredSize(new Dimension(300, 300));
+		this.grille = grille;
+		rows = grille.getNbLignes();
+		cols = grille.getNbColonnes();
 	}
 	
 	@Override
@@ -65,26 +75,45 @@ public class GrilleUI extends Canvas {
 	 */
 	public void paint(Graphics g) {
 		
+		paintLines(g);
+		fillObstacles(g);
+	
+	}
+	
+	private void fillObstacles(Graphics g)
+	{
+		int x,y;
+		
+		for(x=0; x<rows; x++)
+		{
+			for(y=0; y<cols; y++)
+			{
+				if(grille.getValue(x,y) >= 500)
+				{
+					// Signature : g.fillRect(x, y, width, height)
+					g.fillRect(y * htOfRow, x * wdOfRow, wdOfRow, htOfRow);
+				}
+			}
+		}
+	}
+	
+	private void paintLines(Graphics g)
+	{
 		int k;
 		width = this.getPreferredSize().width;
 		height = this.getPreferredSize().height;
 		
-		System.out.println("width2 : " + width + " || height2 : " + height);
-		
-		int htOfRow = height / (rows); // Définition de la hauteur d'une ligne
-		System.out.println("height : " + htOfRow);
+		htOfRow = height / (rows); // Définition de la hauteur d'une ligne
 		
 		for (k = 0; k <= rows; k++) {
 		    g.drawLine(0, k * htOfRow, width, k * htOfRow);
 		}
 		
-		int wdOfRow = width / (cols); // Définition de la largeur d'une ligne
-		System.out.println("width : " + wdOfRow);
+		wdOfRow = width / (cols); // Définition de la largeur d'une ligne
 		
 		for (k = 0; k <= cols; k++) {
 			    g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
 		}
-	
 	}
 	
 }

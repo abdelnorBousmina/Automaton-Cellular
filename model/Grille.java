@@ -36,7 +36,6 @@ public class Grille {
 	 */
 	public Grille(int lignes,int colonnes,int letabxExit[],int letabyExit[])
 	{
-		
 		nbLignes = lignes;
 		nbColonnes = colonnes;
 		this.tabxExit = letabxExit;
