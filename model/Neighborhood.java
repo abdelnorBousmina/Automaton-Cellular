@@ -33,13 +33,12 @@ public class Neighborhood {
 	/**
 	 * Constructeur. Ce constructeur construit le voisinage en fonction de la grille
 	 * et de la personne passés en paramètres.
-	 * @param grille La grille dans laquelle le voisinage prend place
 	 * @param person La personne dont on cherche le voisinage
 	 */
-	public Neighborhood(Grille grille, Person person)
+	public Neighborhood(Person person)
 	{
 		this.person = person;
-		construireVoisinage(grille);
+		construireVoisinage(person.getGrille());
 	}
 	
 	public Float[][] getVoisinage()

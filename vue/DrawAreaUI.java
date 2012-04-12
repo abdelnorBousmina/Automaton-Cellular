@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -16,34 +17,26 @@ public class DrawAreaUI extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private MathModel model;
-	private Grille gr;
-	private GrilleUI gUi;
-	private Neighborhood nbh;
-	private Person person1;
+	private Grille grille;
+	private GrilleUI grilleUi;
+	private ArrayList<PersonUI> personsUi;
 	
-	public MathModel getModel() {
-		return model;
+	private Neighborhood nbh;
+
+	public Grille getGrille() {
+		return grille;
 	}
 
-	public void setModel(MathModel model) {
-		this.model = model;
+	public void setGrille(Grille gr) {
+		this.grille = gr;
 	}
 
-	public Grille getGr() {
-		return gr;
+	public GrilleUI getGrilleUi() {
+		return grilleUi;
 	}
 
-	public void setGr(Grille gr) {
-		this.gr = gr;
-	}
-
-	public GrilleUI getgUi() {
-		return gUi;
-	}
-
-	public void setgUi(GrilleUI gUi) {
-		this.gUi = gUi;
+	public void setGrilleUi(GrilleUI grilleUi) {
+		this.grilleUi = grilleUi;
 	}
 
 	public Neighborhood getNbh() {
@@ -53,17 +46,18 @@ public class DrawAreaUI extends JPanel {
 	public void setNbh(Neighborhood nbh) {
 		this.nbh = nbh;
 	}
+	
+	public ArrayList<PersonUI> getPersonsUi() {
+		return personsUi;
+	}
 
-	public DrawAreaUI() {
-		person1 = new Person();
-		person1.setX(6);
-		person1.setY(4);
-		
-		gUi = new GrilleUI(gr);
-		gUi.paint(this.getGraphics());
-		
-		/*person1.getUi().setgUi(gUi);
-		person1.getUi().update(this.getGraphics());*/
+	public void setPersonsUi(ArrayList<PersonUI> personsUi) {
+		this.personsUi = personsUi;
+	}
+
+	public DrawAreaUI() 
+	{
+		personsUi = new ArrayList<PersonUI>();
 	}
 	
 	public void updateItems()
@@ -71,15 +65,30 @@ public class DrawAreaUI extends JPanel {
 		this.repaint();
 	}
 	
+	public void paintGrille()
+	{
+		grilleUi.setVisible(true);
+	}
+	
 	/**
 	 * Custom painting
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		person1.getUi().paint(g);
-		/*for (Car car : road.getCarList()) {
-			car.getImage().paint(g);
-		}*/
+		System.out.println("dau : paintComponent");
+		grilleUi.paint(g);
+		int i = 0;
+		for (PersonUI p : personsUi) {
+			System.out.println("\t i : " + i++);
+			p.updatePosition();
+			p.paint(g);
+		}
+	}
+	
+	public void addPersonUi(PersonUI pUi)
+	{
+		pUi.setVisible(true);
+		personsUi.add(pUi);
 	}
 
 }

@@ -26,7 +26,7 @@ public class Movement {
 
 	public Movement()
 	{
-		model = new MathModel();
+		/*model = new MathModel();
 		Integer[] mvt;
 		
 		person1 = new Person();
@@ -42,16 +42,12 @@ public class Movement {
 		timer = new Timer( 1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*nbh = new Neighborhood(g, person1);
-				Integer[] mvt;
-				mvt = model.bouger(nbh);*/
 				person1.updatePosition();
 				drawArea.updateItems();
-				//person1.getUi().repaint();
 			}
 		} );
 		timer.setInitialDelay(0);
-		timer.start();
+		timer.start();*/
 	}
 	
 }

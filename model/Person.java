@@ -15,7 +15,7 @@ public class Person {
 	/**
 	 * Dessin
 	 */
-	private PersonUI ui;
+	//private PersonUI ui;
 	
 	/**
 	 * Ligne
@@ -32,23 +32,26 @@ public class Person {
 	 */
 	private MathModel model;
 	
+	private Grille grille;
+	
 	
 	public Person() {
-		ui = new PersonUI();
+		//ui = new PersonUI();
+		model = new MathModel();
 	}
 	
 	/**
 	 * @return the ui
 	 */
-	public PersonUI getUi() {
+	/*public PersonUI getUi() {
 		return ui;
-	}
+	}*/
 	/**
 	 * @param ui the ui to set
 	 */
-	public void setUi(PersonUI ui) {
+	/*public void setUi(PersonUI ui) {
 		this.ui = ui;
-	}
+	}*/
 	/**
 	 * @return the x
 	 */
@@ -89,11 +92,19 @@ public class Person {
 	//public void updatePosition(Integer[] movement)
 	public void updatePosition()
 	{
-		Integer[] mvt = model.bouger(new Neighborhood(MainWindow.getGrille(), this));
+		Integer[] mvt = model.bouger(new Neighborhood(this));
 		x += mvt[0];
 		y += mvt[1];
-		ui.setX(x);
-		ui.setY(y);
+		//ui.setX(x);
+		//ui.setY(y);
+	}
+
+	public Grille getGrille() {
+		return grille;
+	}
+
+	public void setGrille(Grille grille) {
+		this.grille = grille;
 	}
 
 }

@@ -14,6 +14,8 @@ import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import controlleur.Controlleur;
+
 import model.Grille;
 import model.MathModel;
 import model.Neighborhood;
@@ -31,6 +33,7 @@ public class MainWindow {
 	private Neighborhood nbh;
 	private Person person1;
 	private MathModel model;
+	private Controlleur controlleur;
 	
 	public static Grille getGrille()
 	{
@@ -61,13 +64,14 @@ public class MainWindow {
 		/*Person person2 = new Person();
 		Person person3 = new Person();*/
 		
-		DrawAreaUI drawArea = new DrawAreaUI();
-		drawArea.setGr(new Grille(10,10,tabX, tabY));
+		/*DrawAreaUI drawArea = new DrawAreaUI();
+		drawArea.setGr(new Grille(10,10,tabX, tabY));*/
 		
 		// ********************
 		// END OF TESTS
 		// ********************
 		
+		controlleur = new Controlleur();
 		
 		// Définition de la frame
 		frame = new JFrame("Automate cellulaire");
@@ -84,7 +88,7 @@ public class MainWindow {
 
 		// Ajout de la GrilleUi
 		//backgroundPanel.add(gUi);
-		backgroundPanel.add(drawArea);
+		backgroundPanel.add(controlleur.getDrawArea());
 		
 		// Ajout du panel à la frame + dessin + affichage
 		frame.add(backgroundPanel);
