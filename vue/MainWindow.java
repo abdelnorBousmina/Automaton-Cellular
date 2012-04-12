@@ -3,14 +3,14 @@
  */
 package vue;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -27,12 +27,21 @@ public class MainWindow {
 
 	private JPanel backgroundPanel;
 	private JFrame frame;
+	private static Grille g;
+	private Neighborhood nbh;
+	private Person person1;
+	private MathModel model;
+	
+	public static Grille getGrille()
+	{
+		return g;
+	}
 	
 	public MainWindow()
 	{
-		// ********************
-		// SOME TESTS INIT
-		// ********************
+		// ***************************************
+		//  SOME TESTS INIT : Create a small grid
+		// ***************************************
 		int tabX[] = new int[2];
 		int tabY[] = new int[2];
 		
@@ -42,11 +51,19 @@ public class MainWindow {
 		tabY[0] = 0;
 		tabY[1] = 0;
 		
-		Grille g = new Grille(10, 10, tabX, tabY);
+		//g = new Grille(10, 10, tabX, tabY);
 		
-		g.afficherGrille();
+		//g.afficherGrille();
 		
-		GrilleUI gUi = new GrilleUI(g);
+		//GrilleUI gUi = new GrilleUI(g);
+		
+		//Person person1 = new Person();
+		/*Person person2 = new Person();
+		Person person3 = new Person();*/
+		
+		DrawAreaUI drawArea = new DrawAreaUI();
+		drawArea.setGr(new Grille(10,10,tabX, tabY));
+		
 		// ********************
 		// END OF TESTS
 		// ********************
@@ -66,7 +83,8 @@ public class MainWindow {
 		backgroundPanel.setPreferredSize(new Dimension(500,500));
 
 		// Ajout de la GrilleUi
-		backgroundPanel.add(gUi);
+		//backgroundPanel.add(gUi);
+		backgroundPanel.add(drawArea);
 		
 		// Ajout du panel à la frame + dessin + affichage
 		frame.add(backgroundPanel);
@@ -80,6 +98,7 @@ public class MainWindow {
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
 		MainWindow mw = new MainWindow();
+		
 		
 		/*Person person = new Person();
 		person.setX(1);

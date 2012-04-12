@@ -3,6 +3,7 @@
  */
 package model;
 
+import vue.MainWindow;
 import vue.PersonUI;
 
 /**
@@ -26,10 +27,14 @@ public class Person {
 	 */
 	private Integer y;
 	
+	/**
+	 * Modèle mathématique
+	 */
+	private MathModel model;
 	
-	public Person()
-	{
-		// TODO Coder le constructeur
+	
+	public Person() {
+		ui = new PersonUI();
 	}
 	
 	/**
@@ -69,14 +74,26 @@ public class Person {
 		this.y = y;
 	}
 	
+	public MathModel getModel() {
+		return model;
+	}
+
+	public void setModel(MathModel model) {
+		this.model = model;
+	}
+
 	/**
 	 * Mets à jour la position de la personne
 	 * @param movement Tableau renvoyée par MathModel.bouger()
 	 */
-	public void updatePosition(Integer[] movement)
+	//public void updatePosition(Integer[] movement)
+	public void updatePosition()
 	{
-		x += movement[0];
-		y += movement[1];
+		Integer[] mvt = model.bouger(new Neighborhood(MainWindow.getGrille(), this));
+		x += mvt[0];
+		y += mvt[1];
+		ui.setX(x);
+		ui.setY(y);
 	}
 
 }

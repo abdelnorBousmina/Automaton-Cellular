@@ -4,11 +4,14 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import sun.java2d.loops.FillRect;
-
 import model.Grille;
 
 public class GrilleUI extends Canvas {
+
+	/**
+	 * Automatically added
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Hauteur de la grille
@@ -57,6 +60,28 @@ public class GrilleUI extends Canvas {
         System.out.println("width : " + width + " || height : " + height);
 	}
 	
+	
+	
+	
+	public int getHtOfRow() {
+		return htOfRow;
+	}
+
+	/*public void setHtOfRow(int htOfRow) {
+		this.htOfRow = htOfRow;
+	}*/
+
+	public int getWdOfRow() {
+		return wdOfRow;
+	}
+
+	/*public void setWdOfRow(int wdOfRow) {
+		this.wdOfRow = wdOfRow;
+	}*/
+
+
+
+
 	/**
 	 * Constructeur. Dessine la grille à partir d'un objet.
 	 * @param grille La grille que l'on doit dessiner
@@ -71,7 +96,7 @@ public class GrilleUI extends Canvas {
 	
 	@Override
 	/**
-	 * Dessine la grille.
+	 * Dessine la grille : les lignes puis les obstacles
 	 */
 	public void paint(Graphics g) {
 		
@@ -80,6 +105,10 @@ public class GrilleUI extends Canvas {
 	
 	}
 	
+	/**
+	 * Dessine les obstacles sur la grille
+	 * @param g Objet graphique à utiliser pour le dessin
+	 */
 	private void fillObstacles(Graphics g)
 	{
 		int x,y;
@@ -97,6 +126,10 @@ public class GrilleUI extends Canvas {
 		}
 	}
 	
+	/**
+	 * Dessine les lignes de la grille
+	 * @param g Objet graphique à utiliser pour le dessin
+	 */
 	private void paintLines(Graphics g)
 	{
 		int k;
