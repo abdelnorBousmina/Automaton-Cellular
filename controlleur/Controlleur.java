@@ -67,8 +67,9 @@ public class Controlleur {
 		Person per = personnes.get(0);
 		
 		Neighborhood nbh = new Neighborhood(per);
-		System.out.println("Lig : " + per.getLigne() + " | Col : " + per.getColonne());
-		nbh.afficherNeighborhood();
+		
+		//System.out.println("Lig : " + per.getLigne() + " | Col : " + per.getColonne());
+		//nbh.afficherNeighborhood();
 		
 		Timer timer;
 		timer = new Timer( 1000, new ActionListener() {

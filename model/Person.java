@@ -96,7 +96,7 @@ public class Person {
 		ligne += mvt[0];
 		colonne += mvt[1];
 		
-		System.out.println("-------- PERSON : x = " + mvt[0] + " - y = " + mvt[1]);
+		//System.out.println("-------- PERSON : x = " + mvt[0] + " - y = " + mvt[1]);
 		//ui.setX(x);
 		//ui.setY(y);
 	}

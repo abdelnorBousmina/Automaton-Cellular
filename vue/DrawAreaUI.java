@@ -75,7 +75,7 @@ public class DrawAreaUI extends JPanel {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		System.out.println("dau : paintComponent");
+		//System.out.println("dau : paintComponent");
 		grilleUi.paint(g);
 		int i = 0;
 		for (PersonUI p : personsUi) {

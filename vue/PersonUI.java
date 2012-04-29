@@ -80,9 +80,9 @@ public class PersonUI extends Canvas {
 	 */
 	@Override
 	public void update(Graphics g) {
-		System.out.println("pUi : update");
+		//System.out.println("pUi : update");
 		g.setColor(color);
-		System.out.println(" X draw : " + Math.round(x) + " - Y draw : " + Math.round(y));
+		//System.out.println(" X draw : " + Math.round(x) + " - Y draw : " + Math.round(y));
 		g.fillRect( Math.round(x), Math.round(y), 15, 15 );
 	}
 

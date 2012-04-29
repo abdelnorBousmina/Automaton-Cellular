@@ -23,8 +23,8 @@ public class MathModel {
 		
 		voisinage.afficherNeighborhood();
 		
-		if(Math.random() >= panic)
-		{		
+		//if(Math.random() >= panic)
+		//{		
 			// Parcours du voisinage
 			for (ligne = 0; ligne < Neighborhood.NB_LIGNES; ligne++) 
 			{		
@@ -38,28 +38,36 @@ public class MathModel {
 					
 					if(voisinage.getValue(ligne, colonne) < voisinage.getValue(nextX, nextY))
 					{
+						System.out.println("Inf : ("+ligne+","+colonne+") " + voisinage.getValue(ligne, colonne) + " - " + voisinage.getValue(nextX, nextY));
 						nextX = ligne;
 						nextY = colonne;
 					}
 					else if(voisinage.getValue(ligne, colonne) == voisinage.getValue(nextX, nextY))
 					{
 						// 1 chance sur 2 d'aller finalement en (ligne, colonne)
-						if(Math.random() <= 0.50f)
+						double rnd = Math.random();
+						System.out.println("Equ : ("+ligne+","+colonne+") " + voisinage.getValue(ligne, colonne) + " - " + voisinage.getValue(nextX, nextY) + " - " + rnd);
+						if(rnd <= 0.50f)
 						{
 							nextX = ligne;
 							nextY = colonne;
 						}
-					} // Fin détermination next	
+						//System.out.println("nextX : " + ligne + "nextY : " + colonne);
+					} // Fin détermination next
+					else
+					{
+						System.out.println("Sup : ("+ligne+","+colonne+") " + voisinage.getValue(ligne, colonne) + " - " + voisinage.getValue(nextX, nextY));
+					}
 				
 				}// Fin parcours des colonnes
 				
 			} // Fin du parcours des lignes
 		
-		}
-		else
-		{
+		//}
+		//else
+		//{
 			// TODO Implémenter le comportement de panique 
-		}
+		//}
 		
 		retour[0] = nextX - 1;
 		retour[1] = nextY - 1;
