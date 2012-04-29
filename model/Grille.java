@@ -25,7 +25,8 @@ public class Grille {
 
 	private int tabxExit[];
 	private int tabyExit[];
-	private static float lambda = 1.5f;
+	private final float lambda = 1.5f;
+	private final int mur = 500;
 	
 	/**
 	 * 
@@ -51,15 +52,15 @@ public class Grille {
 		// Init murs verticaux
 		for(int i = 0; i < nbLignes; i++)
 		{
-			grille[i][0] = 500;
-			grille[i][nbColonnes-1] = 500;
+			grille[i][0] = mur;
+			grille[i][nbColonnes-1] = mur;
 		}
 		
 		// Init murs horizontaux
 		for(int j = 1; j < nbColonnes-1; j++)
 		{
-			grille[0][j] = 500;
-			grille[nbLignes-1][j] = 500;
+			grille[0][j] = mur;
+			grille[nbLignes-1][j] = mur;
 		}
 		
 		// Init reste de la grille
@@ -74,7 +75,7 @@ public class Grille {
 			grille[tabxExit[i]][tabyExit[i]] = 1;
 		
 		// Init obstacles
-		/*for(Obstacle o:obstacles)
+		for(Obstacle o:obstacles)
 		{
 			int xD = o.getxDebut();
 			int xF = o.getxFin();
@@ -82,8 +83,8 @@ public class Grille {
 			int yF = o.getyFin();
 			for(int i = xD; i <= xF;i++)
 				for(int j = yD; j <= yF;j++)
-					grille[i][j] = 500;
-		}*/
+					grille[i][j] = mur;
+		}
 		//TODO gérer les obstacles 
 		
 		for(int i = 0; i < tabxExit.length ; i++)
@@ -136,7 +137,7 @@ public class Grille {
 	{
 		if(x > 0)
 		{
-			if(grille[x - 1][y] != 500)
+			if(grille[x - 1][y] != mur)
 			{
 				
 				if(grille[x - 1][y] == 400)
@@ -152,7 +153,7 @@ public class Grille {
 			}
 			if(y > 0)
 			{				
-				if(grille[x][y - 1] != 500)
+				if(grille[x][y - 1] != mur)
 				{
 					if(grille[x - 1][y - 1] == 400)
 					{
@@ -165,7 +166,7 @@ public class Grille {
 						}				
 					
 				}
-				if(grille[x - 1][y - 1] != 500)
+				if(grille[x - 1][y - 1] != mur)
 				{
 					if(grille[x - 1][y - 1] == 400)
 					{
@@ -181,7 +182,7 @@ public class Grille {
 			if(y < nbColonnes)
 			{
 				
-				if(grille[x][y + 1] != 500)
+				if(grille[x][y + 1] != mur)
 				{
 					if(grille[x][y + 1] == 400)
 					{
@@ -193,7 +194,7 @@ public class Grille {
 						grille[x][y + 1] = grille[x][y] + 1;
 					}					
 				}
-				if(grille[x - 1][y + 1] != 500)
+				if(grille[x - 1][y + 1] != mur)
 				{
 					if(grille[x - 1][y + 1] == 400)
 					{
@@ -210,7 +211,7 @@ public class Grille {
 		}
 		if(x < nbLignes)
 		{
-			if(grille[x + 1][y] != 500)
+			if(grille[x + 1][y] != mur)
 			{	
 				if(grille[x + 1][y] == 400)
 				{
@@ -225,7 +226,7 @@ public class Grille {
 			}
 			if(y < nbColonnes)
 			{
-				if(grille[x + 1][y + 1] != 500)
+				if(grille[x + 1][y + 1] != mur)
 				{
 					if(grille[x + 1][y + 1] == 400)
 					{
@@ -241,7 +242,7 @@ public class Grille {
 			}
 			if(y > 0)
 			{
-				if(grille[x + 1][y - 1] != 500)
+				if(grille[x + 1][y - 1] != mur)
 				{
 					if(grille[x + 1][y - 1] == 400)
 					{
@@ -269,7 +270,7 @@ public class Grille {
 	{
 		if(x > 0)
 		{
-			if(grille[x - 1][y] != 500)
+			if(grille[x - 1][y] != mur)
 			{
 				if(grille[x - 1][y] > grille[x][y] + 1)
 				{
@@ -280,7 +281,7 @@ public class Grille {
 			if(y < nbColonnes)
 			{
 				
-				if(grille[x][y + 1] != 500)
+				if(grille[x][y + 1] != mur)
 				{		
 					if(grille[x][y + 1] > grille[x][y] + 1)
 					{
@@ -288,13 +289,24 @@ public class Grille {
 					}	
 					initGrilleHautDroite(x,y+1);
 				}
-				if(grille[x - 1][y + 1] != 500)
+				if(grille[x - 1][y + 1] != mur)
 				{					
 					if(grille[x - 1][y + 1] > grille[x][y] + lambda)
 					{
 						grille[x - 1][y + 1] = grille[x][y] + lambda;
 					}
 					initGrilleHautDroite(x-1,y+1);
+				}
+				if(x < nbLignes)
+				{
+					if(grille[x + 1][y + 1] != mur)
+					{
+						if(grille[x + 1][y + 1] > grille[x][y] + lambda)
+						{
+							grille[x + 1][y + 1] = grille[x][y] + lambda;
+						}
+						initGrilleHautDroite(x+1,y+1);					
+					}
 				}
 			}
 		}
@@ -310,7 +322,7 @@ public class Grille {
 		
 		if(x < nbLignes)
 		{
-			if(grille[x + 1][y] != 500)
+			if(grille[x + 1][y] != mur)
 			{	
 				if(grille[x + 1][y] > grille[x][y] + 1)
 				{
@@ -321,7 +333,7 @@ public class Grille {
 			}
 			if(y < nbColonnes)
 			{
-				if(grille[x + 1][y + 1] != 500)
+				if(grille[x + 1][y + 1] != mur)
 				{
 					if(grille[x + 1][y + 1] > grille[x][y] + lambda)
 					{
@@ -329,13 +341,24 @@ public class Grille {
 					}
 					initGrilleBasDroite(x+1,y+1);					
 				}
-				if(grille[x][y + 1] != 500)
+				if(grille[x][y + 1] != mur)
 				{		
 					if(grille[x][y + 1] > grille[x][y] + 1)
 					{
 						grille[x][y + 1] = grille[x][y] + 1;
 					}	
-					initGrilleHautDroite(x,y+1);
+					initGrilleBasDroite(x,y+1);
+				}
+				if( x > 0)
+				{
+					if(grille[x - 1][y + 1] != mur)
+					{					
+						if(grille[x - 1][y + 1] > grille[x][y] + lambda)
+						{
+							grille[x - 1][y + 1] = grille[x][y] + lambda;
+						}
+						initGrilleBasDroite(x-1,y+1);
+					}
 				}
 			}		
 			
@@ -351,7 +374,7 @@ public class Grille {
 	{
 		if(x > 0)
 		{
-			if(grille[x - 1][y] != 500)
+			if(grille[x - 1][y] != mur)
 			{
 				if(grille[x - 1][y] > grille[x][y] + 1)
 				{
@@ -362,7 +385,7 @@ public class Grille {
 			if(y > 0)
 			{
 				
-				if(grille[x][y - 1] != 500)
+				if(grille[x][y - 1] != mur)
 				{		
 					if(grille[x][y - 1] > grille[x][y] + 1)
 					{
@@ -370,13 +393,24 @@ public class Grille {
 					}	
 					initGrilleHautGauche(x,y-1);
 				}
-				if(grille[x - 1][y - 1] != 500)
+				if(grille[x - 1][y - 1] != mur)
 				{					
 					if(grille[x - 1][y - 1] > grille[x][y] + lambda)
 					{
 						grille[x - 1][y - 1] = grille[x][y] + lambda;
 					}
 					initGrilleHautGauche(x-1,y-1);
+				}
+				if(y < nbColonnes)
+				{
+					if(grille[x - 1][y + 1] != mur)
+					{					
+						if(grille[x - 1][y + 1] > grille[x][y] + lambda)
+						{
+							grille[x - 1][y + 1] = grille[x][y] + lambda;
+						}
+						initGrilleHautGauche(x-1,y+1);
+					}
 				}
 			}
 		}
@@ -392,7 +426,7 @@ public class Grille {
 		
 		if(x < nbLignes)
 		{
-			if(grille[x + 1][y] != 500)
+			if(grille[x + 1][y] != mur)
 			{	
 				if(grille[x + 1][y] > grille[x][y] + 1)
 				{
@@ -403,7 +437,7 @@ public class Grille {
 			}
 			if(y > 0)
 			{
-				if(grille[x + 1][y - 1] != 500)
+				if(grille[x + 1][y - 1] != mur)
 				{
 					if(grille[x + 1][y - 1] > grille[x][y] + lambda)
 					{
@@ -411,13 +445,21 @@ public class Grille {
 					}
 					initGrilleBasGauche(x+1,y-1);					
 				}
-				if(grille[x][y - 1] != 500)
+				if(grille[x][y - 1] != mur)
 				{		
 					if(grille[x][y - 1] > grille[x][y] + 1)
 					{
 						grille[x][y - 1] = grille[x][y] + 1;
 					}	
 					initGrilleBasGauche(x,y-1);
+				}
+				if( y < nbColonnes)
+				{
+					if(grille[x + 1][y + 1] > grille[x][y] + 1)
+					{
+						grille[x + 1][y + 1] = grille[x][y] + 1;
+					}	
+					initGrilleBasGauche(x+1,y+1);
 				}
 			}		
 			
