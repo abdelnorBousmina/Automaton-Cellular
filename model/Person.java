@@ -20,12 +20,12 @@ public class Person {
 	/**
 	 * Ligne
 	 */
-	private Integer x;
+	private Integer ligne;
 	
 	/**
 	 * Colonne
 	 */
-	private Integer y;
+	private Integer colonne;
 	
 	/**
 	 * Modèle mathématique
@@ -55,26 +55,26 @@ public class Person {
 	/**
 	 * @return the x
 	 */
-	public Integer getX() {
-		return x;
+	public Integer getLigne() {
+		return ligne;
 	}
 	/**
 	 * @param x the x to set
 	 */
-	public void setX(Integer x) {
-		this.x = x;
+	public void setLigne(Integer x) {
+		this.ligne = x;
 	}
 	/**
 	 * @return the y
 	 */
-	public Integer getY() {
-		return y;
+	public Integer getColonne() {
+		return colonne;
 	}
 	/**
 	 * @param y the y to set
 	 */
-	public void setY(Integer y) {
-		this.y = y;
+	public void setColonne(Integer y) {
+		this.colonne = y;
 	}
 	
 	public MathModel getModel() {
@@ -93,8 +93,10 @@ public class Person {
 	public void updatePosition()
 	{
 		Integer[] mvt = model.bouger(new Neighborhood(this));
-		x += mvt[0];
-		y += mvt[1];
+		ligne += mvt[0];
+		colonne += mvt[1];
+		
+		System.out.println("-------- PERSON : x = " + mvt[0] + " - y = " + mvt[1]);
 		//ui.setX(x);
 		//ui.setY(y);
 	}

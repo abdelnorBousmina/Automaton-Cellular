@@ -59,8 +59,10 @@ public class Neighborhood {
 		int ligne,colonne;
 		
 		for(ligne=0; ligne < NB_LIGNES; ligne++)
+		//for(ligne=NB_LIGNES-1; ligne >= 0 ; ligne--)
 		{
 			for(colonne=0; colonne < NB_COLONNES; colonne++)
+			//for(colonne=NB_COLONNES-1; colonne >= 0 ; colonne--)
 			{
 				System.out.print(voisinage[ligne][colonne]);
 				System.out.print("     ");
@@ -83,7 +85,7 @@ public class Neighborhood {
 			for(colonne=0; colonne < NB_COLONNES; colonne++)
 			{
 				voisinage[ligne][colonne] = 
-						grille.getValue(person.getX() + (ligne - 1), person.getY() + (colonne - 1));
+						grille.getValue(person.getLigne() + (ligne - 1), person.getColonne() + (colonne - 1));
 				
 			}
 		}

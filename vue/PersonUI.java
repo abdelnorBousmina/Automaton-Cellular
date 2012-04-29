@@ -46,8 +46,10 @@ public class PersonUI extends Canvas {
 	
 	public void updatePosition()
 	{
-		this.x = grilleUI.getX() + grilleUI.getWdOfRow() * person.getX();
-		this.y = grilleUI.getY() + grilleUI.getHtOfRow() * person.getY();
+		//this.x = grilleUI.getX() + grilleUI.getWdOfRow() * person.getLigne();
+		this.x = grilleUI.getX() + grilleUI.getWdOfRow() * person.getColonne();
+		//this.y = grilleUI.getY() + grilleUI.getHtOfRow() * person.getColonne();
+		this.y = grilleUI.getY() + grilleUI.getHtOfRow() * person.getLigne();
 	}
 
 	/**

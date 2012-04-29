@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 import model.Grille;
+import model.Neighborhood;
 import model.Person;
 import vue.DrawAreaUI;
 import vue.GrilleUI;
@@ -48,13 +49,26 @@ public class Controlleur {
 		// Person
 		personnes = new ArrayList<Person>();
 		personnes.add(new Person());
-		personnes.get(0).setX(6);
-		personnes.get(0).setY(4);
+		
+		/*personnes.get(0).setLigne(6);
+		personnes.get(0).setColonne(4);*/
+		
+		personnes.get(0).setLigne(8);
+		personnes.get(0).setColonne(5);
+		
 		personnes.get(0).setGrille(grille);
+		
 		PersonUI pUi = new PersonUI();
 		pUi.setPerson(personnes.get(0));
 		pUi.setGrilleUI(drawArea.getGrilleUi());
+		
 		drawArea.addPersonUi(pUi);
+		
+		Person per = personnes.get(0);
+		
+		Neighborhood nbh = new Neighborhood(per);
+		System.out.println("Lig : " + per.getLigne() + " | Col : " + per.getColonne());
+		nbh.afficherNeighborhood();
 		
 		Timer timer;
 		timer = new Timer( 1000, new ActionListener() {
@@ -69,7 +83,8 @@ public class Controlleur {
 
 			}
 		} );
-		timer.setInitialDelay(0);
+		timer.setInitialDelay(1000);
+		
 		timer.start();
 		
 	}

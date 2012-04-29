@@ -21,9 +21,10 @@ public class MathModel {
 		Integer nextX = 0, nextY = 0, ligne, colonne;
 		Integer[] retour = new Integer[2];
 		
+		voisinage.afficherNeighborhood();
+		
 		if(Math.random() >= panic)
-		{
-			
+		{		
 			// Parcours du voisinage
 			for (ligne = 0; ligne < Neighborhood.NB_LIGNES; ligne++) 
 			{		
@@ -33,7 +34,7 @@ public class MathModel {
 					// déjà choisie, la prochaine case est la case évaluée
 					// En cas d'égalité, un choix aléatoire est effectué
 					
-					System.out.print("(" + voisinage.getValue(ligne, colonne) + ") ");
+					//System.out.print("(" + voisinage.getValue(ligne, colonne) + ") ");
 					
 					if(voisinage.getValue(ligne, colonne) < voisinage.getValue(nextX, nextY))
 					{

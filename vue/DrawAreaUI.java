@@ -79,7 +79,7 @@ public class DrawAreaUI extends JPanel {
 		grilleUi.paint(g);
 		int i = 0;
 		for (PersonUI p : personsUi) {
-			System.out.println("\t i : " + i++);
+			//System.out.println("\t i : " + i++);
 			p.updatePosition();
 			p.paint(g);
 		}
