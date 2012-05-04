@@ -15,7 +15,7 @@ public class Person {
 	/**
 	 * Dessin
 	 */
-	//private PersonUI ui;
+	private PersonUI ui;
 	
 	/**
 	 * Ligne
@@ -37,6 +37,13 @@ public class Person {
 	
 	public Person() {
 		//ui = new PersonUI();
+		model = new MathModel();
+	}
+	
+	public Person(int x, int y) {
+		//ui = new PersonUI();
+		ligne = x;
+		colonne = y;
 		model = new MathModel();
 	}
 	
@@ -88,13 +95,22 @@ public class Person {
 	/**
 	 * Mets à jour la position de la personne
 	 * @param movement Tableau renvoyée par MathModel.bouger()
+	 * @return True si encore dans la grille, Faux sinon
 	 */
 	//public void updatePosition(Integer[] movement)
-	public void updatePosition()
+	public Boolean updatePosition()
 	{
 		Integer[] mvt = model.bouger(new Neighborhood(this));
+		Boolean retour = true;
 		ligne += mvt[0];
 		colonne += mvt[1];
+		
+		if( ligne <= 0 || ligne > grille.getNbLignes() || colonne <= 0 || colonne > grille.getNbColonnes() )
+		{
+			retour = false;
+		}
+		
+		return retour;
 		
 		//System.out.println("-------- PERSON : x = " + mvt[0] + " - y = " + mvt[1]);
 		//ui.setX(x);
@@ -107,6 +123,14 @@ public class Person {
 
 	public void setGrille(Grille grille) {
 		this.grille = grille;
+	}
+
+	public PersonUI getUi() {
+		return ui;
+	}
+
+	public void setUi(PersonUI ui) {
+		this.ui = ui;
 	}
 
 }

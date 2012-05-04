@@ -77,7 +77,9 @@ public class DrawAreaUI extends JPanel {
 	public void paintComponent(Graphics g) {
 		//System.out.println("dau : paintComponent");
 		grilleUi.paint(g);
+		
 		int i = 0;
+		
 		for (PersonUI p : personsUi) {
 			//System.out.println("\t i : " + i++);
 			p.updatePosition();
@@ -89,6 +91,12 @@ public class DrawAreaUI extends JPanel {
 	{
 		pUi.setVisible(true);
 		personsUi.add(pUi);
+	}
+	
+	public void removePersonUi(PersonUI pUi)
+	{
+		pUi.setVisible(false);
+		personsUi.remove(pUi);
 	}
 
 }

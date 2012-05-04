@@ -3,6 +3,7 @@ package controlleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.Timer;
 
@@ -48,21 +49,26 @@ public class Controlleur {
 		
 		// Person
 		personnes = new ArrayList<Person>();
-		personnes.add(new Person());
+		//personnes.add(new Person());
+		//personnes.add(new Person());
 		
 		/*personnes.get(0).setLigne(6);
 		personnes.get(0).setColonne(4);*/
 		
-		personnes.get(0).setLigne(8);
-		personnes.get(0).setColonne(5);
+		/*personnes.get(0).setLigne(8);
+		personnes.get(0).setColonne(5);*/
 		
-		personnes.get(0).setGrille(grille);
+		/*personnes.get(0).setGrille(grille);
 		
 		PersonUI pUi = new PersonUI();
 		pUi.setPerson(personnes.get(0));
 		pUi.setGrilleUI(drawArea.getGrilleUi());
 		
-		drawArea.addPersonUi(pUi);
+		personnes.get(0).setUi(pUi);
+		drawArea.addPersonUi(pUi);*/
+		
+		addPerson(new Person(6,4));
+		addPerson(new Person(8,5));
 		
 		Person per = personnes.get(0);
 		
@@ -76,8 +82,18 @@ public class Controlleur {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				for (Person p : personnes) {
-					p.updatePosition();
+				Iterator<Person> it = personnes.iterator();
+				Person p;
+				//for (Person p : personnes)
+				while(it.hasNext())
+				{
+					p = it.next();
+					if(!p.updatePosition()) 
+					{
+						it.remove();
+						//personnes.remove(personnes.indexOf(p));
+						drawArea.removePersonUi(p.getUi());
+					}
 				}
 
 				drawArea.updateItems();
@@ -87,6 +103,20 @@ public class Controlleur {
 		timer.setInitialDelay(1000);
 		
 		timer.start();
+		
+	}
+	
+	public void addPerson(Person person)
+	{
+		
+		person.setGrille(grille);
+		PersonUI pUi = new PersonUI();
+		pUi.setPerson(person);
+		pUi.setGrilleUI(drawArea.getGrilleUi());
+		person.setUi(pUi);
+		
+		personnes.add(person);
+		drawArea.addPersonUi(pUi);
 		
 	}
 	

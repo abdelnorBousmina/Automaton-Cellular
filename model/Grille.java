@@ -124,6 +124,10 @@ public class Grille {
 
 	public float getValue(int x, int y)
 	{
+		if(x < 0 || y < 0 || x > nbLignes || y > nbColonnes)
+		{
+			return 500;
+		}
 		return grille[x][y];
 	}
 	

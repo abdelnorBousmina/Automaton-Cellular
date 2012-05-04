@@ -3,6 +3,7 @@ package vue;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 import model.Person;
 
@@ -20,7 +21,16 @@ public class PersonUI extends Canvas {
 	private static final long serialVersionUID = 1L;
 
 	public PersonUI() {
-		color = Color.RED;
+		
+		// Random color
+		Random randomGenerator = new Random();
+		int red = randomGenerator.nextInt(255);
+		int green = randomGenerator.nextInt(255);
+		int blue = randomGenerator.nextInt(255);
+
+		color = new Color(red,green,blue);
+		
+		//color = Color.RED;
 	}
 	
 	public PersonUI(GrilleUI gUi) {
@@ -70,7 +80,8 @@ public class PersonUI extends Canvas {
 	}*/
 
 	@Override
-	public void paint(Graphics g) {
+	public void paint(Graphics g) 
+	{
 		update(g);
 	} 
 	

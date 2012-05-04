@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -99,6 +100,8 @@ public class GrilleUI extends Canvas {
 	 * Dessine la grille : les lignes puis les obstacles
 	 */
 	public void paint(Graphics g) {
+		
+		g.clearRect(this.getX(), this.getY(), width, height);
 		
 		paintLines(g);
 		fillObstacles(g);
