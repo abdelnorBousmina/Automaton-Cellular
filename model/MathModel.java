@@ -23,8 +23,8 @@ public class MathModel {
 		
 		//voisinage.afficherNeighborhood();
 		
-		//if(Math.random() >= panic)
-		//{		
+		if(Math.random() >= panic)
+		{		
 			// Parcours du voisinage
 			for (ligne = 0; ligne < Neighborhood.NB_LIGNES; ligne++) 
 			{		
@@ -64,11 +64,7 @@ public class MathModel {
 				
 			} // Fin du parcours des lignes
 		
-		//}
-		//else
-		//{
-			// TODO Implémenter le comportement de panique 
-		//}
+		}
 		
 		retour[0] = nextX - 1;
 		retour[1] = nextY - 1;

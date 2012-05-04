@@ -27,8 +27,17 @@ public class Controlleur {
 	}
 
 	private Grille grille;
+	public Grille getGrille() {
+		return grille;
+	}
+
 	private ArrayList<Person> personnes;
 	
+	/**
+	 * Constructeur par défaut. Crée une nouvelle DrawAreaUI et une nouvelle Grille.
+	 * Il initialise les propriétés privées et déclenche un timer qui se charge de
+	 * redessiner la zone toute les secondes.
+	 */
 	public Controlleur()
 	{
 		int tabX[] = new int[2];
@@ -67,8 +76,8 @@ public class Controlleur {
 		personnes.get(0).setUi(pUi);
 		drawArea.addPersonUi(pUi);*/
 		
-		addPerson(new Person(6,4));
-		addPerson(new Person(8,5));
+		addPerson(new Person(6,4, this));
+		addPerson(new Person(8,5, this));
 		
 		Person per = personnes.get(0);
 		
@@ -91,7 +100,6 @@ public class Controlleur {
 					if(!p.updatePosition()) 
 					{
 						it.remove();
-						//personnes.remove(personnes.indexOf(p));
 						drawArea.removePersonUi(p.getUi());
 					}
 				}
@@ -106,18 +114,31 @@ public class Controlleur {
 		
 	}
 	
+	/**
+	 * Ajoute une Person à la Grille gérée par ce Controlleur
+	 * @param person La personne à ajouter
+	 */
 	public void addPerson(Person person)
 	{
-		
-		person.setGrille(grille);
+		//person.setGrille(grille);
 		PersonUI pUi = new PersonUI();
 		pUi.setPerson(person);
 		pUi.setGrilleUI(drawArea.getGrilleUi());
 		person.setUi(pUi);
 		
 		personnes.add(person);
-		drawArea.addPersonUi(pUi);
-		
+		drawArea.addPersonUi(pUi);	
+	}
+	
+	public Boolean isOccupied(Integer[] pos)
+	{
+		for (Person p : personnes) {
+			if(p.getLigne() == pos[0] && p.getColonne() == pos[1])
+			{
+				return true; 
+			}
+		}
+		return false;
 	}
 	
 }

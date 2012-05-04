@@ -3,6 +3,7 @@
  */
 package model;
 
+import controlleur.Controlleur;
 import vue.MainWindow;
 import vue.PersonUI;
 
@@ -28,37 +29,66 @@ public class Person {
 	private Integer colonne;
 	
 	/**
+	 * Position précédente
+	 */
+	private Integer[] posPrec;
+	
+	/**
 	 * Modèle mathématique
 	 */
 	private MathModel model;
 	
-	private Grille grille;
-	
-	
+	/**
+	 * Le Controlleur qui gère cette instance
+	 */
+	private Controlleur controlleur;
+
 	public Person() {
 		//ui = new PersonUI();
+		posPrec = new Integer[2];
 		model = new MathModel();
 	}
 	
-	public Person(int x, int y) {
+	public Person(int x, int y, Controlleur c) {
 		//ui = new PersonUI();
 		ligne = x;
 		colonne = y;
+		posPrec = new Integer[2];
+		posPrec[0] = x;
+		posPrec[1] = y;
 		model = new MathModel();
+		controlleur = c;
 	}
+	
+	public Integer[] getPosPrec() {
+		return posPrec;
+	}
+
+	public void setPosPrec(Integer[] posPrec) {
+		this.posPrec = posPrec;
+	}
+
+	public Controlleur getControlleur() {
+		return controlleur;
+	}
+
+	public void setControlleur(Controlleur controlleur) {
+		this.controlleur = controlleur;
+	}
+	
 	
 	/**
 	 * @return the ui
 	 */
-	/*public PersonUI getUi() {
+	public PersonUI getUi() {
 		return ui;
-	}*/
+	}
 	/**
 	 * @param ui the ui to set
 	 */
-	/*public void setUi(PersonUI ui) {
+	public void setUi(PersonUI ui) {
 		this.ui = ui;
-	}*/
+	}
 	/**
 	 * @return the x
 	 */
@@ -91,6 +121,11 @@ public class Person {
 	public void setModel(MathModel model) {
 		this.model = model;
 	}
+	
+	public Grille getGrille()
+	{
+		return controlleur.getGrille();
+	}
 
 	/**
 	 * Mets à jour la position de la personne
@@ -102,12 +137,17 @@ public class Person {
 	{
 		Integer[] mvt = model.bouger(new Neighborhood(this));
 		Boolean retour = true;
-		ligne += mvt[0];
-		colonne += mvt[1];
 		
-		if( ligne <= 0 || ligne > grille.getNbLignes() || colonne <= 0 || colonne > grille.getNbColonnes() )
+		if(!controlleur.isOccupied(mvt))
 		{
-			retour = false;
+			ligne += mvt[0];
+			colonne += mvt[1];
+			
+			if( ligne <= 0 || ligne > getGrille().getNbLignes() || 
+					colonne <= 0 || colonne > getGrille().getNbColonnes() )
+			{
+				retour = false;
+			}
 		}
 		
 		return retour;
@@ -115,22 +155,6 @@ public class Person {
 		//System.out.println("-------- PERSON : x = " + mvt[0] + " - y = " + mvt[1]);
 		//ui.setX(x);
 		//ui.setY(y);
-	}
-
-	public Grille getGrille() {
-		return grille;
-	}
-
-	public void setGrille(Grille grille) {
-		this.grille = grille;
-	}
-
-	public PersonUI getUi() {
-		return ui;
-	}
-
-	public void setUi(PersonUI ui) {
-		this.ui = ui;
 	}
 
 }
