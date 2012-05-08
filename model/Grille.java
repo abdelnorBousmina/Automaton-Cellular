@@ -434,8 +434,6 @@ public class Grille {
 
 		if(x < nbLignes)
 		{
-			System.out.println("x:" + x);
-			System.out.println("y:" + y);
 			if(grille[x + 1][y] != mur)
 			{	
 				if(grille[x + 1][y] > grille[x][y] + 1)

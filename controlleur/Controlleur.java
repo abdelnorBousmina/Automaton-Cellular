@@ -44,18 +44,17 @@ public class Controlleur {
 		int tabY[] = new int[2];
 		
 		// 1st entry
-		tabX[0] = 0;
-		tabY[0] = 4;
+		tabX[0] = 10;
+		tabY[0] = 1;
 		
 		// 2nd entry
-		tabX[1] = 0;
-		tabY[1] = 5;
+		tabX[1] = 10;
+		tabY[1] = 2;
 		
 		// Grille
 		drawArea = new DrawAreaUI();
 		
 		grille = new Grille(11,11,tabX, tabY);
-		grille.afficherGrille();
 		drawArea.setGrilleUi(new GrilleUI(grille));
 		drawArea.paintGrille();
 		
@@ -79,8 +78,25 @@ public class Controlleur {
 		personnes.get(0).setUi(pUi);
 		drawArea.addPersonUi(pUi);*/
 		
-		addPerson(new Person(6,4, this));
+		addPerson(new Person(2,5, this));
+		addPerson(new Person(3,5, this));
+		addPerson(new Person(4,5, this));
+		addPerson(new Person(7,5, this));
 		addPerson(new Person(8,5, this));
+		
+		addPerson(new Person(2,3, this));
+		addPerson(new Person(3,3, this));
+		addPerson(new Person(4,3, this));
+		addPerson(new Person(7,3, this));
+		addPerson(new Person(8,3, this));
+		
+		addPerson(new Person(2,1, this));
+		addPerson(new Person(3,1, this));
+		addPerson(new Person(4,1, this));
+		addPerson(new Person(7,1, this));
+		addPerson(new Person(8,1, this));
+		
+		addPerson(new Person(5,9, this));
 		
 		Person per = personnes.get(0);
 		
