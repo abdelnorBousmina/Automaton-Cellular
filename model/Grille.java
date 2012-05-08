@@ -27,7 +27,7 @@ public class Grille {
 	private int tabyExit[];
 	private final float lambda = 1.5f;
 	private final int mur = 500;
-	
+
 	/**
 	 * 
 	 * @param lignes nombre de ligne
@@ -41,39 +41,44 @@ public class Grille {
 		nbColonnes = colonnes;
 		this.tabxExit = letabxExit;
 		this.tabyExit = letabyExit;		
-		
+
 		grille = new float[nbLignes][nbColonnes];
-		
+
 		List<Obstacle> obstacles = new ArrayList<Obstacle>();
-		
-		obstacles.add(new Obstacle(4, 3, 6, 3));
-		
-		
+
+		obstacles.add(new Obstacle(2, 2, 4, 2));
+		obstacles.add(new Obstacle(7, 2, 8, 2));
+		obstacles.add(new Obstacle(2, 4, 4, 4));
+		obstacles.add(new Obstacle(7, 4, 8, 4));
+		obstacles.add(new Obstacle(2, 6, 4, 6));
+		obstacles.add(new Obstacle(7, 6, 8, 6));
+		obstacles.add(new Obstacle(5, 8, 6, 8));
+
 		// Init murs verticaux
 		for(int i = 0; i < nbLignes; i++)
 		{
 			grille[i][0] = mur;
 			grille[i][nbColonnes-1] = mur;
 		}
-		
+
 		// Init murs horizontaux
 		for(int j = 1; j < nbColonnes-1; j++)
 		{
 			grille[0][j] = mur;
 			grille[nbLignes-1][j] = mur;
 		}
-		
+
 		// Init reste de la grille
 		for(int i = 1; i < nbLignes-1;i++)
 		{
 			for(int j = 1; j < nbColonnes-1 ; j++ )
 				grille[i][j] = 400;
 		}
-		
+
 		// Init sortie
 		for(int i = 0; i < tabxExit.length; i++)
 			grille[tabxExit[i]][tabyExit[i]] = 1;
-		
+
 		// Init obstacles
 		for(Obstacle o:obstacles)
 		{
@@ -86,7 +91,6 @@ public class Grille {
 					grille[i][j] = mur;
 		}
 		//TODO gérer les obstacles 
-		
 		for(int i = 0; i < tabxExit.length ; i++)
 		{		
 			if(tabyExit[i] == 0)
@@ -114,7 +118,7 @@ public class Grille {
 			}
 		}
 	}
-	
+
 	/**
 	 * @return the grille
 	 */
@@ -124,13 +128,13 @@ public class Grille {
 
 	public float getValue(int x, int y)
 	{
-		if(x < 0 || y < 0 || x > nbLignes || y > nbColonnes)
+		if(x < 0 || y < 0 || x >= nbLignes || y >= nbColonnes)
 		{
 			return 500;
 		}
 		return grille[x][y];
 	}
-	
+
 	/**
 	 * @deprecated
 	 * Permet de calculer les distances à la sortie de chaque cellules
@@ -143,17 +147,17 @@ public class Grille {
 		{
 			if(grille[x - 1][y] != mur)
 			{
-				
+
 				if(grille[x - 1][y] == 400)
 				{
 					grille[x - 1][y] = grille[x][y] + 1;
 					initGrille(x-1,y);
 				}
 				else if(grille[x - 1][y] > grille[x][y] + 1)
-					{
-						grille[x - 1][y] = grille[x][y] + 1;						
-					}
-				
+				{
+					grille[x - 1][y] = grille[x][y] + 1;						
+				}
+
 			}
 			if(y > 0)
 			{				
@@ -165,10 +169,10 @@ public class Grille {
 						initGrille(x,y-1);
 					}
 					else if(grille[x][y - 1] > grille[x][y] + 1)
-						{
-							grille[x][y - 1] = grille[x][y] + 1;
-						}				
-					
+					{
+						grille[x][y - 1] = grille[x][y] + 1;
+					}				
+
 				}
 				if(grille[x - 1][y - 1] != mur)
 				{
@@ -185,7 +189,7 @@ public class Grille {
 			}
 			if(y < nbColonnes)
 			{
-				
+
 				if(grille[x][y + 1] != mur)
 				{
 					if(grille[x][y + 1] == 400)
@@ -206,10 +210,10 @@ public class Grille {
 						initGrille(x-1,y+1);
 					}
 					else if(grille[x - 1][y + 1] > grille[x][y] + lambda)
-						{
-							grille[x - 1][y + 1] = grille[x][y] + lambda;
-						}
-					
+					{
+						grille[x - 1][y + 1] = grille[x][y] + lambda;
+					}
+
 				}
 			}
 		}
@@ -226,7 +230,7 @@ public class Grille {
 				{
 					grille[x + 1][y] = grille[x][y] + 1;
 				}	
-				
+
 			}
 			if(y < nbColonnes)
 			{
@@ -241,7 +245,7 @@ public class Grille {
 					{
 						grille[x + 1][y + 1] = grille[x][y] + lambda;
 					}
-					
+
 				}
 			}
 			if(y > 0)
@@ -257,14 +261,14 @@ public class Grille {
 					{
 						grille[x + 1][y - 1] = grille[x][y] + lambda;
 					}
-					
+
 				}
 			}	
-			
+
 		}
-	
+
 	}
-	
+
 	/**
 	 * Calcul les distances des cases positionnées au dessus et/ou à droite de la case actuelle
 	 * @param x numéro de ligne de la case actuelle
@@ -284,7 +288,7 @@ public class Grille {
 			}			
 			if(y < nbColonnes)
 			{
-				
+
 				if(grille[x][y + 1] != mur)
 				{		
 					if(grille[x][y + 1] > grille[x][y] + 1)
@@ -301,7 +305,7 @@ public class Grille {
 					}
 					initGrilleHautDroite(x-1,y+1);
 				}
-				if(x < nbLignes)
+				if(x < nbLignes - 1)
 				{
 					if(grille[x + 1][y + 1] != mur)
 					{
@@ -315,7 +319,7 @@ public class Grille {
 			}
 		}
 	}
-	
+
 	/**
 	 * Calcul les distances des cases positionnées en dessous et/ou à droite de la case actuelle
 	 * @param x numéro de ligne de la case actuelle
@@ -323,7 +327,7 @@ public class Grille {
 	 */
 	private void initGrilleBasDroite(int x, int y)
 	{
-		
+
 		if(x < nbLignes)
 		{
 			if(grille[x + 1][y] != mur)
@@ -333,7 +337,7 @@ public class Grille {
 					grille[x + 1][y] = grille[x][y] + 1;
 				}
 				initGrilleBasDroite(x+1,y);
-				
+
 			}
 			if(y < nbColonnes)
 			{
@@ -365,10 +369,10 @@ public class Grille {
 					}
 				}
 			}		
-			
+
 		}
 	}
-	
+
 	/**
 	 * Calcul les distances des cases positionnées au dessus et/ou à gauche de la case actuelle
 	 * @param x numéro de ligne de la case actuelle
@@ -388,7 +392,7 @@ public class Grille {
 			}			
 			if(y > 0)
 			{
-				
+
 				if(grille[x][y - 1] != mur)
 				{		
 					if(grille[x][y - 1] > grille[x][y] + 1)
@@ -405,7 +409,7 @@ public class Grille {
 					}
 					initGrilleHautGauche(x-1,y-1);
 				}
-				if(y < nbColonnes)
+				if(y < nbColonnes - 1)
 				{
 					if(grille[x - 1][y + 1] != mur)
 					{					
@@ -419,7 +423,7 @@ public class Grille {
 			}
 		}
 	}
-	
+
 	/**
 	 * Calcul les distances des cases positionnées en dessous et/ou à gauche de la case actuelle
 	 * @param x numéro de ligne de la case actuelle
@@ -427,9 +431,11 @@ public class Grille {
 	 */
 	private void initGrilleBasGauche(int x, int y)
 	{
-		
+
 		if(x < nbLignes)
 		{
+			System.out.println("x:" + x);
+			System.out.println("y:" + y);
 			if(grille[x + 1][y] != mur)
 			{	
 				if(grille[x + 1][y] > grille[x][y] + 1)
@@ -437,7 +443,7 @@ public class Grille {
 					grille[x + 1][y] = grille[x][y] + 1;
 				}
 				initGrilleBasGauche(x+1,y);
-				
+
 			}
 			if(y > 0)
 			{
@@ -457,20 +463,23 @@ public class Grille {
 					}	
 					initGrilleBasGauche(x,y-1);
 				}
-				if( y < nbColonnes)
+				if( y < nbColonnes - 1)
 				{
-					if(grille[x + 1][y + 1] > grille[x][y] + 1)
+					if(grille[x+1][y + 1] != mur)
 					{
-						grille[x + 1][y + 1] = grille[x][y] + 1;
-					}	
-					initGrilleBasGauche(x+1,y+1);
+						if(grille[x + 1][y + 1] > grille[x][y] + 1)
+						{
+							grille[x + 1][y + 1] = grille[x][y] + 1;
+						}	
+						initGrilleBasGauche(x+1,y+1);
+					}
 				}
 			}		
-			
+
 		}
 	}
-	
-	
+
+
 	// Test
 	public void afficherGrille()
 	{

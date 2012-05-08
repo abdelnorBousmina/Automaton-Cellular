@@ -43,16 +43,19 @@ public class Controlleur {
 		int tabX[] = new int[2];
 		int tabY[] = new int[2];
 		
-		tabX[0] = 5;
-		tabX[1] = 6;
+		// 1st entry
+		tabX[0] = 0;
+		tabY[0] = 4;
 		
-		tabY[0] = 0;
-		tabY[1] = 0;
+		// 2nd entry
+		tabX[1] = 0;
+		tabY[1] = 5;
 		
 		// Grille
 		drawArea = new DrawAreaUI();
 		
-		grille = new Grille(10,10,tabX, tabY);
+		grille = new Grille(11,11,tabX, tabY);
+		grille.afficherGrille();
 		drawArea.setGrilleUi(new GrilleUI(grille));
 		drawArea.paintGrille();
 		
