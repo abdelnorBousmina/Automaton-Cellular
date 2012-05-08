@@ -143,8 +143,8 @@ public class Person {
 			ligne += mvt[0];
 			colonne += mvt[1];
 			
-			if( ligne <= 0 || ligne > getGrille().getNbLignes() || 
-					colonne <= 0 || colonne > getGrille().getNbColonnes() )
+			if( ligne <= 0 || ligne >= getGrille().getNbLignes() - 1|| 
+					colonne <= 0 || colonne >= getGrille().getNbColonnes() - 1 )
 			{
 				retour = false;
 			}

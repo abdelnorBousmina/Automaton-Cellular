@@ -57,7 +57,6 @@ public class Controlleur {
 		grille = new Grille(11,11,tabX, tabY);
 		drawArea.setGrilleUi(new GrilleUI(grille));
 		drawArea.paintGrille();
-		
 		// Person
 		personnes = new ArrayList<Person>();
 		//personnes.add(new Person());
@@ -99,9 +98,7 @@ public class Controlleur {
 		addPerson(new Person(5,9, this));
 		
 		Person per = personnes.get(0);
-		
-		Neighborhood nbh = new Neighborhood(per);
-		
+				
 		//System.out.println("Lig : " + per.getLigne() + " | Col : " + per.getColonne());
 		//nbh.afficherNeighborhood();
 		
@@ -109,7 +106,6 @@ public class Controlleur {
 		timer = new Timer( 1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				Iterator<Person> it = personnes.iterator();
 				Person p;
 				//for (Person p : personnes)
@@ -120,6 +116,8 @@ public class Controlleur {
 					{
 						it.remove();
 						drawArea.removePersonUi(p.getUi());
+						System.out.println("une personne en moins");
+						
 					}
 				}
 
