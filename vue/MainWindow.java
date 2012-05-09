@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -89,11 +90,34 @@ public class MainWindow {
 		// Ajout de la GrilleUi
 		//backgroundPanel.add(gUi);
 		backgroundPanel.add(controlleur.getDrawArea());
+		JButton start = new JButton("start");
+		JButton stop = new JButton("stop");
+		backgroundPanel.add(start);
+		backgroundPanel.add(stop);
+		
+		start.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controlleur.startSimulation();
+			}
+			
+		});
+		
+		stop.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controlleur.stopSimulation();
+			}
+			
+		});
 		
 		// Ajout du panel à la frame + dessin + affichage
 		frame.add(backgroundPanel);
 		frame.pack();
 		frame.setVisible(true);
+		
 	}
 	
 	/**

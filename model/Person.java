@@ -135,11 +135,14 @@ public class Person {
 	//public void updatePosition(Integer[] movement)
 	public Boolean updatePosition()
 	{
+		System.out.println("ID PERSON : " + controlleur.getId(this));
 		Integer[] mvt = model.bouger(new Neighborhood(this));
 		Boolean retour = true;
 		
 		if(!controlleur.isOccupied(mvt))
 		{
+			System.out.println("==> Mouvement");
+			System.out.println("");
 			ligne += mvt[0];
 			colonne += mvt[1];
 			
@@ -148,6 +151,11 @@ public class Person {
 			{
 				retour = false;
 			}
+		}
+		else
+		{
+			System.out.println("==> Rien");
+			System.out.println("");
 		}
 		
 		return retour;

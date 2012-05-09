@@ -33,6 +33,8 @@ public class Controlleur {
 
 	private ArrayList<Person> personnes;
 	
+	private Timer timer;
+	
 	/**
 	 * Constructeur par défaut. Crée une nouvelle DrawAreaUI et une nouvelle Grille.
 	 * Il initialise les propriétés privées et déclenche un timer qui se charge de
@@ -102,7 +104,6 @@ public class Controlleur {
 		//System.out.println("Lig : " + per.getLigne() + " | Col : " + per.getColonne());
 		//nbh.afficherNeighborhood();
 		
-		Timer timer;
 		timer = new Timer( 1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -127,7 +128,7 @@ public class Controlleur {
 		} );
 		timer.setInitialDelay(1000);
 		
-		timer.start();
+		//timer.start();
 		
 	}
 	
@@ -152,10 +153,26 @@ public class Controlleur {
 		for (Person p : personnes) {
 			if(p.getLigne() == pos[0] && p.getColonne() == pos[1])
 			{
+				//System.out.println("Occupé");
 				return true; 
 			}
 		}
 		return false;
+	}
+	
+	public int getId(Person p)
+	{
+		return personnes.indexOf(p);
+	}
+	
+	public void startSimulation()
+	{
+		timer.start();
+	}
+	
+	public void stopSimulation()
+	{
+		timer.stop();
 	}
 	
 }
