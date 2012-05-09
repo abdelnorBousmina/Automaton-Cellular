@@ -12,6 +12,9 @@ public class Neighborhood {
 	public static final Integer NB_LIGNES = 3;
 	public static final Integer NB_COLONNES = 3;
 	
+	private int miniX;
+	private int miniY;
+	
 	/**
 	 * Le voisinage
 	 */
@@ -79,6 +82,8 @@ public class Neighborhood {
 	{
 		int ligne,colonne;
 		voisinage = new Float[NB_LIGNES][NB_COLONNES];
+		miniX = 0;
+		miniY = 0;
 		
 		for(ligne=0; ligne < NB_LIGNES; ligne++)
 		{
@@ -86,6 +91,22 @@ public class Neighborhood {
 			{
 				voisinage[ligne][colonne] = 
 						grille.getValue(person.getLigne() + (ligne - 1), person.getColonne() + (colonne - 1));
+				
+				if(voisinage[ligne][colonne] < voisinage[miniX][miniY])
+				{
+					miniX = ligne;
+					miniY = colonne;
+				}
+				else if(voisinage[ligne][colonne] == voisinage[miniX][miniY])
+				{
+					double rnd = Math.random();
+					System.out.println("Equ : ("+ligne+","+colonne+") ");
+					if(rnd <= 0.50f)
+					{
+						miniX = ligne;
+						miniY = colonne;
+					}
+				}
 				
 			}
 		}
@@ -108,6 +129,14 @@ public class Neighborhood {
 		
 		return retour;
 		
+	}
+	
+	public int[] getMiniPosition()
+	{
+		int[] pos = new int[2];
+		pos[0] = miniX;
+		pos[1] = miniY;
+		return pos;
 	}
 
 }

@@ -4,7 +4,6 @@
 package model;
 
 import controlleur.Controlleur;
-import vue.MainWindow;
 import vue.PersonUI;
 
 /**

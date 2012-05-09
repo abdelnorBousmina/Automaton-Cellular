@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import model.Grille;
-import model.MathModel;
 import model.Neighborhood;
-import model.Person;
 
 public class DrawAreaUI extends JPanel {
 
@@ -77,8 +75,6 @@ public class DrawAreaUI extends JPanel {
 	public void paintComponent(Graphics g) {
 		//System.out.println("dau : paintComponent");
 		grilleUi.paint(g);
-		
-		int i = 0;
 		
 		for (PersonUI p : personsUi) {
 			//System.out.println("\t i : " + i++);

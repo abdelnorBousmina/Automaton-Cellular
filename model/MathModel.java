@@ -17,67 +17,24 @@ public class MathModel {
 	 */
 	public Integer[] bouger(Neighborhood voisinage)
 	{
-		// nextX : prochaine ligne | nextY : prochaine colonne
-		Integer nextX = 0, nextY = 0, ligne, colonne;
 		Integer[] retour = new Integer[2];
+		int[] miniPos = new int[2];
 		
-		//voisinage.afficherNeighborhood();
-		
+		//voisinage.afficherNeighborhood();		
 		//System.out.println("");
 		
 		if(Math.random() >= panic)
 		{		
-			// Parcours du voisinage
-			for (ligne = 0; ligne < Neighborhood.NB_LIGNES; ligne++) 
-			{		
-				for (colonne = 0; colonne < Neighborhood.NB_COLONNES; colonne++) 
-				{
-					// Si la case évaluée est plus proche de la sortie que la destination
-					// déjà choisie, la prochaine case est la case évaluée
-					// En cas d'égalité, un choix aléatoire est effectué
-					
-					if(voisinage.getValue(ligne, colonne) < voisinage.getValue(nextX, nextY))
-					{
-						nextX = ligne;
-						nextY = colonne;
-						//System.out.println("Inf : ("+ligne+","+colonne+") " + voisinage.getValue(ligne, colonne) + " - " + voisinage.getValue(nextX, nextY) + " Choix : (" + nextX + "," + nextY + ")");
-					}
-					else if(voisinage.getValue(ligne, colonne) > voisinage.getValue(nextX, nextY))
-					{
-						// Partie inutile : permet de contourner un bug non résolu : il y a un comportement
-						// anormal lorsque les valeurs sont égales
-						
-						//System.out.println("Sup : ("+ligne+","+colonne+") " + voisinage.getValue(ligne, colonne) + " - " + voisinage.getValue(nextX, nextY) + " Choix : (" + nextX + "," + nextY + ")");
-					} // Fin détermination next
-					else
-					{
-						// 1 chance sur 2 d'aller finalement en (ligne, colonne)
-						double rnd = Math.random();
-						//System.out.println("Equ : ("+ligne+","+colonne+") " + voisinage.getValue(ligne, colonne) + " - " + voisinage.getValue(nextX, nextY) + " - " + rnd  + " Choix : (" + nextX + "," + nextY + ")");
-						if(rnd <= 0.50f)
-						{
-							nextX = ligne;
-							nextY = colonne;
-						}
-						//System.out.println("nextX : " + ligne + "nextY : " + colonne);
-					}
-				
-				}// Fin parcours des colonnes
-				
-			} // Fin du parcours des lignes
-		
+			miniPos = voisinage.getMiniPosition();
 		}
 		else
 		{
-			nextX = 1;
-			nextY = 1;
+			miniPos[0] = 1;
+			miniPos[1] = 1;
 		}
 		
-		retour[0] = nextX - 1;
-		retour[1] = nextY - 1;
-		
-		/*System.out.println("nX : " + (nextX - 1) + " - nY : " + (nextY - 1));
-		System.out.println();*/
+		retour[0] = miniPos[0] - 1;
+		retour[1] = miniPos[1] - 1;
 		
 		return retour;
 		

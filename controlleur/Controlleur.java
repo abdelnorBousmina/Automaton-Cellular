@@ -8,7 +8,6 @@ import java.util.Iterator;
 import javax.swing.Timer;
 
 import model.Grille;
-import model.Neighborhood;
 import model.Person;
 import vue.DrawAreaUI;
 import vue.GrilleUI;
@@ -98,8 +97,6 @@ public class Controlleur {
 		addPerson(new Person(8,1, this));
 		
 		addPerson(new Person(5,9, this));
-		
-		Person per = personnes.get(0);
 				
 		//System.out.println("Lig : " + per.getLigne() + " | Col : " + per.getColonne());
 		//nbh.afficherNeighborhood();

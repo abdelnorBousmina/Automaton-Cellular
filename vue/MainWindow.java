@@ -11,16 +11,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import controlleur.Controlleur;
 
 import model.Grille;
-import model.MathModel;
-import model.Neighborhood;
-import model.Person;
 
 /**
  * @author bous
@@ -31,9 +27,6 @@ public class MainWindow {
 	private JPanel backgroundPanel;
 	private JFrame frame;
 	private static Grille g;
-	private Neighborhood nbh;
-	private Person person1;
-	private MathModel model;
 	private Controlleur controlleur;
 	
 	public static Grille getGrille()
