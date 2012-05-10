@@ -15,6 +15,8 @@ import vue.PersonUI;
 
 public class Controlleur {
 
+	private static Float conflit = 0.5f;
+	
 	private DrawAreaUI drawArea;
 	
 	public DrawAreaUI getDrawArea() {
@@ -77,26 +79,32 @@ public class Controlleur {
 		
 		personnes.get(0).setUi(pUi);
 		drawArea.addPersonUi(pUi);*/
+		/*		
+		addPerson(new Person(7,1,3, this));
+		addPerson(new Person(6,2,3, this));
+		addPerson(new Person(5,3,3, this));
+		addPerson(new Person(4,4,3, this));
+		addPerson(new Person(3,5,3, this));
+		*/
+		addPerson(new Person(1,2,5, this));
+		addPerson(new Person(2,3,5, this));
+		addPerson(new Person(3,4,5, this));
+		addPerson(new Person(4,7,5, this));
+		addPerson(new Person(5,8,5, this));
 		
-		addPerson(new Person(2,5, this));
-		addPerson(new Person(3,5, this));
-		addPerson(new Person(4,5, this));
-		addPerson(new Person(7,5, this));
-		addPerson(new Person(8,5, this));
+		addPerson(new Person(6,2,3, this));
+		addPerson(new Person(7,3,3, this));
+		addPerson(new Person(8,4,3, this));
+		addPerson(new Person(9,7,3, this));
+		addPerson(new Person(10,8,3, this));
 		
-		addPerson(new Person(2,3, this));
-		addPerson(new Person(3,3, this));
-		addPerson(new Person(4,3, this));
-		addPerson(new Person(7,3, this));
-		addPerson(new Person(8,3, this));
+		addPerson(new Person(11,2,1, this));
+		addPerson(new Person(12,3,1, this));
+		addPerson(new Person(13,4,1, this));
+		addPerson(new Person(14,7,1, this));
+		addPerson(new Person(15,8,1, this));
 		
-		addPerson(new Person(2,1, this));
-		addPerson(new Person(3,1, this));
-		addPerson(new Person(4,1, this));
-		addPerson(new Person(7,1, this));
-		addPerson(new Person(8,1, this));
-		
-		addPerson(new Person(5,9, this));
+		addPerson(new Person(16,5,9, this));
 				
 		//System.out.println("Lig : " + per.getLigne() + " | Col : " + per.getColonne());
 		//nbh.afficherNeighborhood();
@@ -104,21 +112,35 @@ public class Controlleur {
 		timer = new Timer( 1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Iterator<Person> it = personnes.iterator();
+				ArrayList<Person> clonePersonnes = new ArrayList<Person>();
+				
+				for (Person p : personnes )
+				{
+					clonePersonnes.add((Person) p.clone());
+				}				
+				
+				Iterator<Person> it = clonePersonnes.iterator();
+				Iterator<Person> it2 = personnes.iterator();
 				Person p;
-				//for (Person p : personnes)
 				while(it.hasNext())
 				{
 					p = it.next();
+					it2.next();
 					if(!p.updatePosition()) 
 					{
-						it.remove();
-						drawArea.removePersonUi(p.getUi());
-						System.out.println("une personne en moins");
-						
+						it.remove();	
+						it2.remove();
+						drawArea.removePersonUi(p.getUi());						
 					}
 				}
-
+				resolveConflicts(clonePersonnes);
+				//System.out.println("maj personnes");
+				
+				for(int i = 0; i < clonePersonnes.size(); i++)
+				{
+					personnes.get(i).update(clonePersonnes.get(i));
+				}
+				
 				drawArea.updateItems();
 
 			}
@@ -147,14 +169,52 @@ public class Controlleur {
 	
 	public Boolean isOccupied(Integer[] pos)
 	{
+		//System.out.println("new: " + pos[2]+ ": " +pos[0] + " " + pos[1]);
+		//System.out.println("old: " + personnes.get(0).getId() + ": " +personnes.get(0).getLigne()  + " " + personnes.get(0).getColonne() );
+		
 		for (Person p : personnes) {
-			if(p.getLigne() == pos[0] && p.getColonne() == pos[1])
-			{
-				//System.out.println("Occupé");
+			if(p.getLigne() == pos[0] && p.getColonne() == pos[1] && p.getId() != pos[2])
+			{				
+				//System.out.println(p.getId() + " Occupé");
 				return true; 
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Si 2 personnes parmis la nouvelle grille on fait le même choix de case, une personne est tirée au sort
+	 * pour rester sur sa case tandis que l'autre reprand sa position précédente
+	 * @param nextPersonnes
+	 */
+	private void resolveConflicts(ArrayList<Person> nextPersonnes)
+	{
+		int i = 0;
+		
+		for (Person p : nextPersonnes)
+		{
+			int j = 0;
+			for (Person p2 : nextPersonnes)
+			{
+				if(p.getLigne() == p2.getLigne()  && p.getColonne() == p2.getColonne() && p.getId() != p2.getId())
+				{
+					System.out.println("conflit");					
+					if( Math.random() >= conflit )
+					{
+						p.setLigne(personnes.get(i).getLigne());
+						p.setColonne(personnes.get(i).getColonne());
+					}
+					else
+					{
+						p2.setLigne(personnes.get(j).getLigne());
+						p2.setColonne(personnes.get(j).getColonne());
+					}
+				}
+				j++;
+			}
+			i++;
+		}
+	
 	}
 	
 	public int getId(Person p)

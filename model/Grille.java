@@ -54,6 +54,9 @@ public class Grille {
 		obstacles.add(new Obstacle(7, 6, 8, 6));
 		obstacles.add(new Obstacle(5, 8, 6, 8));
 
+		//obstacles.add(new Obstacle(1, 2, 8, 2));
+		//obstacles.add(new Obstacle(1, 4, 8, 4));
+		
 		// Init murs verticaux
 		for(int i = 0; i < nbLignes; i++)
 		{

@@ -10,7 +10,12 @@ import vue.PersonUI;
  * @author albin
  *
  */
-public class Person {
+public class Person implements Cloneable{
+	
+	/**
+	 * Id
+	 */
+	private int id;
 	
 	/**
 	 * Dessin
@@ -46,10 +51,12 @@ public class Person {
 		//ui = new PersonUI();
 		posPrec = new Integer[2];
 		model = new MathModel();
+		id = -1;
 	}
 	
-	public Person(int x, int y, Controlleur c) {
+	public Person(int id, int x, int y, Controlleur c) {
 		//ui = new PersonUI();
+		this.id = id;
 		ligne = x;
 		colonne = y;
 		posPrec = new Integer[2];
@@ -134,14 +141,20 @@ public class Person {
 	//public void updatePosition(Integer[] movement)
 	public Boolean updatePosition()
 	{
-		System.out.println("ID PERSON : " + controlleur.getId(this));
+		//System.out.println("ID PERSON : " + controlleur.getId(this));
 		Integer[] mvt = model.bouger(new Neighborhood(this));
 		Boolean retour = true;
 		
-		if(!controlleur.isOccupied(mvt))
+		Integer nextligne = ligne + mvt[0];
+		Integer nextcolonne = colonne + mvt[1];
+		Integer[] nextPos = new Integer[3];
+		nextPos[0] = nextligne;
+		nextPos[1] = nextcolonne;
+		nextPos[2] = id;
+		if(!controlleur.isOccupied(nextPos))
 		{
-			System.out.println("==> Mouvement");
-			System.out.println("");
+			//System.out.println("==> Mouvement");
+			//System.out.println("");
 			ligne += mvt[0];
 			colonne += mvt[1];
 			
@@ -153,8 +166,8 @@ public class Person {
 		}
 		else
 		{
-			System.out.println("==> Rien");
-			System.out.println("");
+			//System.out.println("==> Rien");
+			//System.out.println("");
 		}
 		
 		return retour;
@@ -164,4 +177,33 @@ public class Person {
 		//ui.setY(y);
 	}
 
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch(CloneNotSupportedException cnse) {			
+			cnse.printStackTrace(System.err);
+		}
+		return o;
+	}
+	
+	public void update(Person p)
+	{
+		this.ligne = p.ligne;
+		this.colonne = p.colonne;
+	}
 }

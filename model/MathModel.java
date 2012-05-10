@@ -23,15 +23,16 @@ public class MathModel {
 		//voisinage.afficherNeighborhood();		
 		//System.out.println("");
 		
-		if(Math.random() >= panic)
-		{		
+		//if(Math.random() >= panic)
+		//{		
 			miniPos = voisinage.getMiniPosition();
-		}
-		else
+		//}
+		/*else
 		{
 			miniPos[0] = 1;
 			miniPos[1] = 1;
-		}
+			System.out.println("panic :s :s :s :s");
+		}*/
 		
 		retour[0] = miniPos[0] - 1;
 		retour[1] = miniPos[1] - 1;

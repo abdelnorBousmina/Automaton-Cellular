@@ -3,6 +3,7 @@
  */
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -76,18 +77,22 @@ public class MainWindow {
 		
 		// Création du panel
 		backgroundPanel = new JPanel();	
-		backgroundPanel.setLayout(new GridLayout(1,1));
+		backgroundPanel.setLayout(new BorderLayout());
 		backgroundPanel.setBorder(new EmptyBorder(30,30,30,30));
 		backgroundPanel.setPreferredSize(new Dimension(500,500));
 
+		// Panel bouttons
+		JPanel ButtonsPanel = new JPanel();
+		ButtonsPanel.setLayout(new GridLayout(1,2));
+		ButtonsPanel.setBorder(new EmptyBorder(30,30,30,30));
+		
 		// Ajout de la GrilleUi
 		//backgroundPanel.add(gUi);
-		backgroundPanel.add(controlleur.getDrawArea());
+		backgroundPanel.add("Center",controlleur.getDrawArea());
 		JButton start = new JButton("start");
 		JButton stop = new JButton("stop");
-		backgroundPanel.add(start);
-		backgroundPanel.add(stop);
-		
+		ButtonsPanel.add(start);
+		ButtonsPanel.add(stop);
 		start.addActionListener(new ActionListener() {
 			
 			@Override
@@ -107,7 +112,8 @@ public class MainWindow {
 		});
 		
 		// Ajout du panel à la frame + dessin + affichage
-		frame.add(backgroundPanel);
+		frame.add("Center",backgroundPanel);
+		frame.add("East",ButtonsPanel);
 		frame.pack();
 		frame.setVisible(true);
 		

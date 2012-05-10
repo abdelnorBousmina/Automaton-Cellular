@@ -100,7 +100,7 @@ public class Neighborhood {
 				else if(voisinage[ligne][colonne] == voisinage[miniX][miniY])
 				{
 					double rnd = Math.random();
-					System.out.println("Equ : ("+ligne+","+colonne+") ");
+					//System.out.println("Equ : ("+ligne+","+colonne+") ");
 					if(rnd <= 0.50f)
 					{
 						miniX = ligne;
