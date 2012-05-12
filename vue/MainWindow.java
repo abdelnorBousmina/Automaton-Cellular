@@ -8,142 +8,313 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
+import model.Person;
 
 import controlleur.Controlleur;
 
-import model.Grille;
 
 /**
  * @author bous
  *
  */
 public class MainWindow {
-
-	private JPanel backgroundPanel;
+	
 	private JFrame frame;
-	private static Grille g;
+	private JPanel uiPanel;
+	private JPanel backgroundPanel;
+	private JPanel buttonsPanel;
+	private JPanel nbEntryPanel;
+	private JPanel posEntryPanel;
 	private Controlleur controlleur;
 	private JButton start; 
 	private JButton stop;
 	private JButton restart;
-	public static Grille getGrille()
-	{
-		return g;
-	}
+	private JButton confirm;
+	private JFormattedTextField fieldNbEntries;
+	private JLabel lblNbEntries;
+	private int nbEntries;
+	private int tabX[]; 
+	private int tabY[];
+	private int nbLigneGrille = 11;
+	private int nbColGrille = 11;
+	private ArrayList<JComboBox> tabCombobox ;
 	
 	public MainWindow()
 	{
-		// ***************************************
-		//  SOME TESTS INIT : Create a small grid
-		// ***************************************
-		int tabX[] = new int[2];
-		int tabY[] = new int[2];
-		
-		tabX[0] = 5;
-		tabX[1] = 6;
-		
-		tabY[0] = 0;
-		tabY[1] = 0;
-		
-		//g = new Grille(10, 10, tabX, tabY);
-		
-		//g.afficherGrille();
-		
-		//GrilleUI gUi = new GrilleUI(g);
-		
-		//Person person1 = new Person();
-		/*Person person2 = new Person();
-		Person person3 = new Person();*/
-		
-		/*DrawAreaUI drawArea = new DrawAreaUI();
-		drawArea.setGr(new Grille(10,10,tabX, tabY));*/
-		
-		// ********************
-		// END OF TESTS
-		// ********************
-		
-		controlleur = new Controlleur();
+		/**
+		 * Initialisation des elements graphiques
+		 */
+
 		// Définition de la frame
 		frame = new JFrame("Automate cellulaire");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(800, 600));
-		frame.setMinimumSize(new Dimension(800, 600));
+		frame.setPreferredSize(new Dimension(1100, 600));
+		frame.setMinimumSize(new Dimension(1100, 600));
 		frame.setResizable(false);
-		
-		// Création du panel
+
+		// Création du panel contenant la grille
 		backgroundPanel = new JPanel();	
 		backgroundPanel.setLayout(new BorderLayout());
 		backgroundPanel.setBorder(new EmptyBorder(30,30,30,30));
 		backgroundPanel.setPreferredSize(new Dimension(500,500));
 
-		// Panel bouttons
-		JPanel ButtonsPanel = new JPanel();
-		ButtonsPanel.setLayout(new GridLayout(1,3));
-		ButtonsPanel.setBorder(new EmptyBorder(30,30,30,30));
+		// Panel boutons
+		buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new GridLayout(3,3,5,5));
+		buttonsPanel.setBorder(new EmptyBorder(30,30,30,30));
+
+		// Panel choix nombre d'entrée
+		nbEntryPanel = new JPanel();
+		nbEntryPanel.setLayout(new GridLayout(1,2,5,5));
+		nbEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
-		// Ajout de la GrilleUi
-		//backgroundPanel.add(gUi);
-		backgroundPanel.add("Center",controlleur.getDrawArea());
+		// Panel choix du positionnement des entrées
+		posEntryPanel = new JPanel();
+		posEntryPanel.setLayout(new GridLayout(0,4,5,5));
+		posEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
+		
+		// Panel user interface
+		uiPanel = new JPanel();
+		uiPanel.setLayout(new BorderLayout());
+		uiPanel.setBorder(new EmptyBorder(30,30,30,30));
+		
+		// Boutons
 		start = new JButton("start");
 		stop = new JButton("stop");
-		restart = new JButton("restart");
-		ButtonsPanel.add(start);
-		ButtonsPanel.add(stop);
-		ButtonsPanel.add(restart);
+		restart = new JButton("restart");	
+		confirm = new JButton("confirm");
+		
+		confirm.setEnabled(false);
+		start.setEnabled(false);
 		restart.setEnabled(false);
 		stop.setEnabled(false);
-		start.addActionListener(new ActionListener() {
+				
+		buttonsPanel.add(confirm);
+		buttonsPanel.add(start);
+		buttonsPanel.add(stop);
+		buttonsPanel.add(restart);
+
+		fieldNbEntries = new JFormattedTextField(createFormatter("#"));
+		lblNbEntries = new JLabel("Nombre d'entrées: ");
+		lblNbEntries.setLabelFor(fieldNbEntries);
+		
+		nbEntryPanel.add(lblNbEntries);
+		nbEntryPanel.add(fieldNbEntries);
+				
+		uiPanel.add("North",nbEntryPanel);
+		uiPanel.add("Center",posEntryPanel);
+		uiPanel.add("South",buttonsPanel);
+		
+		// Ajout du panel à la frame + dessin + affichage
+		frame.add("Center",backgroundPanel);
+		frame.add("East",uiPanel);
+		
+		frame.pack();
+		frame.setVisible(true);
+
+		/**
+		 * Definition des actions liées aux boutons
+		 */
+		
+		fieldNbEntries.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				nbEntries = Integer.parseInt(fieldNbEntries.getText());
+				//System.out.print(nbEntries);
+				ArrayList<JLabel> tabLabel = new ArrayList<JLabel>();
+				
+				tabCombobox = new ArrayList<JComboBox>();
+				
+				Integer[] choixLigne = new Integer[nbLigneGrille];
+				Integer[] choixColonne = new Integer[nbColGrille];
+				
+				for(int i = 0; i < nbLigneGrille ; i++) choixLigne[i] = i + 1;
+				for(int i = 0; i < nbColGrille ; i++) choixColonne[i] = i + 1;
+				
+				for(int i = 0; i < nbEntries;i++)
+				{
+					JLabel lblLigne = new JLabel("n° ligne entrée " + (i+1) + ": ");
+					JComboBox choixNumLigne = new JComboBox(choixLigne);
+					choixNumLigne.setPreferredSize(new Dimension(20,5));
+					JLabel lnlColonne = new JLabel("n° colonne entrée " + (i+1) +": ");
+					JComboBox choixNumColonne = new JComboBox(choixColonne);
+					choixNumColonne.setPreferredSize(new Dimension(20,5));
+					
+					tabLabel.add(lblLigne);
+					tabLabel.add(lnlColonne);
+					tabCombobox.add(choixNumLigne);
+					tabCombobox.add(choixNumColonne);
+				}
+				
+				posEntryPanel.removeAll();
+				
+				Iterator<JLabel> it = tabLabel.iterator();
+				Iterator<JComboBox> it1 = tabCombobox.iterator();
+				JLabel lbl;
+				JComboBox cb;
+				while(it.hasNext())
+				{
+					lbl = it.next();
+					cb = it1.next();
+					posEntryPanel.add(lbl);
+					posEntryPanel.add(cb);
+					
+				}			
+				confirm.setEnabled(true);
+				frame.pack();
+				frame.repaint();
+			}
+		});
+		
+		confirm.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {						
+				
+				tabX = new int[nbEntries];
+				tabY = new int[nbEntries];
+				
+				Iterator<JComboBox> it = tabCombobox.iterator();
+				JComboBox cb;
+				int i = 0;
+				while(it.hasNext())
+				{
+					cb = it.next();
+					tabX[i] = cb.getSelectedIndex();				
+					cb = it.next();
+					tabY[i] = cb.getSelectedIndex();
+					
+					i++;
+				}
+				
+				if(isValidEntry())
+				{					
+					posEntryPanel.removeAll();
+					if(controlleur != null)
+						backgroundPanel.remove(controlleur.getDrawArea());
+					controlleur = new Controlleur(tabX, tabY,nbLigneGrille,nbColGrille);	
+					backgroundPanel.add("Center",controlleur.getDrawArea());
+					frame.repaint();
+					frame.pack();					
+					start.setEnabled(true);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(frame, "Entrée(s) invalide(s)");
+				}
+			}
+
+		});
+		
+		start.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {				
 				controlleur.startSimulation();
 				stop.setEnabled(true);
 				start.setEnabled(false);
 				restart.setEnabled(true);
+				confirm.setEnabled(false);
 			}
-			
+
 		});
-		
+
 		stop.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				controlleur.stopSimulation();
 				start.setEnabled(true);
 				stop.setEnabled(false);
+				confirm.setEnabled(true);
 			}
-			
+
 		});
-		
+
 		restart.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {			
 				stop.setEnabled(false);				
 
 				backgroundPanel.remove(controlleur.getDrawArea());
-				controlleur = new Controlleur();
+				controlleur = new Controlleur(tabX, tabY, nbLigneGrille, nbColGrille);
 				backgroundPanel.add("Center",controlleur.getDrawArea());
 
 				frame.repaint();
 				frame.pack();
 				start.setEnabled(true);
+				confirm.setEnabled(true);
+			}
+
+		});
+
+	}
+
+	/**
+	 * Permet de s'assurer que les entrées se situent à des endroits cohérents
+	 * @return true si les entrées sont cohérentes
+	 */
+	private boolean isValidEntry()
+	{
+		boolean answer = true;
+		for(int i = 0; i < tabX.length; i++)
+		{
+			// coin haut gauche
+			if(tabX[i] == 0 && tabY[i] == 0)
+			{
+				answer = false;
+			}
+			// coin haut droit
+			if(tabX[i] == 0 && tabY[i] == (nbColGrille - 1))
+			{
+				answer = false;
+			}
+			// coin bas droit
+			if(tabX[i] == (nbLigneGrille-1) && tabY[i] == nbColGrille - 1)
+			{
+				answer = false;
+			}
+			// coin bas gauche
+			if(tabX[i] == (nbLigneGrille-1) && tabY[i] == 0)
+			{
+				answer = false;
 			}
 			
-		});
-		
-		// Ajout du panel à la frame + dessin + affichage
-		frame.add("Center",backgroundPanel);
-		frame.add("East",ButtonsPanel);
-		frame.pack();
-		frame.setVisible(true);
-		
+			// centre
+			if(tabX[i] != 0 && tabX[i] != nbLigneGrille-1 && tabY[i] != 0 && tabY[i] != nbColGrille-1) 
+			{
+				answer = false;
+			}
+		}
+		return answer;
+	}
+	
+	protected MaskFormatter createFormatter(String s) {
+	    MaskFormatter formatter = null;
+	    try {
+	        formatter = new MaskFormatter(s);
+	    } catch (java.text.ParseException exc) {
+	        System.err.println("formatter is bad: " + exc.getMessage());
+	        System.exit(-1);
+	    }
+	    return formatter;
 	}
 	
 	/**
@@ -152,23 +323,23 @@ public class MainWindow {
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
 		MainWindow mw = new MainWindow();
-		
-		
+
+
 		/*Person person = new Person();
 		person.setX(1);
 		person.setY(1);
-		
+
 		//System.out.println(g.getValue(person.getX(), person.getY()));
-		
+
 		Neighborhood nbh = new Neighborhood(g, person);
-		
+
 		//nbh.afficherNeighborhood();
-		
+
 		MathModel model = new MathModel();
 		Integer[] mvt = model.bouger(nbh);
-		
+
 		person.updatePosition(mvt);
-		
+
 		//System.out.println("NEW PERSON'S POS : (" + person.getX() + " , " + person.getY() + ")");*/
 
 	}

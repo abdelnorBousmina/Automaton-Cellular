@@ -28,6 +28,7 @@ public class Controlleur {
 	}
 
 	private Grille grille;
+	
 	public Grille getGrille() {
 		return grille;
 	}
@@ -40,24 +41,17 @@ public class Controlleur {
 	 * Constructeur par défaut. Crée une nouvelle DrawAreaUI et une nouvelle Grille.
 	 * Il initialise les propriétés privées et déclenche un timer qui se charge de
 	 * redessiner la zone toute les secondes.
+	 * @param tabX : abscisses des entrées
+	 * @param tabY : ordonnées des entrées
 	 */
-	public Controlleur()
+	public Controlleur(int[] tabX, int[] tabY, int nbLigne, int nbCol)
 	{
-		int tabX[] = new int[2];
-		int tabY[] = new int[2];
-		
-		// 1st entry
-		tabX[0] = 10;
-		tabY[0] = 1;
-		
-		// 2nd entry
-		tabX[1] = 10;
-		tabY[1] = 2;
-		
+			
 		// Grille
 		drawArea = new DrawAreaUI();
 		
-		grille = new Grille(11,11,tabX, tabY);
+		grille = new Grille(nbLigne,nbCol,tabX, tabY);
+		//grille.afficherGrille();
 		drawArea.setGrilleUi(new GrilleUI(grille));
 		drawArea.paintGrille();
 		// Person

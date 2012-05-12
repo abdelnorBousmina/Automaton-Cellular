@@ -27,6 +27,7 @@ public class Grille {
 	private int tabyExit[];
 	private final float lambda = 1.5f;
 	private final int mur = 500;
+	private final int sortie = 1;
 
 	/**
 	 * 
@@ -80,7 +81,7 @@ public class Grille {
 
 		// Init sortie
 		for(int i = 0; i < tabxExit.length; i++)
-			grille[tabxExit[i]][tabyExit[i]] = 1;
+			grille[tabxExit[i]][tabyExit[i]] = sortie;
 
 		// Init obstacles
 		for(Obstacle o:obstacles)
@@ -93,7 +94,6 @@ public class Grille {
 				for(int j = yD; j <= yF;j++)
 					grille[i][j] = mur;
 		}
-		//TODO gérer les obstacles 
 		for(int i = 0; i < tabxExit.length ; i++)
 		{		
 			if(tabyExit[i] == 0)
@@ -147,7 +147,7 @@ public class Grille {
 	{
 		if(x > 0)
 		{
-			if(grille[x - 1][y] != mur)
+			if(grille[x - 1][y] != mur && grille[x - 1][y] != sortie)
 			{
 				if(grille[x - 1][y] > grille[x][y] + 1)
 				{
@@ -158,7 +158,7 @@ public class Grille {
 			if(y < nbColonnes)
 			{
 
-				if(grille[x][y + 1] != mur)
+				if(grille[x][y + 1] != mur && grille[x][y + 1] != sortie)
 				{		
 					if(grille[x][y + 1] > grille[x][y] + 1)
 					{
@@ -166,7 +166,7 @@ public class Grille {
 					}	
 					initGrilleHautDroite(x,y+1);
 				}
-				if(grille[x - 1][y + 1] != mur)
+				if(grille[x - 1][y + 1] != mur && grille[x - 1][y + 1] != sortie)
 				{					
 					if(grille[x - 1][y + 1] > grille[x][y] + lambda)
 					{
@@ -176,7 +176,7 @@ public class Grille {
 				}
 				if(x < nbLignes - 1)
 				{
-					if(grille[x + 1][y + 1] != mur)
+					if(grille[x + 1][y + 1] != mur && grille[x + 1][y + 1] != sortie)
 					{
 						if(grille[x + 1][y + 1] > grille[x][y] + lambda)
 						{
@@ -199,7 +199,7 @@ public class Grille {
 
 		if(x < nbLignes)
 		{
-			if(grille[x + 1][y] != mur)
+			if(grille[x + 1][y] != mur && grille[x + 1][y] != sortie)
 			{	
 				if(grille[x + 1][y] > grille[x][y] + 1)
 				{
@@ -210,7 +210,7 @@ public class Grille {
 			}
 			if(y < nbColonnes)
 			{
-				if(grille[x + 1][y + 1] != mur)
+				if(grille[x + 1][y + 1] != mur && grille[x + 1][y + 1] != sortie)
 				{
 					if(grille[x + 1][y + 1] > grille[x][y] + lambda)
 					{
@@ -218,7 +218,7 @@ public class Grille {
 					}
 					initGrilleBasDroite(x+1,y+1);					
 				}
-				if(grille[x][y + 1] != mur)
+				if(grille[x][y + 1] != mur && grille[x][y + 1] != sortie)
 				{		
 					if(grille[x][y + 1] > grille[x][y] + 1)
 					{
@@ -228,7 +228,7 @@ public class Grille {
 				}
 				if( x > 0)
 				{
-					if(grille[x - 1][y + 1] != mur)
+					if(grille[x - 1][y + 1] != mur && grille[x - 1][y + 1] != sortie)
 					{					
 						if(grille[x - 1][y + 1] > grille[x][y] + lambda)
 						{
@@ -251,7 +251,7 @@ public class Grille {
 	{
 		if(x > 0)
 		{
-			if(grille[x - 1][y] != mur)
+			if(grille[x - 1][y] != mur && grille[x - 1][y] != sortie)
 			{
 				if(grille[x - 1][y] > grille[x][y] + 1)
 				{
@@ -262,7 +262,7 @@ public class Grille {
 			if(y > 0)
 			{
 
-				if(grille[x][y - 1] != mur)
+				if(grille[x][y - 1] != mur && grille[x][y - 1] != sortie)
 				{		
 					if(grille[x][y - 1] > grille[x][y] + 1)
 					{
@@ -270,7 +270,7 @@ public class Grille {
 					}	
 					initGrilleHautGauche(x,y-1);
 				}
-				if(grille[x - 1][y - 1] != mur)
+				if(grille[x - 1][y - 1] != mur && grille[x - 1][y - 1] != sortie)
 				{					
 					if(grille[x - 1][y - 1] > grille[x][y] + lambda)
 					{
@@ -280,7 +280,7 @@ public class Grille {
 				}
 				if(y < nbColonnes - 1)
 				{
-					if(grille[x - 1][y + 1] != mur)
+					if(grille[x - 1][y + 1] != mur && grille[x - 1][y + 1] != sortie)
 					{					
 						if(grille[x - 1][y + 1] > grille[x][y] + lambda)
 						{
@@ -303,7 +303,7 @@ public class Grille {
 
 		if(x < nbLignes)
 		{
-			if(grille[x + 1][y] != mur)
+			if(grille[x + 1][y] != mur && grille[x+1][y] != sortie )
 			{	
 				if(grille[x + 1][y] > grille[x][y] + 1)
 				{
@@ -314,7 +314,7 @@ public class Grille {
 			}
 			if(y > 0)
 			{
-				if(grille[x + 1][y - 1] != mur)
+				if(grille[x + 1][y - 1] != mur && grille[x + 1][y - 1] != sortie)
 				{
 					if(grille[x + 1][y - 1] > grille[x][y] + lambda)
 					{
@@ -322,7 +322,7 @@ public class Grille {
 					}
 					initGrilleBasGauche(x+1,y-1);					
 				}
-				if(grille[x][y - 1] != mur)
+				if(grille[x][y - 1] != mur && grille[x][y - 1] != sortie)
 				{		
 					if(grille[x][y - 1] > grille[x][y] + 1)
 					{
@@ -332,7 +332,7 @@ public class Grille {
 				}
 				if( y < nbColonnes - 1)
 				{
-					if(grille[x+1][y + 1] != mur)
+					if(grille[x+1][y + 1] != mur && grille[x+1][y + 1] != sortie)
 					{
 						if(grille[x + 1][y + 1] > grille[x][y] + 1)
 						{
