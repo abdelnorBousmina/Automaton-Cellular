@@ -29,7 +29,9 @@ public class MainWindow {
 	private JFrame frame;
 	private static Grille g;
 	private Controlleur controlleur;
-	
+	private JButton start; 
+	private JButton stop;
+	private JButton restart;
 	public static Grille getGrille()
 	{
 		return g;
@@ -67,7 +69,6 @@ public class MainWindow {
 		// ********************
 		
 		controlleur = new Controlleur();
-		
 		// Définition de la frame
 		frame = new JFrame("Automate cellulaire");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -83,21 +84,28 @@ public class MainWindow {
 
 		// Panel bouttons
 		JPanel ButtonsPanel = new JPanel();
-		ButtonsPanel.setLayout(new GridLayout(1,2));
+		ButtonsPanel.setLayout(new GridLayout(1,3));
 		ButtonsPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
 		// Ajout de la GrilleUi
 		//backgroundPanel.add(gUi);
 		backgroundPanel.add("Center",controlleur.getDrawArea());
-		JButton start = new JButton("start");
-		JButton stop = new JButton("stop");
+		start = new JButton("start");
+		stop = new JButton("stop");
+		restart = new JButton("restart");
 		ButtonsPanel.add(start);
 		ButtonsPanel.add(stop);
+		ButtonsPanel.add(restart);
+		restart.setEnabled(false);
+		stop.setEnabled(false);
 		start.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {				
 				controlleur.startSimulation();
+				stop.setEnabled(true);
+				start.setEnabled(false);
+				restart.setEnabled(true);
 			}
 			
 		});
@@ -107,6 +115,25 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				controlleur.stopSimulation();
+				start.setEnabled(true);
+				stop.setEnabled(false);
+			}
+			
+		});
+		
+		restart.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {			
+				stop.setEnabled(false);				
+
+				backgroundPanel.remove(controlleur.getDrawArea());
+				controlleur = new Controlleur();
+				backgroundPanel.add("Center",controlleur.getDrawArea());
+
+				frame.repaint();
+				frame.pack();
+				start.setEnabled(true);
 			}
 			
 		});

@@ -198,7 +198,7 @@ public class Controlleur {
 			{
 				if(p.getLigne() == p2.getLigne()  && p.getColonne() == p2.getColonne() && p.getId() != p2.getId())
 				{
-					System.out.println("conflit");					
+					//System.out.println("conflit");					
 					if( Math.random() >= conflit )
 					{
 						p.setLigne(personnes.get(i).getLigne());
