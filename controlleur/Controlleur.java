@@ -15,28 +15,31 @@ import vue.PersonUI;
 
 public class Controlleur {
 
+	/**
+	 * Probabilité de panique des personnes
+	 */
 	private static Float conflit = 0.5f;
 	
+	/**
+	 * Aire de dessin
+	 */
 	private DrawAreaUI drawArea;
 	
-	public DrawAreaUI getDrawArea() {
-		return drawArea;
-	}
-
-	public void setDrawArea(DrawAreaUI drawArea) {
-		this.drawArea = drawArea;
-	}
-
+	/**
+	 * Grille du système
+	 */
 	private Grille grille;
 	
-	public Grille getGrille() {
-		return grille;
-	}
-
+	/**
+	 * Tableau des personnes actuellement dans le système
+	 */
 	private ArrayList<Person> personnes;
 	
+	/**
+	 * Timer permettant le déplacement régulier
+	 */
 	private Timer timer;
-	
+		
 	/**
 	 * Constructeur par défaut. Crée une nouvelle DrawAreaUI et une nouvelle Grille.
 	 * Il initialise les propriétés privées et déclenche un timer qui se charge de
@@ -47,39 +50,19 @@ public class Controlleur {
 	public Controlleur(int[] tabX, int[] tabY, int nbLigne, int nbCol)
 	{
 			
-		// Grille
+		/*
+		 *  STEP 1 : Définition de la grille
+		 */
 		drawArea = new DrawAreaUI();
-		
 		grille = new Grille(nbLigne,nbCol,tabX, tabY);
-		//grille.afficherGrille();
 		drawArea.setGrilleUi(new GrilleUI(grille));
 		drawArea.paintGrille();
-		// Person
+		
+		/*
+		 * STEP 2 : Définition des personnes
+		 */
 		personnes = new ArrayList<Person>();
-		//personnes.add(new Person());
-		//personnes.add(new Person());
 		
-		/*personnes.get(0).setLigne(6);
-		personnes.get(0).setColonne(4);*/
-		
-		/*personnes.get(0).setLigne(8);
-		personnes.get(0).setColonne(5);*/
-		
-		/*personnes.get(0).setGrille(grille);
-		
-		PersonUI pUi = new PersonUI();
-		pUi.setPerson(personnes.get(0));
-		pUi.setGrilleUI(drawArea.getGrilleUi());
-		
-		personnes.get(0).setUi(pUi);
-		drawArea.addPersonUi(pUi);*/
-		/*		
-		addPerson(new Person(7,1,3, this));
-		addPerson(new Person(6,2,3, this));
-		addPerson(new Person(5,3,3, this));
-		addPerson(new Person(4,4,3, this));
-		addPerson(new Person(3,5,3, this));
-		*/
 		addPerson(new Person(1,2,5, this));
 		addPerson(new Person(2,3,5, this));
 		addPerson(new Person(3,4,5, this));
@@ -99,13 +82,14 @@ public class Controlleur {
 		addPerson(new Person(15,8,1, this));
 		
 		addPerson(new Person(16,5,9, this));
-				
-		//System.out.println("Lig : " + per.getLigne() + " | Col : " + per.getColonne());
-		//nbh.afficherNeighborhood();
-		
+
+		/*
+		 * STEP 3 : Définition du timer (toute les 1 secondes)
+		 */
 		timer = new Timer( 1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				ArrayList<Person> clonePersonnes = new ArrayList<Person>();
 				
 				for (Person p : personnes )
@@ -120,6 +104,8 @@ public class Controlleur {
 				{
 					p = it.next();
 					it2.next();
+					
+					// Dans le cas où la personne n'est plus dans le système
 					if(!p.updatePosition()) 
 					{
 						it.remove();	
@@ -128,7 +114,6 @@ public class Controlleur {
 					}
 				}
 				resolveConflicts(clonePersonnes);
-				//System.out.println("maj personnes");
 				
 				for(int i = 0; i < clonePersonnes.size(); i++)
 				{
@@ -140,9 +125,6 @@ public class Controlleur {
 			}
 		} );
 		timer.setInitialDelay(1000);
-		
-		//timer.start();
-		
 	}
 	
 	/**
@@ -161,15 +143,42 @@ public class Controlleur {
 		drawArea.addPersonUi(pUi);	
 	}
 	
-	public Boolean isOccupied(Integer[] pos)
+	/**
+	 * Retourne l'aire de dessin gérée par ce controleur
+	 * @return l'aire de dessin gérée par ce controleur
+	 */
+	public DrawAreaUI getDrawArea() {
+		return drawArea;
+	}
+	
+	/**
+	 * Retourne la grille gérée par ce controleur
+	 * @return la grille gérée par ce controleur
+	 */
+	public Grille getGrille() {
+		return grille;
+	}
+	
+	/**
+	 * Retourne la position d'une personne dans la liste des personnes
+	 * @param p La personne dont on cherche la position
+	 * @return La position de la personne dans la liste des personnes
+	 */
+	public int getId(Person p)
 	{
-		//System.out.println("new: " + pos[2]+ ": " +pos[0] + " " + pos[1]);
-		//System.out.println("old: " + personnes.get(0).getId() + ": " +personnes.get(0).getLigne()  + " " + personnes.get(0).getColonne() );
-		
+		return personnes.indexOf(p);
+	}
+	
+	/**
+	 * Indique si une position est occupée ou non
+	 * @param pos La position à vérifier
+	 * @return True si la position est occupée, False sinon
+	 */
+	public Boolean isOccupied(Integer[] pos)
+	{	
 		for (Person p : personnes) {
 			if(p.getLigne() == pos[0] && p.getColonne() == pos[1] && p.getId() != pos[2])
 			{				
-				//System.out.println(p.getId() + " Occupé");
 				return true; 
 			}
 		}
@@ -177,8 +186,8 @@ public class Controlleur {
 	}
 	
 	/**
-	 * Si 2 personnes parmis la nouvelle grille on fait le même choix de case, une personne est tirée au sort
-	 * pour rester sur sa case tandis que l'autre reprand sa position précédente
+	 * Si 2 personnes parmis la nouvelle grille ont fait le même choix de case, une personne est tirée au sort
+	 * pour rester sur sa case tandis que l'autre reprend sa position précédente
 	 * @param nextPersonnes
 	 */
 	private void resolveConflicts(ArrayList<Person> nextPersonnes)
@@ -211,16 +220,25 @@ public class Controlleur {
 	
 	}
 	
-	public int getId(Person p)
-	{
-		return personnes.indexOf(p);
+	/**
+	 * Définit la zone de dessin à rattacher à ce controleur
+	 * @param drawArea La zone de dessin à rattacher 
+	 */
+	public void setDrawArea(DrawAreaUI drawArea) {
+		this.drawArea = drawArea;
 	}
 	
+	/**
+	 * Démarre la simulation
+	 */
 	public void startSimulation()
 	{
 		timer.start();
 	}
 	
+	/**
+	 * Arrête la simulation
+	 */
 	public void stopSimulation()
 	{
 		timer.stop();

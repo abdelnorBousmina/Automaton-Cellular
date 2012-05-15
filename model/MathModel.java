@@ -20,9 +20,6 @@ public class MathModel {
 		Integer[] retour = new Integer[2];
 		int[] miniPos = new int[2];
 		
-		//voisinage.afficherNeighborhood();		
-		//System.out.println("");
-		
 		if(Math.random() >= panic)
 		{		
 			miniPos = voisinage.getMiniPosition();
@@ -31,7 +28,7 @@ public class MathModel {
 		{
 			miniPos[0] = 1;
 			miniPos[1] = 1;
-			System.out.println("panic :s :s :s :s");
+			//System.out.println("panic :s :s :s :s");
 		}
 		
 		retour[0] = miniPos[0] - 1;

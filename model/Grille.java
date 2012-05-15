@@ -5,9 +5,21 @@ import java.util.List;
 
 public class Grille {
 
+	/**
+	 * La grille
+	 */
 	private float[][] grille;
+	
+	/**
+	 * Le nombre de lignes de la grille
+	 */
 	private int nbLignes;
+	
+	/**
+	 * Le nombre de colonnes de la grille
+	 */
 	private int nbColonnes;
+	
 	/**
 	 * @return the nbLignes
 	 */
@@ -21,7 +33,6 @@ public class Grille {
 	public int getNbColonnes() {
 		return nbColonnes;
 	}
-
 
 	private int tabxExit[];
 	private int tabyExit[];
@@ -133,7 +144,7 @@ public class Grille {
 	{
 		if(x < 0 || y < 0 || x >= nbLignes || y >= nbColonnes)
 		{
-			return 500;
+			return 0;
 		}
 		return grille[x][y];
 	}

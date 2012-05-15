@@ -12,16 +12,26 @@ public class GrilleUI extends Canvas {
 	 * Automatically added
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * Nombre de colonnes
+	 */
+	private int cols;
+	
+	/**
+	 * La grille liée à cette UI
+	 */
+	private Grille grille;
+	
 	/**
 	 * Hauteur de la grille
 	 */
 	private int height;
 	
 	/**
-	 * Largeur de la grille
+	 * Hauteur d'une case
 	 */
-	private int width;
+	private int htOfRow;
 	
 	/**
 	 * Nombre de lignes
@@ -29,19 +39,17 @@ public class GrilleUI extends Canvas {
 	private int rows;
 	
 	/**
-	 * Nombre de colonnes
+	 * Largeur d'une case
 	 */
-	private int cols;
-	
-	private int htOfRow;
-	
 	private int wdOfRow;
 	
-	private Grille grille;
-	
+	/**
+	 * Largeur de la grille
+	 */
+	private int width;
 
 	/**
-	 * Constructeur
+	 * Constructeur. Définit la largeur, la hauteur, le nombre de lignes et de colonnes.
 	 * @param w Largeur souhaitée
 	 * @param h Hauteur souhaitée
 	 * @param r Nombre de lignes souhaité
@@ -49,38 +57,12 @@ public class GrilleUI extends Canvas {
 	 */
 	public GrilleUI(int w, int h, int r, int c)
 	{
-		//this.setSize(w, h);
 		this.setPreferredSize(new Dimension(w, h));
-		System.out.println("w : " + w + " || h : " + h);
         width = w;
         height = h;
 		rows = r;
         cols = c;
-        
-        System.out.println("width : " + width + " || height : " + height);
 	}
-	
-	
-	
-	
-	public int getHtOfRow() {
-		return htOfRow;
-	}
-
-	/*public void setHtOfRow(int htOfRow) {
-		this.htOfRow = htOfRow;
-	}*/
-
-	public int getWdOfRow() {
-		return wdOfRow;
-	}
-
-	/*public void setWdOfRow(int wdOfRow) {
-		this.wdOfRow = wdOfRow;
-	}*/
-
-
-
 
 	/**
 	 * Constructeur. Dessine la grille à partir d'un objet.
@@ -92,19 +74,6 @@ public class GrilleUI extends Canvas {
 		this.grille = grille;
 		rows = grille.getNbLignes();
 		cols = grille.getNbColonnes();
-	}
-	
-	@Override
-	/**
-	 * Dessine la grille : les lignes puis les obstacles
-	 */
-	public void paint(Graphics g) {
-		
-		g.clearRect(this.getX(), this.getY(), width, height);
-		
-		paintLines(g);
-		fillObstacles(g);
-	
 	}
 	
 	/**
@@ -126,6 +95,33 @@ public class GrilleUI extends Canvas {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @return la hauteur d'une ligne
+	 */
+	public int getHtOfRow() {
+		return htOfRow;
+	}
+
+	/**
+	 * @return la largeur d'une ligne
+	 */
+	public int getWdOfRow() {
+		return wdOfRow;
+	}
+	
+	@Override
+	/**
+	 * Dessine la grille : les lignes puis les obstacles
+	 */
+	public void paint(Graphics g) {
+		
+		g.clearRect(this.getX(), this.getY(), width, height);
+		
+		paintLines(g);
+		fillObstacles(g);
+	
 	}
 	
 	/**

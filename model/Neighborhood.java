@@ -9,16 +9,25 @@ package model;
  */
 public class Neighborhood {
 	
+	/**
+	 * Nombre de lignes d'un voisinage
+	 */
 	public static final Integer NB_LIGNES = 3;
-	public static final Integer NB_COLONNES = 3;
-	
-	private int miniX;
-	private int miniY;
 	
 	/**
-	 * Le voisinage
+	 * Nombre de colonnes d'un voisinage
 	 */
-	private Float[][] voisinage;
+	public static final Integer NB_COLONNES = 3;
+	
+	/**
+	 * Position en x de la case à valeur minimum de ce voisinage
+	 */
+	private int miniX;
+	
+	/**
+	 * Position en y de la case à valeur minimum de ce voisinage
+	 */
+	private int miniY;
 	
 	/**
 	 * La personne dont on considère le voisinage
@@ -26,12 +35,9 @@ public class Neighborhood {
 	private Person person;
 	
 	/**
-	 * Constructeur par défaut. Ne fait rien de particulier
+	 * Le voisinage
 	 */
-	public Neighborhood()
-	{
-		
-	}
+	private Float[][] voisinage;
 	
 	/**
 	 * Constructeur. Ce constructeur construit le voisinage en fonction de la grille
@@ -42,16 +48,6 @@ public class Neighborhood {
 	{
 		this.person = person;
 		construireVoisinage(person.getGrille());
-	}
-	
-	public Float[][] getVoisinage()
-	{
-		return voisinage;
-	}
-	
-	public Person getPerson()
-	{
-		return person;
 	}
 	
 	/**
@@ -113,6 +109,28 @@ public class Neighborhood {
 	}
 	
 	/**
+	 * Retourne la position minimum de ce voisinage
+	 * @return la position minimum de ce voisinage dans un tableau ayant cette forme :
+	 * 	[0] : position en x
+	 * 	[1] : position en y
+	 */
+	public int[] getMiniPosition()
+	{
+		int[] pos = new int[2];
+		pos[0] = miniX;
+		pos[1] = miniY;
+		return pos;
+	}
+	
+	/**
+	 * @return la personne concernée par ce voisinage
+	 */
+	public Person getPerson()
+	{
+		return person;
+	}
+	
+	/**
 	 * Retourne la distance de la sortie de la case (x,y)
 	 * @param x Coordonnée en x de la case
 	 * @param y Coordonnée en y de la case
@@ -131,12 +149,13 @@ public class Neighborhood {
 		
 	}
 	
-	public int[] getMiniPosition()
+
+	/**
+	 * @return le voisinage
+	 */
+	public Float[][] getVoisinage()
 	{
-		int[] pos = new int[2];
-		pos[0] = miniX;
-		pos[1] = miniY;
-		return pos;
+		return voisinage;
 	}
 
 }

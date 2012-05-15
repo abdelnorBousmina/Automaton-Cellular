@@ -9,17 +9,39 @@ import model.Person;
 
 public class PersonUI extends Canvas {
 
+	/**
+	 * La couleur
+	 */
 	private Color color;
-	private Integer x;
-	private Integer y;
+	
+	/**
+	 * La partie graphique sur laquelle dessiner cette personne
+	 */
 	private GrilleUI grilleUI;
+	
+	/**
+	 * La personne liée à cette instance
+	 */
 	private Person person;
+	
+	/**
+	 * La position en x
+	 */
+	private Integer x;
+	
+	/**
+	 * La position en y
+	 */
+	private Integer y;
 	
 	/**
 	 * Automatically added
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructeur par défaut. Crée une couleur aléatoire pour cette personne
+	 */
 	public PersonUI() {
 		
 		// Random color
@@ -30,54 +52,29 @@ public class PersonUI extends Canvas {
 
 		color = new Color(red,green,blue);
 		
-		//color = Color.RED;
 	}
 	
-	public PersonUI(GrilleUI gUi) {
-		color = Color.RED;
-		this.grilleUI = gUi;
-	}
-	
+	/**
+	 * @return la couleur
+	 */
 	public Color getColor() {
 		return color;
 	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
+	
+	/**
+	 * @return la partie graphique liée à cette instance
+	 */
 	public GrilleUI getGrilleUI() {
 		return grilleUI;
 	}
-
-	public void setGrilleUI(GrilleUI gUi) {
-		this.grilleUI = gUi;
-	}
 	
-	public void updatePosition()
-	{
-		//this.x = grilleUI.getX() + grilleUI.getWdOfRow() * person.getLigne();
-		this.x = grilleUI.getX() + grilleUI.getWdOfRow() * person.getColonne() + 8;
-		//this.y = grilleUI.getY() + grilleUI.getHtOfRow() * person.getColonne();
-		this.y = grilleUI.getY() + grilleUI.getHtOfRow() * person.getLigne() + 8;
+	/**
+	 * @return la personne liée à cette instance
+	 */
+	public Person getPerson() {
+		return person;
 	}
 
-	/**
-	 * Transforme la position "matricielle" en position relative à la grille
-	 * @param x Position "matricielle"
-	 */
-	/*public void setX(Integer x) {
-		// Origine grille + taille ligne * x 
-		this.x = gUi.getX() + gUi.getWdOfRow() * x;
-	}*/
-
-	/**
-	 * Transforme la position "matricielle" en position relative à la grille
-	 * @param y Position "matricielle"
-	 */
-	/*public void setY(Integer y) {
-		this.y = gUi.getY() + gUi.getHtOfRow() * y;
-	}*/
 
 	@Override
 	public void paint(Graphics g) 
@@ -86,23 +83,43 @@ public class PersonUI extends Canvas {
 	} 
 	
 	/**
-	 * Draw the car
-	 * @see javax.swing.JFrame#update(java.awt.Graphics)
+	 * @param color la couleur de cette personne
 	 */
-	@Override
-	public void update(Graphics g) {
-		//System.out.println("pUi : update");
-		g.setColor(color);
-		//System.out.println(" X draw : " + Math.round(x) + " - Y draw : " + Math.round(y));
-		g.fillRect( Math.round(x), Math.round(y), 15, 15 );
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
-	public Person getPerson() {
-		return person;
+	/**
+	 * @param gUi la partie graphique d'une grille à lier
+	 */
+	public void setGrilleUI(GrilleUI gUi) {
+		this.grilleUI = gUi;
 	}
-
+	
+	/**
+	 * @param person la personne à lier à cette instance
+	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
 	
+	/**
+	 * Met à jour la position de cette instance par rapport à la personne à laquelle
+	 * elle est liée.
+	 */
+	public void updatePosition()
+	{
+		this.x = grilleUI.getX() + grilleUI.getWdOfRow() * person.getColonne() + 8;
+		this.y = grilleUI.getY() + grilleUI.getHtOfRow() * person.getLigne() + 8;
+	}
+	
+	/**
+	 * Dessine cette personne.
+	 * @see javax.swing.JFrame#update(java.awt.Graphics)
+	 */
+	@Override
+	public void update(Graphics g) {
+		g.setColor(color);
+		g.fillRect( Math.round(x), Math.round(y), 15, 15 );
+	}
 }
