@@ -86,7 +86,7 @@ public class ChartLine extends JFrame {
     	// create the chart...
         final JFreeChart chart = ChartFactory.createLineChart(
             chartTitle,       		   // chart title
-            "ID Personnes",            // domain axis label
+            "Nb sorties",            // domain axis label
             "Secondes",                // range axis label
             dataset,                   // data
             PlotOrientation.VERTICAL,  // orientation

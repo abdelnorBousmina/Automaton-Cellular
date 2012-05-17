@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -21,10 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
-
 import controlleur.Controlleur;
 
 
@@ -49,6 +47,8 @@ public class MainWindow {
 	private JLabel lblLambda;
 	private JFormattedTextField fieldNbEntries;
 	private JLabel lblNbEntries;
+	private JCheckBox newFigure;
+	private JLabel lblnewFigure;
 	private int nbEntries;
 	private int tabX[]; 
 	private int tabY[];
@@ -56,6 +56,8 @@ public class MainWindow {
 	private int nbColGrille = 11;
 	private ArrayList<JComboBox> tabCombobox ;
 	private float lambda = 1.5f;
+	private ChartLine chartline;
+	
 	
 	public MainWindow()
 	{
@@ -83,7 +85,7 @@ public class MainWindow {
 
 		// Panel choix nombre d'entrée
 		nbEntryPanel = new JPanel();
-		nbEntryPanel.setLayout(new GridLayout(2,2,5,5));
+		nbEntryPanel.setLayout(new GridLayout(3,2,5,5));
 		nbEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
 		// Panel choix du positionnement des entrées
@@ -123,11 +125,19 @@ public class MainWindow {
 		lblLambda = new JLabel("Coût déplacement diagonal: ");
 		lblLambda.setLabelFor(lblLambda);
 		
+		newFigure = new JCheckBox();
+		newFigure.setSelected(true);
+		newFigure.setEnabled(false);
+		lblnewFigure = new JLabel("Ouvrir un nouveau graphique");
+		lblnewFigure.setLabelFor(newFigure);
+		
 		nbEntryPanel.add(lblLambda);
 		nbEntryPanel.add(fieldLambda);
 		nbEntryPanel.add(lblNbEntries);
 		nbEntryPanel.add(fieldNbEntries);
-				
+		nbEntryPanel.add(lblnewFigure);
+		nbEntryPanel.add(newFigure);
+		
 		uiPanel.add("North",nbEntryPanel);
 		uiPanel.add("Center",posEntryPanel);
 		uiPanel.add("South",buttonsPanel);
@@ -224,7 +234,12 @@ public class MainWindow {
 					}
 					
 					lambda = Float.parseFloat(fieldLambda.getText().replace(",","."));
-					controlleur = new Controlleur(tabX, tabY,nbLigneGrille,nbColGrille, lambda);	
+					
+					if(newFigure.isSelected())
+					{
+						chartline = new ChartLine("Sortie des personnes");
+					}
+					controlleur = new Controlleur(tabX, tabY,nbLigneGrille,nbColGrille, lambda,chartline);	
 					backgroundPanel.add("Center",controlleur.getDrawArea());
 					frame.repaint();
 					frame.pack();					
@@ -247,6 +262,7 @@ public class MainWindow {
 				start.setEnabled(false);
 				restart.setEnabled(true);
 				confirm.setEnabled(false);
+				newFigure.setEnabled(true);
 			}
 
 		});
@@ -270,7 +286,11 @@ public class MainWindow {
 				stop.setEnabled(false);				
 
 				backgroundPanel.remove(controlleur.getDrawArea());
-				controlleur = new Controlleur(tabX, tabY, nbLigneGrille, nbColGrille, lambda);
+				if(newFigure.isSelected())
+				{
+					chartline = new ChartLine("Sortie des personnes");
+				}
+				controlleur = new Controlleur(tabX, tabY, nbLigneGrille, nbColGrille, lambda,chartline);
 				backgroundPanel.add("Center",controlleur.getDrawArea());
 
 				frame.repaint();

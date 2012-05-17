@@ -65,7 +65,7 @@ public class Controlleur {
 	 * @param tabX : abscisses des entrées
 	 * @param tabY : ordonnées des entrées
 	 */
-	public Controlleur(int[] tabX, int[] tabY, int nbLigne, int nbCol, float lambda)
+	public Controlleur(final int[] tabX, int[] tabY, int nbLigne, int nbCol, float lambda, ChartLine chartline)
 	{
 			
 		/*
@@ -104,7 +104,7 @@ public class Controlleur {
 		/*
 		 * STEP 3 : Définition des charts 
 		 */
-		chartExit = new ChartLine("Sortie des personnes");
+		this.chartExit = chartline;
 		nbIterations = 0;
 		
 		chartDistance = new Chart("Distance parcourue");
@@ -137,7 +137,7 @@ public class Controlleur {
 						it2.remove();
 						// en 1 iteration, l'indivitdu se déplace de 0.4m à 1m/s
 						// il s'écoule donc 0.4 seconde par itération 
-						chartExit.addPoint(nbIterations * temps, "Dates de sortie", Integer.toString(p.getId()));
+						
 						chartDistance.addPoint(p.getDistance(), "Distances", Integer.toString(p.getId()));
 						
 						drawArea.removePersonUi(p.getUi());					
@@ -149,7 +149,11 @@ public class Controlleur {
 				{
 					personnes.get(i).update(clonePersonnes.get(i));
 				}
-				
+				if(personnes.isEmpty())
+				{
+					chartExit.addPoint(nbIterations * temps, "Dates de sortie", Integer.toString(tabX.length));
+					stopSimulation();
+				}
 				drawArea.updateItems();
 				nbIterations++;
 			}
