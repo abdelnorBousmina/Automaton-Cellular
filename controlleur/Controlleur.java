@@ -52,14 +52,14 @@ public class Controlleur {
 	 * @param tabX : abscisses des entrées
 	 * @param tabY : ordonnées des entrées
 	 */
-	public Controlleur(int[] tabX, int[] tabY, int nbLigne, int nbCol)
+	public Controlleur(int[] tabX, int[] tabY, int nbLigne, int nbCol, float lambda)
 	{
 			
 		/*
 		 *  STEP 1 : Définition de la grille
 		 */
 		drawArea = new DrawAreaUI();
-		grille = new Grille(nbLigne,nbCol,tabX, tabY);
+		grille = new Grille(nbLigne,nbCol,tabX, tabY, lambda);
 		drawArea.setGrilleUi(new GrilleUI(grille));
 		drawArea.paintGrille();
 		

@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -20,7 +21,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 
 import controlleur.Controlleur;
 
@@ -42,6 +45,8 @@ public class MainWindow {
 	private JButton stop;
 	private JButton restart;
 	private JButton confirm;
+	private JFormattedTextField fieldLambda;
+	private JLabel lblLambda;
 	private JFormattedTextField fieldNbEntries;
 	private JLabel lblNbEntries;
 	private int nbEntries;
@@ -50,6 +55,7 @@ public class MainWindow {
 	private int nbLigneGrille = 11;
 	private int nbColGrille = 11;
 	private ArrayList<JComboBox> tabCombobox ;
+	private float lambda = 1.5f;
 	
 	public MainWindow()
 	{
@@ -77,7 +83,7 @@ public class MainWindow {
 
 		// Panel choix nombre d'entrée
 		nbEntryPanel = new JPanel();
-		nbEntryPanel.setLayout(new GridLayout(1,2,5,5));
+		nbEntryPanel.setLayout(new GridLayout(2,2,5,5));
 		nbEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
 		// Panel choix du positionnement des entrées
@@ -110,6 +116,15 @@ public class MainWindow {
 		lblNbEntries = new JLabel("Nombre d'entrées: ");
 		lblNbEntries.setLabelFor(fieldNbEntries);
 		
+		NumberFormat percentFormat = NumberFormat.getNumberInstance();
+        percentFormat.setMinimumFractionDigits(2);
+		fieldLambda = new JFormattedTextField(percentFormat);
+		fieldLambda.setValue(lambda);
+		lblLambda = new JLabel("Coût déplacement diagonal: ");
+		lblLambda.setLabelFor(lblLambda);
+		
+		nbEntryPanel.add(lblLambda);
+		nbEntryPanel.add(fieldLambda);
 		nbEntryPanel.add(lblNbEntries);
 		nbEntryPanel.add(fieldNbEntries);
 				
@@ -204,9 +219,12 @@ public class MainWindow {
 				if(isValidEntry())
 				{					
 					posEntryPanel.removeAll();
-					if(controlleur != null)
+					if(controlleur != null){
 						backgroundPanel.remove(controlleur.getDrawArea());
-					controlleur = new Controlleur(tabX, tabY,nbLigneGrille,nbColGrille);	
+					}
+					
+					lambda = Float.parseFloat(fieldLambda.getText().replace(",","."));
+					controlleur = new Controlleur(tabX, tabY,nbLigneGrille,nbColGrille, lambda);	
 					backgroundPanel.add("Center",controlleur.getDrawArea());
 					frame.repaint();
 					frame.pack();					
@@ -252,7 +270,7 @@ public class MainWindow {
 				stop.setEnabled(false);				
 
 				backgroundPanel.remove(controlleur.getDrawArea());
-				controlleur = new Controlleur(tabX, tabY, nbLigneGrille, nbColGrille);
+				controlleur = new Controlleur(tabX, tabY, nbLigneGrille, nbColGrille, lambda);
 				backgroundPanel.add("Center",controlleur.getDrawArea());
 
 				frame.repaint();

@@ -36,7 +36,7 @@ public class Grille {
 
 	private int tabxExit[];
 	private int tabyExit[];
-	private final float lambda = 1.5f;
+	private float lambda = 1.5f;
 	private final int mur = 500;
 	private final int sortie = 1;
 
@@ -47,10 +47,11 @@ public class Grille {
 	 * @param xExit numéro de ligne de la sortie
 	 * @param yExit numéro de colonne de la sortie
 	 */
-	public Grille(int lignes,int colonnes,int letabxExit[],int letabyExit[])
+	public Grille(int lignes,int colonnes,int letabxExit[],int letabyExit[], float lambda)
 	{
-		nbLignes = lignes;
-		nbColonnes = colonnes;
+		this.lambda = lambda;
+		this.nbLignes = lignes;
+		this.nbColonnes = colonnes;
 		this.tabxExit = letabxExit;
 		this.tabyExit = letabyExit;		
 
