@@ -20,7 +20,8 @@ public class Controlleur {
 	/**
 	 * Probabilité de panique des personnes
 	 */
-	private static Float conflit = 0.5f;
+	private final Float conflit = 0.5f;
+	private final Float temps = 0.4f;
 	
 	/**
 	 * Aire de dessin
@@ -42,9 +43,19 @@ public class Controlleur {
 	 */
 	private Timer timer;
 	
+	/**
+	 * Diagramme d'affichage des dates de sortie
+	 */
 	private ChartLine chartExit;
+	
+	/**
+	 * Diagramme des distances avant sortie
+	 */
 	private Chart chartDistance;
 	
+	/**
+	 * Nombre d'itérations depuis le début du traitement
+	 */
 	private int nbIterations;
 		
 	/**
@@ -124,9 +135,9 @@ public class Controlleur {
 					{
 						it.remove();	
 						it2.remove();
-						
-						chartExit.addPoint(nbIterations, "Dates de sortie", Integer.toString(p.getId()));
-						System.out.println(p.getDistance());
+						// en 1 iteration, l'indivitdu se déplace de 0.4m à 1m/s
+						// il s'écoule donc 0.4 seconde par itération 
+						chartExit.addPoint(nbIterations * temps, "Dates de sortie", Integer.toString(p.getId()));
 						chartDistance.addPoint(p.getDistance(), "Distances", Integer.toString(p.getId()));
 						
 						drawArea.removePersonUi(p.getUi());					

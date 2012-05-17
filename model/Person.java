@@ -120,7 +120,6 @@ public class Person implements Cloneable {
 	 * @return la distance parcourue
 	 */
 	public int getDistance() {
-		System.out.println("dist __ " + distance);
 		return distance;
 	}
 	
@@ -180,9 +179,6 @@ public class Person implements Cloneable {
 		this.controlleur = controlleur;
 	}
 	
-	public void setDistance(int d) {
-		distance = d;
-	}
 	/**
 	 * @param id the id to set
 	 */
