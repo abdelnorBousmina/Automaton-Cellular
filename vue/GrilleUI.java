@@ -70,7 +70,7 @@ public class GrilleUI extends Canvas {
 	 */
 	public GrilleUI(Grille grille)
 	{
-		this.setPreferredSize(new Dimension(300, 300));
+		this.setPreferredSize(new Dimension(400, 400));
 		this.grille = grille;
 		rows = grille.getNbLignes();
 		cols = grille.getNbColonnes();

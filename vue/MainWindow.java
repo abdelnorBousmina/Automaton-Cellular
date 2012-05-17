@@ -36,6 +36,7 @@ public class MainWindow {
 	private JPanel uiPanel;
 	private JPanel backgroundPanel;
 	private JPanel buttonsPanel;
+	private JPanel sizePanel;
 	private JPanel nbEntryPanel;
 	private JPanel posEntryPanel;
 	private Controlleur controlleur;
@@ -54,6 +55,10 @@ public class MainWindow {
 	private int tabY[];
 	private int nbLigneGrille = 11;
 	private int nbColGrille = 11;
+	private final int SIZE_MAX = 15;
+	private JComboBox cbNbLigne;
+	private JComboBox cbNbCol;
+	private JLabel lblSize;
 	private ArrayList<JComboBox> tabCombobox ;
 	private float lambda = 1.5f;
 	private ChartLine chartline;
@@ -83,6 +88,9 @@ public class MainWindow {
 		buttonsPanel.setLayout(new GridLayout(3,3,5,5));
 		buttonsPanel.setBorder(new EmptyBorder(30,30,30,30));
 
+		// Panel choix taille grille
+		sizePanel = new JPanel();
+		
 		// Panel choix nombre d'entrée
 		nbEntryPanel = new JPanel();
 		nbEntryPanel.setLayout(new GridLayout(3,2,5,5));
@@ -90,12 +98,12 @@ public class MainWindow {
 		
 		// Panel choix du positionnement des entrées
 		posEntryPanel = new JPanel();
-		posEntryPanel.setLayout(new GridLayout(0,4,5,5));
+		posEntryPanel.setLayout(new GridLayout(0,4));
 		posEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
 		// Panel user interface
 		uiPanel = new JPanel();
-		uiPanel.setLayout(new BorderLayout());
+		uiPanel.setLayout(new GridLayout(4,1,5,5));
 		uiPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
 		// Boutons
@@ -124,7 +132,7 @@ public class MainWindow {
 		fieldLambda.setValue(lambda);
 		lblLambda = new JLabel("Coût déplacement diagonal: ");
 		lblLambda.setLabelFor(lblLambda);
-		
+				
 		newFigure = new JCheckBox();
 		newFigure.setSelected(true);
 		newFigure.setEnabled(false);
@@ -138,6 +146,27 @@ public class MainWindow {
 		nbEntryPanel.add(lblnewFigure);
 		nbEntryPanel.add(newFigure);
 		
+		// taille de la grille 
+		Integer[] size = new Integer[SIZE_MAX];
+		
+		for(int i = 1; i <= SIZE_MAX ; i++) size[i - 1] = i;
+		
+		cbNbLigne = new JComboBox(size);
+		cbNbCol = new JComboBox(size);
+		lblSize = new JLabel("Taille de grille");
+		cbNbLigne.setSelectedIndex(nbLigneGrille-1);
+		cbNbCol.setSelectedIndex(nbColGrille-1);
+		
+		JLabel lblligne = new JLabel("lignes");
+		JLabel lblcol = new JLabel("colonnes");
+		
+		sizePanel.add(lblSize);	
+		sizePanel.add(cbNbLigne);
+		sizePanel.add(lblligne);
+		sizePanel.add(cbNbCol);
+		sizePanel.add(lblcol);
+		
+		uiPanel.add("North",sizePanel);
 		uiPanel.add("North",nbEntryPanel);
 		uiPanel.add("Center",posEntryPanel);
 		uiPanel.add("South",buttonsPanel);
@@ -163,6 +192,9 @@ public class MainWindow {
 				ArrayList<JLabel> tabLabel = new ArrayList<JLabel>();
 				
 				tabCombobox = new ArrayList<JComboBox>();
+				
+				nbLigneGrille = cbNbLigne.getSelectedIndex() + 1;
+				nbColGrille = (Integer) cbNbCol.getItemAt(cbNbCol.getSelectedIndex());
 				
 				Integer[] choixLigne = new Integer[nbLigneGrille];
 				Integer[] choixColonne = new Integer[nbColGrille];
@@ -239,6 +271,7 @@ public class MainWindow {
 					{
 						chartline = new ChartLine("Sortie des personnes");
 					}
+										
 					controlleur = new Controlleur(tabX, tabY,nbLigneGrille,nbColGrille, lambda,chartline);	
 					backgroundPanel.add("Center",controlleur.getDrawArea());
 					frame.repaint();
