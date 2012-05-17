@@ -9,6 +9,7 @@ import javax.swing.Timer;
 
 import model.Grille;
 import model.Person;
+import vue.Chart;
 import vue.ChartLine;
 import vue.DrawAreaUI;
 import vue.GrilleUI;
@@ -42,7 +43,19 @@ public class Controlleur {
 	 */
 	private Timer timer;
 	
-	private ChartLine chartL;
+	/**
+	 * Diagramme d'affichage des dates de sortie
+	 */
+	private ChartLine chartExit;
+	
+	/**
+	 * Diagramme des distances avant sortie
+	 */
+	private Chart chartDistance;
+	
+	/**
+	 * Nombre d'itérations depuis le début du traitement
+	 */
 	private int nbIterations;
 		
 	/**
@@ -88,11 +101,16 @@ public class Controlleur {
 		
 		addPerson(new Person(16,5,9, this));
 		
-		chartL = new ChartLine("Sortie des personnes");
+		/*
+		 * STEP 3 : Définition des charts 
+		 */
+		chartExit = new ChartLine("Sortie des personnes");
 		nbIterations = 0;
 		
+		chartDistance = new Chart("Distance parcourue");
+		
 		/*
-		 * STEP 3 : Définition du timer (toute les 1 secondes)
+		 * STEP 4 : Définition du timer (toute les 1 secondes)
 		 */
 		timer = new Timer( 1000, new ActionListener() {
 			@Override
@@ -119,7 +137,9 @@ public class Controlleur {
 						it2.remove();
 						// en 1 iteration, l'indivitdu se déplace de 0.4m à 1m/s
 						// il s'écoule donc 0.4 seconde par itération 
-						chartL.addPoint(nbIterations * temps, "Dates de sortie", Integer.toString(p.getId()));
+						chartExit.addPoint(nbIterations * temps, "Dates de sortie", Integer.toString(p.getId()));
+						chartDistance.addPoint(p.getDistance(), "Distances", Integer.toString(p.getId()));
+						
 						drawArea.removePersonUi(p.getUi());					
 					}
 				}

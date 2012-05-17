@@ -10,7 +10,7 @@ import vue.PersonUI;
  * @author albin
  *
  */
-public class Person implements Cloneable{
+public class Person implements Cloneable {
 	
 	/**
 	 * Colonne
@@ -21,6 +21,16 @@ public class Person implements Cloneable{
 	 * Le Controlleur qui gère cette instance
 	 */
 	private Controlleur controlleur;
+	
+	/**
+	 * Distance à rajouter lors du parcours d'une diagonale
+	 */
+	private static int diagonalLength = 0;
+	
+	/**
+	 * La distance parcourue par cette personne
+	 */
+	private int distance;
 	
 	/**
 	 * Id
@@ -56,6 +66,7 @@ public class Person implements Cloneable{
 		posPrec = new Integer[2];
 		model = new MathModel();
 		id = -1;
+		distance = 0;
 	}
 	
 	/**
@@ -75,6 +86,7 @@ public class Person implements Cloneable{
 		posPrec[1] = y;
 		model = new MathModel();
 		controlleur = c;
+		distance = 0;
 	}
 	
 	/**
@@ -102,6 +114,13 @@ public class Person implements Cloneable{
 	 */
 	public Controlleur getControlleur() {
 		return controlleur;
+	}
+	
+	/**
+	 * @return la distance parcourue
+	 */
+	public int getDistance() {
+		return distance;
 	}
 	
 	/**
@@ -204,6 +223,7 @@ public class Person implements Cloneable{
 	{
 		this.ligne = p.ligne;
 		this.colonne = p.colonne;
+		this.distance = p.distance;
 	}
 
 	/**
@@ -211,7 +231,6 @@ public class Person implements Cloneable{
 	 * @param movement Tableau renvoyée par MathModel.bouger()
 	 * @return True si la personne est encore dans le grille, False sinon
 	 */
-	//public void updatePosition(Integer[] movement)
 	public Boolean updatePosition()
 	{
 		Boolean retour = true;
@@ -220,11 +239,9 @@ public class Person implements Cloneable{
 		Integer[] mvt = model.bouger(new Neighborhood(this));
 		
 		// Définition des variables pour la nouvelle position
-		Integer nextligne = ligne + mvt[0];
-		Integer nextcolonne = colonne + mvt[1];
 		Integer[] nextPos = new Integer[3];
-		nextPos[0] = nextligne;
-		nextPos[1] = nextcolonne;
+		nextPos[0] = ligne + mvt[0];
+		nextPos[1] = colonne + mvt[1];
 		nextPos[2] = id;
 		
 		// On vérifie si la case est libre
@@ -238,6 +255,21 @@ public class Person implements Cloneable{
 					colonne < 0 || colonne > getGrille().getNbColonnes() - 1 )
 			{
 				retour = false;
+			}
+			else
+			{
+				// Si la personne ne s'est pas déplacée en diagonale, on augmente la distance
+				if(Math.abs(mvt[0] + mvt[1]) == 1)
+				{					
+					//System.out.println("Depla. ligne - " + distance);
+					distance = distance + 1;
+				}
+				// Si elle déplacée en diagonale, on change l'opération
+				else if(mvt[0] != 0 && mvt[1] != 0)
+				{
+					//System.out.println("Depla. diag - " + distance);
+					distance = distance + 1 + diagonalLength;
+				}
 			}
 		}
 		

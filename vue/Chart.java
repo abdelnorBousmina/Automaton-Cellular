@@ -75,7 +75,6 @@ public class Chart extends JFrame {
     public void addPoint(double val, String serie, String cat)
     {
     	dataset.addValue(val, serie, cat);
-    	System.out.println("point ajouté");
     }
     
     /**
@@ -88,7 +87,7 @@ public class Chart extends JFrame {
         final JFreeChart chart = ChartFactory.createBarChart3D(
             chartTitle,       			 // chart title
             "ID Personnes",              // domain axis label
-            "Secondes",                  // range axis label
+            "Unités",                  // range axis label
             dataset,                     // data
             PlotOrientation.HORIZONTAL,  // orientation
             true,                        // include legend
