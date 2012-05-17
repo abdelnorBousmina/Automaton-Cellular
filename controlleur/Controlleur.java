@@ -9,6 +9,7 @@ import javax.swing.Timer;
 
 import model.Grille;
 import model.Person;
+import vue.ChartLine;
 import vue.DrawAreaUI;
 import vue.GrilleUI;
 import vue.PersonUI;
@@ -39,6 +40,9 @@ public class Controlleur {
 	 * Timer permettant le déplacement régulier
 	 */
 	private Timer timer;
+	
+	private ChartLine chartL;
+	private int nbIterations;
 		
 	/**
 	 * Constructeur par défaut. Crée une nouvelle DrawAreaUI et une nouvelle Grille.
@@ -82,7 +86,10 @@ public class Controlleur {
 		addPerson(new Person(15,8,1, this));
 		
 		addPerson(new Person(16,5,9, this));
-
+		
+		chartL = new ChartLine("Sortie des personnes");
+		nbIterations = 0;
+		
 		/*
 		 * STEP 3 : Définition du timer (toute les 1 secondes)
 		 */
@@ -91,7 +98,6 @@ public class Controlleur {
 			public void actionPerformed(ActionEvent e) {
 				
 				ArrayList<Person> clonePersonnes = new ArrayList<Person>();
-				
 				for (Person p : personnes )
 				{
 					clonePersonnes.add((Person) p.clone());
@@ -110,7 +116,8 @@ public class Controlleur {
 					{
 						it.remove();	
 						it2.remove();
-						drawArea.removePersonUi(p.getUi());						
+						chartL.addPoint(nbIterations, "Dates de sortie", Integer.toString(p.getId()));
+						drawArea.removePersonUi(p.getUi());					
 					}
 				}
 				resolveConflicts(clonePersonnes);
@@ -121,7 +128,7 @@ public class Controlleur {
 				}
 				
 				drawArea.updateItems();
-
+				nbIterations++;
 			}
 		} );
 		timer.setInitialDelay(1000);

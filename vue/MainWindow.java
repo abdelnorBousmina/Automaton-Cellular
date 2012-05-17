@@ -22,8 +22,6 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import model.Person;
-
 import controlleur.Controlleur;
 
 
@@ -323,25 +321,6 @@ public class MainWindow {
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
 		MainWindow mw = new MainWindow();
-
-
-		/*Person person = new Person();
-		person.setX(1);
-		person.setY(1);
-
-		//System.out.println(g.getValue(person.getX(), person.getY()));
-
-		Neighborhood nbh = new Neighborhood(g, person);
-
-		//nbh.afficherNeighborhood();
-
-		MathModel model = new MathModel();
-		Integer[] mvt = model.bouger(nbh);
-
-		person.updatePosition(mvt);
-
-		//System.out.println("NEW PERSON'S POS : (" + person.getX() + " , " + person.getY() + ")");*/
-
 	}
 
 }
