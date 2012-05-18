@@ -10,11 +10,26 @@
 	\item La pièce est divisée en une grille rectangulaire. La porte de sortie a une valeur de 1.
 	\item Ensuite, toutes les cellules adjacente à la précédente (un second ``layer'' de cellules) se voient assigner des valeurs de la façon suivante :
 		\begin{enumerate}
-			\item Si une cellule a une valeur $N$, alors la cellule adjacente dans les directions verticales et horizontales ont une valeur $N + 1$. Nous allons permettre les déplacements en diagonale, donc il est pertinent de considérer les cellules en diagonale. On leur assigne alors une valeur $N + \lambda$ avec $\lambda \sup 1$. Nous faisons cela dans le but de représenter le fait que la distance entre deux cases diagonalement est plus grande que celle entre deux cases horizontalement ou verticalement adjacentes. (Le papier a choisi une valeur arbitraire de $\lambda = 3$. Dans notre projet, la valeur est personalisable).
+			\item Si une cellule a une valeur $N$, alors la cellule adjacente dans les directions verticales et horizontales ont une valeur $N + 1$. Nous allons permettre les déplacements en diagonale, donc il est pertinent de considérer les cellules en diagonale. On leur assigne alors une valeur $N + \lambda$ avec $\lambda \sup 1$. Nous faisons cela dans le but de représenter le fait que la distance entre deux cases diagonalement est plus grande que celle entre deux cases horizontalement ou verticalement adjacentes. (Le papier a choisi une valeur arbitraire de $\lambda = 3$. Dans notre projet, la valeur est personnalisable).
 			\item Si il y a un conflit lors d'une assignation de valeur, alors la valeur minimum est assignée.
 		\end{enumerate}
 
 		\item Puis le troisième ``layer'' de cellules est calculé, composé de toutes les cellules adjacentes à celle du second, mais pas celle du premier.
 		\item Le processus est répété jusqu'à ce que toutes les cellules soient évaluées.
 		\item Les murs sont également considérés lors de la définition de la grille. Les cellules représentant les murs ont des valeurs très élevées. Cela assurera que les personnes ne choisiront jamais de se placer sur ces cellules. (Les obstacles seront donc gérés de la même façon).
-	\end{enumerate} 
+	\end{enumerate}
+	
+	\subsection{Le comportement des personnes} 
+	Les comportements des personnes sont également clairement expliqué dans le papier. A chaque itération, chaque personne va devoir décider de la case où elle va se déplacer. Dans le cas de ce modèle, elle va toujours choisir de se déplacer sur la case la plus proche de la sortie, adjacente à la case où elle se trouve actuellement (c'est à dire celle ayant la valeur la plus petite). Par définition, ce comportement est déterministe et ne représente donc pas correctement le comportement des personnes. Il a donc été proposé d'ajouter trois moyens de rendre l'ensemble non-déterministe :
+	
+	\begin{enumerate}
+		\item Si deux cases adjacentes ou plus ont la même valeur, il est aléatoirement décidé quelle case va être finalement choisie.
+		\item Si deux personnes tentent de se déplacer sur la même cellule, le conflit est résolu aléatoirement. Le gagnant se déplace, le perdant reste sur place. (Ce conflit, et le fait qu'une personne ne peut pas se rendre sur une case utilisée est la seule interaction entre les personnes).
+		\item Un état de ``panique'' est introduit. Ainsi, une personne a une certaine probabilité de se retrouver dans cet état et de rester sur la case sans bouger, même si le déplacement avait été possible. Dans ce modèle, la probabilité de panique a été fixée à $5\%$.
+	\end{enumerate}
+
+	
+	
+	
+	
+	
