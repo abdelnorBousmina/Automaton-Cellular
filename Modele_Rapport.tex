@@ -1,0 +1,93 @@
+\documentclass[twoside,UTF8]{EPURapport}
+\usepackage[utf8]{inputenc}
+\input{include.tex}
+
+\thedocument{Rapport de mini-projet}{Automaton Cellular}{Automaton Cellular}
+
+\grade{Département Informatique\\ 4\ieme{} année\\ 2011 - 2012}
+
+\authors{%
+	\category{Étudiants}{%
+		\name{Abdelnor BOUSMINA} \mail{abdelnor.bousmina@etu.univ-tours.fr}
+		\name{Albin POIGNOT} \mail{albin.poignot@etu.univ-tours.fr}
+	}
+	\details{DI4 2011 - 2012}
+}
+
+\supervisors{%
+	\category{Encadrants}{%
+		\name{Emmanuel NERON} \mail{emmanuel.neron@univ-tours.fr}
+	}
+	\details{Université François-Rabelais, Tours}
+}
+
+\abstracts{Implémentation d'un modèle mathématique simulant l'évacuation de piétons d'une salle. Elle génère également des diagrammes représentant certaines statistiques sur le déroulement de l'évacuation.}
+{java, évacuation, modèle mathématique, automate cellulaire}
+{Description en anglais}
+{java, evacuation, mathematic model, automaton cellular}
+
+\begin{document}
+
+\chapter{Introduction}
+	\section{Objectifs du projet}
+	Ce projet a pour objectif d'implémenter un modèle mathématique fourni. Ce dernier simule le déplacement de piétons. Dans notre cas, nous voulons utiliser ce modèle pour simuler l'évacuation d'une salle remplie de personnes. L'application fournie également des diagrammes représentant différentes valeurs comme par exemple la durée passée dans la pièce avant de sortir, la distance parcourue, etc...
+	
+\chapter{Méthodes et résultats}
+	
+	\section{Solutions techniques}
+	Pour la réalisation de ce projet, nous avons choisi d'utiliser le langage Java. De plus, pour la gestion des diagrammes, nous avons également utilisé une librairie dédiée à cette tâche : JFreeChart. De façon à structurer les sources, nous avons mis en place une structure MVC (Model-View-Controler). Cette façon de programmer permet de séparer les différents modules en les rendant les plus indépendants possibles les uns des autres. Cela améliore la maintenabilité ainsi que la réutilisabilité du code.\\
+	En suivant cette méthode, voici comment nous avons organisé nos sources :
+	
+	\begin{enumerate}
+		\item Package "Controlleur"
+		\begin{itemize}
+			\item \textbf{Controller} : organise les interactions entre les classes du package Modele elle-même mais aussi entre les classes du package Modele et du package Vue
+		\end{itemize}
+		
+		\item Package "Modele"
+		\begin{itemize}
+			\item \textbf{Grille} : chargée de gérer la génération de la grille et de ses obstacles
+			\item \textbf{MathModel} : implémentation du modèle mathématique : fourni la prochaine position d'une personne
+			\item \textbf{Neighborhood} : fourni les cases voisines d'une personne
+			\item \textbf{Obstacle} : représente un obstacle
+			\item \textbf{Person} : représente une personne
+		\end{itemize}
+		
+		\item Package "Vue"
+		\begin{itemize}
+			\item \textbf{Chart} : dessine un diagramme en batons
+			\item \textbf{ChartLine} : dessine un diagramme dessinant une courbe
+			\item \textbf{DrawAreaUI} : aire de dessin des composants de l'application
+			\item \textbf{GrilleUI} : représente la partie graphique d'une instance de Grille 
+			\item \textbf{MainWindow} : fenêtre principale (contient la fonction main())
+			\item \textbf{PersonUI} : représente la partie graphique d'une instance de Personne
+		\end{itemize}
+	\end{enumerate}	
+	
+	Le schéma UML suivant fourni une vision globale des classes implémentées : \\
+	\input{UML.tex}
+	
+	
+	\section{Résultats obtenus}
+		L'application permet de personnaliser la position de la sortie. Le placement des obstacles à l'intérieur de la pièce correspond aux dispositions des tables dans une salle de classe. Une interface est fournie pour permettre cette personnalisation :
+		
+		\textbf{SCREENSHOT}
+		
+		Une fois cette personnalisation effectuée et validée, la grille est générée, et les fenêtres contenant les diagrammes s'ouvrent en parallèle. L'utilisateur n'a plus qu'à cliqué sur le boutons "Start" pour démarrer la simulation de l'évacuation. Cette dernière continuera jusqu'à ce que l'évacuation soit complète, en mettant à jour les diagrammes en temps réel. Cependant, l'utilisateur a la possibilité de stopper la simulation grâce au bouton "Stop".
+		
+		\textbf{SCREENSHOT}
+		
+\chapter{Analyse du projet}
+	\section{Compétences acquises}
+	Ce projet nous a permis d'asseoir nos compétences dans le développement Java. Cependant, la partie la plus importante a été de mêler nos enseignements en développement aux enseignements plus mathématiques que sont les matières de Sciences de la Décision.\\
+	
+	En fournissant des mesures exploitables lors de l'implémentation d'un modèle mathématique, il nous a été possible de voir concrètement le lien important qu'il existe en l'informatique et les mathématiques. Il est évident que grâce au mélange de ces deux domaines, ils nous été possible de fournir ``facilement'' et efficacement une simulation précise du fonctionnement du monde réel.
+	
+	\section{Améliorations possibles}
+
+	\section{Reste à faire}
+	
+\annexes
+
+\end{document}
+
