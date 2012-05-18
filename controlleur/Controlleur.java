@@ -124,25 +124,36 @@ public class Controlleur {
 				
 				Iterator<Person> it = clonePersonnes.iterator();
 				Iterator<Person> it2 = personnes.iterator();
+				
+				ArrayList<Person> personToRemove = new ArrayList<Person>();
+				
 				Person p;
+				Person p2;
 				while(it.hasNext())
 				{
 					p = it.next();
-					it2.next();
+					p2 = it2.next();
 					
 					// Dans le cas où la personne n'est plus dans le système
 					if(!p.updatePosition()) 
 					{
+						personToRemove.add(p2);
 						it.remove();	
-						it2.remove();
-						// en 1 iteration, l'indivitdu se déplace de 0.4m à 1m/s
-						// il s'écoule donc 0.4 seconde par itération 
 						
 						chartDistance.addPoint(p.getDistance(), "Distances", Integer.toString(p.getId()));
 						
 						drawArea.removePersonUi(p.getUi());					
 					}
 				}
+				Iterator<Person> it3 = personnes.iterator();
+				while(it3.hasNext())
+				{
+					p2 = it3.next();
+					if(personToRemove.contains(p2)){
+						it3.remove();
+					}
+				}
+				personToRemove.clear();
 				resolveConflicts(clonePersonnes);
 				
 				for(int i = 0; i < clonePersonnes.size(); i++)
@@ -151,6 +162,8 @@ public class Controlleur {
 				}
 				if(personnes.isEmpty())
 				{
+					// en 1 iteration, l'indivitdu se déplace de 0.4m à 1m/s
+					// il s'écoule donc 0.4 seconde par itération 
 					chartExit.addPoint(nbIterations * temps, "Dates de sortie", Integer.toString(tabX.length));
 					stopSimulation();
 				}
