@@ -30,9 +30,32 @@
 
 \chapter{Introduction}
 	\section{Objectifs du projet}
-	Ce projet a pour objectif d'implémenter un modèle mathématique fourni. Ce dernier simule le déplacement de piétons. Dans notre cas, nous voulons utiliser ce modèle pour simuler l'évacuation d'une salle remplie de personnes. L'application fournie également des diagrammes représentant différentes valeurs comme par exemple la durée passée dans la pièce avant de sortir, la distance parcourue, etc...
+	Ce projet a pour objectif d'implémenter un modèle mathématique fourni. Ce dernier simule le déplacement de piétons. Dans notre cas, nous voulons utiliser ce modèle pour simuler l'évacuation d'une salle remplie de personnes. L'application fournie également des diagrammes représentant le temps écoulé avant évacuation de la dernière personne ainsi que la distance parcourue.\\
+	Incluant certains facteurs aléatoires comme l'état de panique et la gestion des "collisions", de telles données vont permettre d'analyser l'influence des comportements imprévisibles des personnes lors d'une évacuation d'urgence.
 	
 \chapter{Méthodes et résultats}
+
+	\section{Modèle mathématique}
+	Le modèle mathématique utilisé a été présenté dans un papier écrit par A. Varasa, M.D. Cornejoa, D. Mainemera, B. Toledob, J. Rogana, V. Munoza et J.A. Valdiviaa. \\
+	Ce modèle représente une pièce comme une grille 2D. Chaque case de cette grille pouvant être vide, occupée par une personne ou par un obstacle. On considère que chaque case représente un espace de $0,4 * 0,4 m^2$ dans le monde réel. Cette surface est celle typiquement occupée par une personne dans une foule dense. Ainsi, en considérant une vitesse de marche moyenne de $1m/s$, lorsqu'une personne bouge de $0,4m$, on a donc $\Delta t \approx 0.4$.\\
+	Ensuite, les mouvements des personnes sont déterminé par (1) un plan fixe de la configuration de la salle, calculé de façon à ce que la case la plus proche de la sortie soit préférée, et par (2) l'interaction entre les personnes.
+	
+	\subsection{La configuration de la salle}
+	A la création du système, la taille de la pièce ainsi que la position de la sortie sont déterminées. En sachant cela, une valeur est assignée à chaque case, représentant sa distance à la porte : au plus la valeur est faible, au plus la case est proche de la sortie. C'est à partir de cette configuration statique que les personnes auront la possibilité de déterminer la prochaine case à rejoindre : celle qui a une valeur plus faible que là où il se trouve actuellement. \\
+	L'algorithme utilisé est très clairement décrit dans le papier :
+	\begin{enumerate}
+	\item La pièce est divisée en une grille rectangulaire. La porte de sortie a une valeur de 1.
+	\item Ensuite, toutes les cellules adjacente à la précédente (un second ``layer'' de cellules) se voient assigner des valeurs de la façon suivante :
+		\begin{enumerate}
+			\item Si une cellule a une valeur $N$, alors la cellule adjacente dans les directions verticales et horizontales ont une valeur $N + 1$. Nous allons permettre les déplacements en diagonale, donc il est pertinent de considérer les cellules en diagonale. On leur assigne alors une valeur $N + \lambda$ avec $\lambda \sup 1$. Nous faisons cela dans le but de représenter le fait que la distance entre deux cases diagonalement est plus grande que celle entre deux cases horizontalement ou verticalement adjacentes. (Le papier a choisi une valeur arbitraire de $\lambda = 3$. Dans notre projet, la valeur est personalisable).
+			\item Si il y a un conflit lors d'une assignation de valeur, alors la valeur minimum est assignée.
+		\end{enumerate}
+
+		\item Puis le troisième ``layer'' de cellules est calculé, composé de toutes les cellules adjacentes à celle du second, mais pas celle du premier.
+		\item Le processus est répété jusqu'à ce que toutes les cellules soient évaluées.
+		\item Les murs sont également considérés lors de la définition de la grille. Les cellules représentant les murs ont des valeurs très élevées. Cela assurera que les personnes ne choisiront jamais de se placer sur ces cellules. (Les obstacles seront donc gérés de la même façon).
+	\end{enumerate}
+
 	
 	\section{Solutions techniques}
 	Pour la réalisation de ce projet, nous avons choisi d'utiliser le langage Java. De plus, pour la gestion des diagrammes, nous avons également utilisé une librairie dédiée à cette tâche : JFreeChart. De façon à structurer les sources, nous avons mis en place une structure MVC (Model-View-Controler). Cette façon de programmer permet de séparer les différents modules en les rendant les plus indépendants possibles les uns des autres. Cela améliore la maintenabilité ainsi que la réutilisabilité du code.\\
@@ -64,23 +87,30 @@
 		\end{itemize}
 	\end{enumerate}	
 	
-	Le schéma UML suivant fourni une vision globale des classes implémentées : \\
-	\input{UML.tex}
+	Le schéma UML suivant fourni une vision globale des classes implémentées : ~\ref{fig:uml}\\
 	
+%	\input{UML.tex}
+	
+	\begin{figure}[!H]
+	\centering
+	\input{UML.tex}
+	\caption{Schéma UML des classes}
+	\label{fig:uml}
+	\end{figure}
 	
 	\section{Résultats obtenus}
-		L'application permet de personnaliser la position de la sortie. Le placement des obstacles à l'intérieur de la pièce correspond aux dispositions des tables dans une salle de classe. Une interface est fournie pour permettre cette personnalisation :
+	L'application permet de personnaliser la position de la sortie. Le placement des obstacles à l'intérieur de la pièce correspond aux dispositions des tables dans une salle de classe. Une interface est fournie pour permettre cette personnalisation : ~\ref{fig:distances_parcourues}
 		
-		\begin{figure}[htb]
+	\begin{figure}[!H]
 	\centering
 	\includegraphics[scale=0.7]{imagesPNG/personnalisation.png}
 	\caption{Représentation des distances parcourues}
 	\label{fig:distances_parcourues}
 	\end{figure}
 		
-		Une fois cette personnalisation effectuée et validée, la grille est générée, et les fenêtres contenant les diagrammes s'ouvrent en parallèle. L'utilisateur n'a plus qu'à cliqué sur le boutons "Start" pour démarrer la simulation de l'évacuation. Cette dernière continuera jusqu'à ce que l'évacuation soit complète, en mettant à jour les diagrammes en temps réel. Cependant, l'utilisateur a la possibilité de stopper la simulation grâce au bouton "Stop".
+	Une fois cette personnalisation effectuée et validée, la grille est générée, et les fenêtres contenant les diagrammes s'ouvrent en parallèle. L'utilisateur n'a plus qu'à cliqué sur le boutons "Start" pour démarrer la simulation de l'évacuation. Cette dernière continuera jusqu'à ce que l'évacuation soit complète, en mettant à jour les diagrammes en temps réel. Cependant, l'utilisateur a la possibilité de stopper la simulation grâce au bouton "Stop".
 		
-		\textbf{SCREENSHOT}
+	\textbf{SCREENSHOT}
 		
 \chapter{Analyse du projet}
 	\section{Compétences acquises}
@@ -88,14 +118,14 @@
 	
 	En fournissant des mesures exploitables lors de l'implémentation d'un modèle mathématique, il nous a été possible de voir concrètement le lien important qu'il existe en l'informatique et les mathématiques. Il est évident que grâce au mélange de ces deux domaines, ils nous été possible de fournir ``facilement'' et efficacement une simulation précise du fonctionnement du monde réel.
 	
-	\begin{figure}[htb]
+	\begin{figure}[!H]
 	\centering
 	\includegraphics[scale=0.7]{imagesPNG/dateSortie.png}
 	\caption{Représentation des dates de sortie}
 	\label{fig:date_sortie}
 	\end{figure}
 	
-	\begin{figure}[htb]
+	\begin{figure}[!H]
 	\centering
 	\includegraphics[scale=0.7]{imagesPNG/distanceParcourue.png}
 	\caption{Représentation des distances parcourues}
