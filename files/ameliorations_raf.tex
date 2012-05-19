@@ -1,1 +1,23 @@
 \section{Améliorations possibles / Reste à faire}
+Le modèle mathématique actuellement utilisé est assez limité. Bien que reproduisant plus ou moins fidèlement le comportement de personnes lors d'une évacuation d'urgence, il prend en compte très peu de paramètres extérieurs. Il serait possible d'ajouter, par exemple, la gestion d'obstacles de nature diverses :
+
+	\begin{enumerate}
+		\item Obstacle n'occupant qu'une partie d'une case
+		\item Obstacles mobiles
+		\item etc...
+	\end{enumerate}
+	
+Un autre modèle étudié au début du projet mais qui n'a pas été retenu (nommé \textit{EVAC}, publié dans un papier de Pablo Cristian Tisser, Marcela Printista et Marcelo Luis Errecalde) gérait également l'``état'' des cases. Les états retenus étaient les suivants : 
+
+	\begin{enumerate}
+		\item \textbf{W} - Mur extérieur
+		\item \textbf{E} - Cellule vide
+		\item \textbf{P} - Cellule avec une personne
+		\item \textbf{O} - Obstacle
+		\item \textbf{S} - Cellule avec de la fumée
+		\item \textbf{SF} - Cellule avec de la fumée et du feu
+		\item \textbf{PS} - Cellule avec une personne et de la fumée
+		\item \textbf{PSF} - Cellule avec une personne, de la fumée et du feu
+	\end{enumerate}
+	
+Le modèle gérait également un nombre de ``points de dommage'' pour chaque personne. Ces points étaient pris compte dans la résolution des collisions. Intuitivement, on voit que prendre en compte ce type de caractéristiques pourraient rendre la simulation plus précise, notamment dans le cas d'une évacuation lors d'un incendie. Il pourrait être intéressant de les intégrer dans le programme actuellement utilisé et comparer les résultats lors de l'exécution des deux types de simulation.
