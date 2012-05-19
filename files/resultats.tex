@@ -1,12 +1,36 @@
 \section{Résultats obtenus}
-	L'application permet de personnaliser la position de la sortie. Le placement des obstacles à l'intérieur de la pièce correspond aux dispositions des tables dans une salle de classe. Une interface est fournie pour permettre cette personnalisation : Figure~\ref{fig:distances_parcourues}
-		
-	\begin{figure}[!H]
+	L'application finale permet de personnaliser différentes choses. Une interface graphique permet d'effectuer ces personnalisations avant de lancer la simulation (Figure~\ref{fig:personnalisation}). Les personnalisations possibles sont les suivantes :
+	
+	\begin{enumerate}
+		\item La position de la (ou des) sorties
+		\item Le placement des obstacles au sein de la pièce
+		\item La position des personnes présentes dans la pièce
+	\end{enumerate}		
+
+	\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{imagesPNG/personnalisation.png}
-	\caption{Représentation des distances parcourues\label{fig:distances_parcourues}}
+	\caption{Représentation des distances parcourues\label{fig:personnalisation}}
 	\end{figure}
 		
-	Une fois cette personnalisation effectuée et validée, la grille est générée, et les fenêtres contenant les diagrammes s'ouvrent en parallèle. L'utilisateur n'a plus qu'à cliqué sur le boutons "Start" pour démarrer la simulation de l'évacuation. Cette dernière continuera jusqu'à ce que l'évacuation soit complète, en mettant à jour les diagrammes en temps réel. Cependant, l'utilisateur a la possibilité de stopper la simulation grâce au bouton "Stop".
-		
-	\textbf{SCREENSHOT}
+	Une fois cette personnalisation effectuée et validée, la grille est générée, et les fenêtres contenant les diagrammes s'ouvrent en parallèle. L'utilisateur n'a plus qu'à cliquer sur le bouton "Start" pour démarrer la simulation de l'évacuation. Cette dernière continuera jusqu'à ce que l'évacuation soit complète, en mettant à jour les diagrammes en temps réel. A la fin de la simulation, le programme ajoute la date de sortie de la dernière personne de façon à pouvoir comparer les temps d'évacuation de différentes configurations ou la variation de cette date pour une même configuration selon le comportement aléatoire des personnes. On notera également que l'utilisateur a la possibilité de stopper la simulation grâce au bouton "Stop". \\
+	
+	La Figure~\ref{fig:captureGlobale} montre l'affichage lorsqu'une simulation est en cours. La Figure~\ref{fig:distances_parcourues} représente quant à elle un diagramme listant les distances parcourues par les personnes. Enfin, la Figure~\ref{fig:dateSortie} montre une courbe représentant les dates de sortie des dernières personnes de plusieurs simulations.
+
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{imagesPNG/captureGlobale.png}
+	\caption{Représentation des distances parcourues\label{fig:distances_parcourues}}
+	\end{figure}
+
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{imagesPNG/distanceParcourue.png}
+	\caption{Représentation des distances parcourues\label{fig:distances_parcourues}}
+	\end{figure}
+	
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{imagesPNG/dateSortie.png}
+	\caption{Représentation des distances parcourues\label{fig:distances_parcourues}}
+	\end{figure}
