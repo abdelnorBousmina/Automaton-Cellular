@@ -30,12 +30,19 @@
 	
 	Le schéma UML suivant fourni une vision globale des classes implémentées : Figure~\ref{fig:uml}\\
 	
-%	\input{UML.tex}
-	
-	\begin{figure}[!H]
+	\begin{figure}[H]
 	\centering
 	\input{UML.tex}
 	\caption{Schéma UML des classes\label{fig:uml}}
 	\end{figure}
+	
+	\subsection{Méthode d'implémentation}
+	Chaque classe a un but bien précis. Elles communiquent entre elles dans le cas où cela est nécessaire. Cette partie va expliquer ces interactions. Sa lecture permettra de comprendre le fonctionnement global du code. \\
+	
+	Tout d'abord, chaque classe du package ``Model'' a accès à sa partie graphique du package ``View''. Les relations entre ces deux types de classe est donc effectué au sein même des classes. Par exemple, c'est l'instance de la classe \textbf{Person} qui est chargée de mettre à jour la position de l'instance de la classe \textbf{PersonUI} correspondante. La cohérence du système entre les classes \textit{conceptuelles} et les classes de \textit{visualisation} est donc assurée sans passer par une entité intermédiaire. \\
+	
+	Sachant cela, on peut considérer que la classe ``centrale'' est la classe \textbf{Controller}. Cette dernière régit toutes les relations et les communications entre les classes n'ayant pas de liens ``directs''. Elle assure notamment les connexions entre les classes du package \textit{Model}. Les classes présentes au sein de ce package n'ont pas connaissance les unes des autres. Cette fois, la cohérence du système est assurée grâce à une classe intermédiaire : la classe \textbf{Controller}.\\
+	
+	En plus d'assurer les communications évoquées ci-dessus, la classe \textbf{Controller} se charge également de déclencher les mises à jour du système. Effectivement, c'est à cette classe que revient la gestion du \textit{Timer} qui met régulièrement le système à jour en demandant à chaque personne de choisir sa prochaine position. Une fois cette mise à jour effectuée, il commande la mise à jour de l'affichage. On notera que cette mise à jour est gérée par les composants du paquet ``View'' et non pas par le contrôleur.
 	
 	
