@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.Timer;
 
@@ -65,41 +66,27 @@ public class Controlleur {
 	 * @param tabX : abscisses des entrées
 	 * @param tabY : ordonnées des entrées
 	 */
-	public Controlleur(final int[] tabX, int[] tabY, int nbLigne, int nbCol, float lambda, ChartLine chartline)
+	public Controlleur(Grille lagrille,List<Integer[]> lesPersonnes, ChartLine chartline)
 	{
 			
 		/*
 		 *  STEP 1 : Définition de la grille
 		 */
 		drawArea = new DrawAreaUI();
-		grille = new Grille(nbLigne,nbCol,tabX, tabY, lambda);
+		this.grille = lagrille;
 		drawArea.setGrilleUi(new GrilleUI(grille));
 		drawArea.paintGrille();
 		
 		/*
 		 * STEP 2 : Définition des personnes
 		 */
-		personnes = new ArrayList<Person>();
-		
-		addPerson(new Person(1,2,5, this));
-		addPerson(new Person(2,3,5, this));
-		addPerson(new Person(3,4,5, this));
-		addPerson(new Person(4,7,5, this));
-		addPerson(new Person(5,8,5, this));
-		
-		addPerson(new Person(6,2,3, this));
-		addPerson(new Person(7,3,3, this));
-		addPerson(new Person(8,4,3, this));
-		addPerson(new Person(9,7,3, this));
-		addPerson(new Person(10,8,3, this));
-		
-		addPerson(new Person(11,2,1, this));
-		addPerson(new Person(12,3,1, this));
-		addPerson(new Person(13,4,1, this));
-		addPerson(new Person(14,7,1, this));
-		addPerson(new Person(15,8,1, this));
-		
-		addPerson(new Person(16,5,9, this));
+		this.personnes = new ArrayList<Person>();
+		int i = 0;
+		for(Integer[] p: lesPersonnes)
+		{
+			addPerson(new Person(i, p[0], p[1], this));
+			i++;
+		}
 		
 		/*
 		 * STEP 3 : Définition des charts 
@@ -164,7 +151,7 @@ public class Controlleur {
 				{
 					// en 1 iteration, l'indivitdu se déplace de 0.4m à 1m/s
 					// il s'écoule donc 0.4 seconde par itération 
-					chartExit.addPoint(nbIterations * temps, "Dates de sortie", Integer.toString(tabX.length));
+					chartExit.addPoint(nbIterations * temps, "Dates de sortie", Integer.toString(grille.getNbExit()));
 					stopSimulation();
 				}
 				drawArea.updateItems();

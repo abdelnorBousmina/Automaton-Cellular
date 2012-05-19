@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -20,11 +23,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
-import controlleur.Controlleur;
 
+import model.Grille;
+import controlleur.Controlleur;
+import model.Obstacle;
 
 /**
  * @author bous
@@ -39,6 +45,7 @@ public class MainWindow {
 	private JPanel sizePanel;
 	private JPanel nbEntryPanel;
 	private JPanel posEntryPanel;
+	private JPanel obsAndPersPanel;
 	private Controlleur controlleur;
 	private JButton start; 
 	private JButton stop;
@@ -48,6 +55,10 @@ public class MainWindow {
 	private JLabel lblLambda;
 	private JFormattedTextField fieldNbEntries;
 	private JLabel lblNbEntries;
+	private JTextField fieldObstacles;
+	private JLabel lblObstacles;
+	private JTextField fieldPersonnes;
+	private JLabel lblPersonnes;
 	private JCheckBox newFigure;
 	private JLabel lblnewFigure;
 	private int nbEntries;
@@ -62,8 +73,11 @@ public class MainWindow {
 	private ArrayList<JComboBox> tabCombobox ;
 	private float lambda = 1.5f;
 	private ChartLine chartline;
+	private List<Integer[]> personnes;
+	private List<Obstacle> obstacles; 
 	
-	
+	private final String patternObstacle = "([0-9]+),([0-9]+);([0-9]+),([0-9]+)";
+	private final String patternPersonne = "([0-9]+),([0-9]+)";
 	public MainWindow()
 	{
 		/**
@@ -83,28 +97,35 @@ public class MainWindow {
 		backgroundPanel.setBorder(new EmptyBorder(30,30,30,30));
 		backgroundPanel.setPreferredSize(new Dimension(500,500));
 
-		// Panel boutons
-		buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(3,3,5,5));
-		buttonsPanel.setBorder(new EmptyBorder(30,30,30,30));
-
+		// Panel user interface
+		uiPanel = new JPanel();
+		uiPanel.setLayout(new GridLayout(5,1,5,5));
+		uiPanel.setBorder(new EmptyBorder(30,5,30,5));
+		uiPanel.setPreferredSize(new Dimension(500, 600));
+		uiPanel.setMinimumSize(new Dimension(500, 600));
+		
 		// Panel choix taille grille
 		sizePanel = new JPanel();
 		
+		// Panel choix obstacles et personnes
+		obsAndPersPanel = new JPanel();
+		obsAndPersPanel.setLayout(new GridLayout(3,2));
+	//	obsAndPersPanel.setBorder(new EmptyBorder(30,30,30,30));
+		
 		// Panel choix nombre d'entrée
 		nbEntryPanel = new JPanel();
-		nbEntryPanel.setLayout(new GridLayout(3,2,5,5));
-		nbEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
+		nbEntryPanel.setLayout(new GridLayout(3,2));
+	//	nbEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
 		// Panel choix du positionnement des entrées
 		posEntryPanel = new JPanel();
 		posEntryPanel.setLayout(new GridLayout(0,4));
-		posEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
+	//	posEntryPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
-		// Panel user interface
-		uiPanel = new JPanel();
-		uiPanel.setLayout(new GridLayout(4,1,5,5));
-		uiPanel.setBorder(new EmptyBorder(30,30,30,30));
+		// Panel boutons
+		buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new GridLayout(3,3,5,5));
+	//	buttonsPanel.setBorder(new EmptyBorder(30,30,30,30));
 		
 		// Boutons
 		start = new JButton("start");
@@ -166,10 +187,28 @@ public class MainWindow {
 		sizePanel.add(cbNbCol);
 		sizePanel.add(lblcol);
 		
-		uiPanel.add("North",sizePanel);
-		uiPanel.add("North",nbEntryPanel);
-		uiPanel.add("Center",posEntryPanel);
-		uiPanel.add("South",buttonsPanel);
+		// Obstacles et Personnes
+		lblObstacles = new JLabel("Obstacles ([xDebut,yDebut;xFin,yFin]");
+		lblPersonnes = new JLabel("Personnes ([x,y])");
+		fieldObstacles = new JTextField();
+		
+		fieldObstacles.setText("[2,2;4,2][7,2;8,2][2,4;4,4][7,4;8,4][2,6;4,6][7,6;8,6][5,8;6,8]");	
+		fieldObstacles.setMaximumSize(new Dimension(50, 30));
+		fieldPersonnes = new JTextField();
+		fieldPersonnes.setText("[2,1][3,1][4,1][7,1][8,1][2,3][3,3][4,3][7,3][8,3][2,5][3,5][4,5][7,5][8,5][6,9]");
+		lblObstacles.setLabelFor(fieldObstacles);
+		lblPersonnes.setLabelFor(fieldPersonnes);
+		
+		obsAndPersPanel.add(lblObstacles);
+		obsAndPersPanel.add(fieldObstacles);
+		obsAndPersPanel.add(lblPersonnes);
+		obsAndPersPanel.add(fieldPersonnes);
+		
+		uiPanel.add(sizePanel);
+		uiPanel.add(obsAndPersPanel);
+		uiPanel.add(nbEntryPanel);
+		uiPanel.add(posEntryPanel);
+		uiPanel.add(buttonsPanel);
 		
 		// Ajout du panel à la frame + dessin + affichage
 		frame.add("Center",backgroundPanel);
@@ -242,6 +281,9 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {						
 				
+				nbLigneGrille = cbNbLigne.getSelectedIndex() + 1;
+				nbColGrille = (Integer) cbNbCol.getItemAt(cbNbCol.getSelectedIndex());
+				
 				tabX = new int[nbEntries];
 				tabY = new int[nbEntries];
 				
@@ -257,30 +299,42 @@ public class MainWindow {
 					
 					i++;
 				}
-				
-				if(isValidEntry())
-				{					
-					posEntryPanel.removeAll();
-					if(controlleur != null){
-						backgroundPanel.remove(controlleur.getDrawArea());
-					}
-					
-					lambda = Float.parseFloat(fieldLambda.getText().replace(",","."));
-					
-					if(newFigure.isSelected())
-					{
-						chartline = new ChartLine("Sortie des personnes");
-					}
-										
-					controlleur = new Controlleur(tabX, tabY,nbLigneGrille,nbColGrille, lambda,chartline);	
-					backgroundPanel.add("Center",controlleur.getDrawArea());
-					frame.repaint();
-					frame.pack();					
-					start.setEnabled(true);
-				}
-				else
+				setPersonnes();
+				setObstacles();
+				if(areValidObstacles())
 				{
-					JOptionPane.showMessageDialog(frame, "Entrée(s) invalide(s)");
+					if(areValidPersonnes())
+					{
+						if(isValidEntry())
+						{					
+							posEntryPanel.removeAll();
+							if(controlleur != null){
+								backgroundPanel.remove(controlleur.getDrawArea());
+							}
+							
+							lambda = Float.parseFloat(fieldLambda.getText().replace(",","."));
+							
+							if(newFigure.isSelected())
+							{
+								chartline = new ChartLine("Sortie des personnes");
+							}
+							Grille grille = new Grille(nbLigneGrille, nbColGrille, tabX, tabY, lambda, obstacles);
+							controlleur = new Controlleur(grille, personnes ,chartline);	
+							backgroundPanel.add("Center",controlleur.getDrawArea());
+							frame.repaint();
+							frame.pack();					
+							start.setEnabled(true);
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(frame, "Entrée(s) invalide(s)");
+						}
+					}else{
+						JOptionPane.showMessageDialog(frame, "Personne(s) invalide(s)");
+					}
+				}else
+				{
+					JOptionPane.showMessageDialog(frame, "Obstacle(s) invalide(s)");					
 				}
 			}
 
@@ -323,7 +377,8 @@ public class MainWindow {
 				{
 					chartline = new ChartLine("Sortie des personnes");
 				}
-				controlleur = new Controlleur(tabX, tabY, nbLigneGrille, nbColGrille, lambda,chartline);
+				Grille grille = new Grille(nbLigneGrille, nbColGrille, tabX, tabY, lambda, obstacles);
+				controlleur = new Controlleur(grille,personnes,chartline);
 				backgroundPanel.add("Center",controlleur.getDrawArea());
 
 				frame.repaint();
@@ -334,6 +389,105 @@ public class MainWindow {
 
 		});
 
+	}
+	private boolean areValidObstacles() {
+		boolean answer = true;
+		for(Obstacle o : obstacles)
+		{
+			if(o.getxDebut() <= 0 || o.getxDebut() >= nbLigneGrille -1)
+			{
+				answer = false;
+			}
+			if(o.getyDebut() <= 0 || o.getyDebut() >= nbColGrille - 1)
+			{
+				answer = false;
+			}
+			if(o.getxFin() <= 0 || o.getxFin() >= nbLigneGrille -1)
+			{
+				answer = false;
+			}
+			if(o.getyFin() <= 0 || o.getyFin() >= nbColGrille - 1)
+			{
+				answer = false;
+			}
+			
+		}
+		return answer;
+	}
+
+	private boolean areValidPersonnes() {
+		boolean answer = true;
+		int size = personnes.size();
+		for(int i = 0; i < size ; i++)
+		{
+			if(personnes.get(i)[0] < 1 || personnes.get(i)[0] >= nbLigneGrille - 1)
+				answer = false;
+			if(personnes.get(i)[1] < 1 || personnes.get(i)[1] >= nbColGrille - 1)
+				answer = false;
+			for(Obstacle o : obstacles)
+			{
+				//TODO obstacle != personne
+				if((personnes.get(i)[0] == o.getxDebut() || personnes.get(i)[0] == o.getxFin() ) && personnes.get(i)[1] >= o.getyDebut() && personnes.get(i)[1] <= o.getyFin())
+				{
+					answer = false;
+				}
+				if((personnes.get(i)[1] == o.getyDebut() || personnes.get(i)[1] == o.getyFin() ) && personnes.get(i)[0] >= o.getxDebut() && personnes.get(i)[0] <= o.getxFin())
+				{
+					answer = false;
+				}
+			}
+			for(int j = 0 ; j < size ; j++)
+			{
+				if( i != j)
+				{
+					if(personnes.get(i)[0] == personnes.get(j)[0] && personnes.get(i)[1] == personnes.get(j)[1] )
+						answer = false;
+				}
+			}
+		}
+		
+		return answer;
+	}
+	
+	private void setObstacles() {		
+		List<Obstacle> obstacles = new ArrayList<Obstacle>();
+		
+		String obstacle = fieldObstacles.getText();
+		
+		Pattern p = Pattern.compile(patternObstacle);
+		Matcher m = p.matcher(obstacle);
+		while (m.find())
+		{
+			obstacles.add(new Obstacle(Integer.parseInt(m.group(1)),
+					Integer.parseInt(m.group(2)),
+					Integer.parseInt(m.group(3)),
+					Integer.parseInt(m.group(4))));
+			/*System.out.println("["+Integer.parseInt(m.group(1)) +"," +
+					Integer.parseInt(m.group(2)) + ";" +
+					Integer.parseInt(m.group(3)) + "," +
+					Integer.parseInt(m.group(4))+ "]");*/
+			
+		}		
+		this.obstacles = obstacles;
+	}
+
+	private void setPersonnes() {
+		
+		List<Integer[]> listPersonnes = new ArrayList<Integer[]>();
+		
+		String personne = fieldPersonnes.getText();
+		
+		Pattern p = Pattern.compile(patternPersonne);
+		Matcher m = p.matcher(personne);
+		while (m.find())
+		{
+			Integer[] person = new Integer[2];			
+			person[0] = Integer.parseInt(m.group(1));
+			person[1] = Integer.parseInt(m.group(2));
+			listPersonnes.add(person);
+		}	
+		
+		this.personnes = listPersonnes;
 	}
 
 	/**

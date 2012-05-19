@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Grille {
@@ -35,6 +34,15 @@ public class Grille {
 	}
 
 	private int tabxExit[];
+	
+	private int nbExit;
+	/**
+	 * @return the nbExit
+	 */
+	public int getNbExit() {
+		return nbExit;
+	}
+
 	private int tabyExit[];
 	private float lambda = 1.5f;
 	private final int mur = 500;
@@ -47,29 +55,17 @@ public class Grille {
 	 * @param xExit numéro de ligne de la sortie
 	 * @param yExit numéro de colonne de la sortie
 	 */
-	public Grille(int lignes,int colonnes,int letabxExit[],int letabyExit[], float lambda)
+	public Grille(int lignes,int colonnes,int letabxExit[],int letabyExit[], float lambda, List<Obstacle> obstacles)
 	{
 		this.lambda = lambda;
 		this.nbLignes = lignes;
 		this.nbColonnes = colonnes;
 		this.tabxExit = letabxExit;
 		this.tabyExit = letabyExit;		
-
+		this.nbExit = letabxExit.length;
+		
 		grille = new float[nbLignes][nbColonnes];
 
-		List<Obstacle> obstacles = new ArrayList<Obstacle>();
-
-		obstacles.add(new Obstacle(2, 2, 4, 2));
-		obstacles.add(new Obstacle(7, 2, 8, 2));
-		obstacles.add(new Obstacle(2, 4, 4, 4));
-		obstacles.add(new Obstacle(7, 4, 8, 4));
-		obstacles.add(new Obstacle(2, 6, 4, 6));
-		obstacles.add(new Obstacle(7, 6, 8, 6));
-		obstacles.add(new Obstacle(5, 8, 6, 8));
-
-		//obstacles.add(new Obstacle(1, 2, 8, 2));
-		//obstacles.add(new Obstacle(1, 4, 8, 4));
-		
 		// Init murs verticaux
 		for(int i = 0; i < nbLignes; i++)
 		{
@@ -92,7 +88,7 @@ public class Grille {
 		}
 
 		// Init sortie
-		for(int i = 0; i < tabxExit.length; i++)
+		for(int i = 0; i < nbExit; i++)
 			grille[tabxExit[i]][tabyExit[i]] = sortie;
 
 		// Init obstacles
