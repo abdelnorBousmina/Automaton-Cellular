@@ -6,7 +6,7 @@ public class MathModel {
 	/**
 	 * Probabilité de panique des personnes dans le système
 	 */
-	private static Float panic = 0.05f;
+	private static Double panic = 0.05;
 
 	/**
 	 * Définit la prochaine position dans le voisinage de la case centrale du voisinage
@@ -20,7 +20,7 @@ public class MathModel {
 		Integer[] retour = new Integer[2];
 		int[] miniPos = new int[2];
 		
-		if(Math.random() >= panic)
+		if(panic.compareTo(Math.random()) < 0)
 		{		
 			miniPos = voisinage.getMiniPosition();
 		}

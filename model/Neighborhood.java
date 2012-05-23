@@ -3,6 +3,10 @@
  */
 package model;
 
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.Random;
+
 /**
  * @author albin
  *
@@ -87,24 +91,24 @@ public class Neighborhood {
 			{
 				voisinage[ligne][colonne] = 
 						grille.getValue(person.getLigne() + (ligne - 1), person.getColonne() + (colonne - 1));
-				
-				if(voisinage[ligne][colonne] < voisinage[miniX][miniY])
+								
+				if(voisinage[ligne][colonne].compareTo(voisinage[miniX][miniY]) < 0)
 				{
 					miniX = ligne;
 					miniY = colonne;
 				}
-				else if(voisinage[ligne][colonne] == voisinage[miniX][miniY])
+				else if(voisinage[ligne][colonne].compareTo(voisinage[miniX][miniY]) == 0)
 				{
 					double rnd = Math.random();
-					//System.out.println("Equ : ("+ligne+","+colonne+") ");
-					if(rnd <= 0.50f)
+					
+					if(rnd > 0.5)
 					{
 						miniX = ligne;
 						miniY = colonne;
 					}
 				}
 				
-			}
+			}			
 		}
 	}
 	

@@ -21,7 +21,7 @@ public class Controlleur {
 	/**
 	 * Probabilité de panique des personnes
 	 */
-	private final Float conflit = 0.5f;
+	private final Double conflit = 0.5;
 	private final Float temps = 0.4f;
 	
 	/**
@@ -236,7 +236,7 @@ public class Controlleur {
 				if(p.getLigne() == p2.getLigne()  && p.getColonne() == p2.getColonne() && p.getId() != p2.getId())
 				{
 					//System.out.println("conflit");					
-					if( Math.random() >= conflit )
+					if(conflit.compareTo(Math.random()) < 0 )
 					{
 						p.setLigne(personnes.get(i).getLigne());
 						p.setColonne(personnes.get(i).getColonne());
