@@ -53,7 +53,7 @@ public class MainWindow {
 	private JButton confirm;
 	private JFormattedTextField fieldLambda;
 	private JLabel lblLambda;
-	private JFormattedTextField fieldNbEntries;
+	private JTextField fieldNbEntries;
 	private JLabel lblNbEntries;
 	private JTextField fieldObstacles;
 	private JLabel lblObstacles;
@@ -78,6 +78,8 @@ public class MainWindow {
 	
 	private final String patternObstacle = "([0-9]+),([0-9]+);([0-9]+),([0-9]+)";
 	private final String patternPersonne = "([0-9]+),([0-9]+)";
+	private final String patternEntries = "([0-9]+),([0-9]+)";
+	
 	public MainWindow()
 	{
 		/**
@@ -133,7 +135,6 @@ public class MainWindow {
 		restart = new JButton("restart");	
 		confirm = new JButton("confirm");
 		
-		confirm.setEnabled(false);
 		start.setEnabled(false);
 		restart.setEnabled(false);
 		stop.setEnabled(false);
@@ -143,7 +144,8 @@ public class MainWindow {
 		buttonsPanel.add(stop);
 		buttonsPanel.add(restart);
 
-		fieldNbEntries = new JFormattedTextField(createFormatter("#"));
+		fieldNbEntries = new JTextField();
+		fieldNbEntries.setText("[1,0]");
 		lblNbEntries = new JLabel("Nombre d'entrées: ");
 		lblNbEntries.setLabelFor(fieldNbEntries);
 		
@@ -220,62 +222,7 @@ public class MainWindow {
 		/**
 		 * Definition des actions liées aux boutons
 		 */
-		
-		fieldNbEntries.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
 				
-				nbEntries = Integer.parseInt(fieldNbEntries.getText());
-				//System.out.print(nbEntries);
-				ArrayList<JLabel> tabLabel = new ArrayList<JLabel>();
-				
-				tabCombobox = new ArrayList<JComboBox>();
-				
-				nbLigneGrille = cbNbLigne.getSelectedIndex() + 1;
-				nbColGrille = (Integer) cbNbCol.getItemAt(cbNbCol.getSelectedIndex());
-				
-				Integer[] choixLigne = new Integer[nbLigneGrille];
-				Integer[] choixColonne = new Integer[nbColGrille];
-				
-				for(int i = 0; i < nbLigneGrille ; i++) choixLigne[i] = i + 1;
-				for(int i = 0; i < nbColGrille ; i++) choixColonne[i] = i + 1;
-				
-				for(int i = 0; i < nbEntries;i++)
-				{
-					JLabel lblLigne = new JLabel("n° ligne entrée " + (i+1) + ": ");
-					JComboBox choixNumLigne = new JComboBox(choixLigne);
-					choixNumLigne.setPreferredSize(new Dimension(20,5));
-					JLabel lnlColonne = new JLabel("n° colonne entrée " + (i+1) +": ");
-					JComboBox choixNumColonne = new JComboBox(choixColonne);
-					choixNumColonne.setPreferredSize(new Dimension(20,5));
-					
-					tabLabel.add(lblLigne);
-					tabLabel.add(lnlColonne);
-					tabCombobox.add(choixNumLigne);
-					tabCombobox.add(choixNumColonne);
-				}
-				
-				posEntryPanel.removeAll();
-				
-				Iterator<JLabel> it = tabLabel.iterator();
-				Iterator<JComboBox> it1 = tabCombobox.iterator();
-				JLabel lbl;
-				JComboBox cb;
-				while(it.hasNext())
-				{
-					lbl = it.next();
-					cb = it1.next();
-					posEntryPanel.add(lbl);
-					posEntryPanel.add(cb);
-					
-				}			
-				confirm.setEnabled(true);
-				frame.pack();
-				frame.repaint();
-			}
-		});
-		
 		confirm.addActionListener(new ActionListener() {
 
 			@Override
@@ -284,21 +231,7 @@ public class MainWindow {
 				nbLigneGrille = cbNbLigne.getSelectedIndex() + 1;
 				nbColGrille = (Integer) cbNbCol.getItemAt(cbNbCol.getSelectedIndex());
 				
-				tabX = new int[nbEntries];
-				tabY = new int[nbEntries];
-				
-				Iterator<JComboBox> it = tabCombobox.iterator();
-				JComboBox cb;
-				int i = 0;
-				while(it.hasNext())
-				{
-					cb = it.next();
-					tabX[i] = cb.getSelectedIndex();				
-					cb = it.next();
-					tabY[i] = cb.getSelectedIndex();
-					
-					i++;
-				}
+				setEntries();
 				setPersonnes();
 				setObstacles();
 				if(areValidObstacles())
@@ -488,6 +421,34 @@ public class MainWindow {
 		}	
 		
 		this.personnes = listPersonnes;
+	}
+	
+	private void setEntries() {
+		
+		List<Integer[]> listEntries = new ArrayList<Integer[]>();
+		
+		String entries = fieldNbEntries.getText();
+		
+		Pattern p = Pattern.compile(patternEntries);
+		Matcher m = p.matcher(entries);
+		while (m.find())
+		{
+			Integer[] entry = new Integer[2];			
+			entry[0] = Integer.parseInt(m.group(1));
+			entry[1] = Integer.parseInt(m.group(2));
+			listEntries.add(entry);
+		}	
+		
+		tabX = new int[listEntries.size()];
+		tabY = new int[listEntries.size()];
+		int i = 0;
+		for(Integer[] entry : listEntries)
+		{
+			tabX[i] = entry[0];
+			tabY[i] = entry[1];
+			i++;
+		}
+		
 	}
 
 	/**
