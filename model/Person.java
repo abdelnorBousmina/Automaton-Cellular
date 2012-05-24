@@ -228,7 +228,6 @@ public class Person implements Cloneable {
 
 	/**
 	 * Mets à jour la position de la personne
-	 * @param movement Tableau renvoyée par MathModel.bouger()
 	 * @return True si la personne est encore dans le grille, False sinon
 	 */
 	public Boolean updatePosition()

@@ -52,8 +52,10 @@ public class Grid {
 	 * Crée un tableau de float à 2 dimensions représentant une salle
 	 * @param lignes nombre de ligne
 	 * @param colonnes nombre de colonne
-	 * @param xExit numéro de ligne de la sortie
-	 * @param yExit numéro de colonne de la sortie
+	 * @param letabxExit les numéros de ligne des sorties
+	 * @param letabyExit les numéros de colonne des sorties
+	 * @param lambda la valeur de lambda
+	 * @param obstacles la liste des obstacles
 	 */
 	public Grid(int lignes,int colonnes,int letabxExit[],int letabyExit[], float lambda, List<Obstacle> obstacles)
 	{
