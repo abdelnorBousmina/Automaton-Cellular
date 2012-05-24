@@ -23,42 +23,42 @@ public class Controller {
 	 */
 	private final Double conflit = 0.5;
 	private final Float temps = 0.4f;
-	
+
 	/**
 	 * Aire de dessin
 	 */
 	private DrawAreaUI drawArea;
-	
+
 	/**
 	 * Grille du système
 	 */
 	private Grid grid;
-	
+
 	/**
 	 * Tableau des personnes actuellement dans le système
 	 */
 	private ArrayList<Person> personnes;
-	
+
 	/**
 	 * Timer permettant le déplacement régulier
 	 */
 	private Timer timer;
-	
+
 	/**
 	 * Diagramme d'affichage des dates de sortie
 	 */
 	private ChartLine chartExit;
-	
+
 	/**
 	 * Diagramme des distances avant sortie
 	 */
 	private Chart chartDistance;
-	
+
 	/**
 	 * Nombre d'itérations depuis le début du traitement
 	 */
 	private int nbIterations;
-		
+
 	/**
 	 * Constructeur. Crée une nouvelle DrawAreaUI.
 	 * Il initialise les propriétés privées et déclenche un timer qui se charge de
@@ -69,7 +69,7 @@ public class Controller {
 	 */
 	public Controller(Grid lagrille,List<Integer[]> lesPersonnes, ChartLine chartline)
 	{
-			
+
 		/*
 		 *  STEP 1 : Définition de la grille
 		 */
@@ -77,7 +77,7 @@ public class Controller {
 		this.grid = lagrille;
 		drawArea.setGridUi(new GridUI(grid));
 		drawArea.paintGrid();
-		
+
 		/*
 		 * STEP 2 : Définition des personnes
 		 */
@@ -88,48 +88,48 @@ public class Controller {
 			addPerson(new Person(i, p[0], p[1], this));
 			i++;
 		}
-		
+
 		/*
 		 * STEP 3 : Définition des charts 
 		 */
 		this.chartExit = chartline;
 		nbIterations = 0;
-		
+
 		chartDistance = new Chart("Distance parcourue");
-		
+
 		/*
 		 * STEP 4 : Définition du timer (toute les 1 secondes)
 		 */
 		timer = new Timer( 1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				ArrayList<Person> clonePersonnes = new ArrayList<Person>();
 				for (Person p : personnes )
 				{
 					clonePersonnes.add((Person) p.clone());
 				}				
-				
+
 				Iterator<Person> it = clonePersonnes.iterator();
 				Iterator<Person> it2 = personnes.iterator();
-				
+
 				ArrayList<Person> personToRemove = new ArrayList<Person>();
-				
+
 				Person p;
 				Person p2;
 				while(it.hasNext())
 				{
 					p = it.next();
 					p2 = it2.next();
-					
+
 					// Dans le cas où la personne n'est plus dans le système
 					if(!p.updatePosition()) 
 					{
 						personToRemove.add(p2);
 						it.remove();	
-						
+
 						chartDistance.addPoint(p.getDistance(), "Distances", Integer.toString(p.getId()));
-						
+
 						drawArea.removePersonUi(p.getUi());					
 					}
 				}
@@ -143,7 +143,7 @@ public class Controller {
 				}
 				personToRemove.clear();
 				resolveConflicts(clonePersonnes);
-				
+
 				for(int i = 0; i < clonePersonnes.size(); i++)
 				{
 					personnes.get(i).update(clonePersonnes.get(i));
@@ -162,7 +162,7 @@ public class Controller {
 		} );
 		timer.setInitialDelay(1000);
 	}
-	
+
 	/**
 	 * Ajoute une Person à la Grille gérée par ce Controlleur
 	 * @param person La personne à ajouter
@@ -174,11 +174,11 @@ public class Controller {
 		pUi.setPerson(person);
 		pUi.setGridUI(drawArea.getGridUi());
 		person.setUi(pUi);
-		
+
 		personnes.add(person);
 		drawArea.addPersonUi(pUi);	
 	}
-	
+
 	/**
 	 * Retourne l'aire de dessin gérée par ce controleur
 	 * @return l'aire de dessin gérée par ce controleur
@@ -186,7 +186,7 @@ public class Controller {
 	public DrawAreaUI getDrawArea() {
 		return drawArea;
 	}
-	
+
 	/**
 	 * Retourne la grille gérée par ce controleur
 	 * @return la grille gérée par ce controleur
@@ -194,7 +194,7 @@ public class Controller {
 	public Grid getGrid() {
 		return grid;
 	}
-	
+
 	/**
 	 * Retourne la position d'une personne dans la liste des personnes
 	 * @param p La personne dont on cherche la position
@@ -204,7 +204,7 @@ public class Controller {
 	{
 		return personnes.indexOf(p);
 	}
-	
+
 	/**
 	 * Indique si une position est occupée ou non
 	 * @param pos La position à vérifier
@@ -220,7 +220,7 @@ public class Controller {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Si 2 personnes parmis la nouvelle grille ont fait le même choix de case, une personne est tirée au sort
 	 * pour rester sur sa case tandis que l'autre reprend sa position précédente
@@ -229,7 +229,7 @@ public class Controller {
 	private void resolveConflicts(ArrayList<Person> nextPersonnes)
 	{
 		int i = 0;
-		
+
 		for (Person p : nextPersonnes)
 		{
 			int j = 0;
@@ -253,9 +253,9 @@ public class Controller {
 			}
 			i++;
 		}
-	
+
 	}
-	
+
 	/**
 	 * Définit la zone de dessin à rattacher à ce controleur
 	 * @param drawArea La zone de dessin à rattacher 
@@ -263,7 +263,7 @@ public class Controller {
 	public void setDrawArea(DrawAreaUI drawArea) {
 		this.drawArea = drawArea;
 	}
-	
+
 	/**
 	 * Démarre la simulation
 	 */
@@ -271,7 +271,7 @@ public class Controller {
 	{
 		timer.start();
 	}
-	
+
 	/**
 	 * Arrête la simulation
 	 */
@@ -279,5 +279,5 @@ public class Controller {
 	{
 		timer.stop();
 	}
-	
+
 }

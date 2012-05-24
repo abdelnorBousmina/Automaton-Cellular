@@ -35,7 +35,7 @@ import model.Obstacle;
  *
  */
 public class MainWindow {
-	
+
 	private JFrame frame;
 	private JPanel uiPanel;
 	private JPanel backgroundPanel;
@@ -71,11 +71,11 @@ public class MainWindow {
 	private ChartLine chartline;
 	private List<Integer[]> personnes;
 	private List<Obstacle> obstacles; 
-	
+
 	private final String patternObstacle = "([0-9]+),([0-9]+);([0-9]+),([0-9]+)";
 	private final String patternPersonne = "([0-9]+),([0-9]+)";
 	private final String patternEntries = "([0-9]+),([0-9]+)";
-	
+
 	public MainWindow()
 	{
 		/**
@@ -101,36 +101,36 @@ public class MainWindow {
 		uiPanel.setBorder(new EmptyBorder(30,5,30,5));
 		uiPanel.setPreferredSize(new Dimension(500, 600));
 		uiPanel.setMinimumSize(new Dimension(500, 600));
-		
+
 		// Panel choix taille grille
 		sizePanel = new JPanel();
-		
+
 		// Panel choix obstacles et personnes
 		obsAndPersPanel = new JPanel();
 		obsAndPersPanel.setLayout(new GridLayout(3,2));
-		
+
 		// Panel choix nombre d'entrée
 		nbEntryPanel = new JPanel();
 		nbEntryPanel.setLayout(new GridLayout(3,2));
-		
+
 		// Panel choix du positionnement des entrées
 		posEntryPanel = new JPanel();
 		posEntryPanel.setLayout(new GridLayout(0,4));
-		
+
 		// Panel boutons
 		buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridLayout(3,3,5,5));
-		
+
 		// Boutons
 		start = new JButton("start");
 		stop = new JButton("stop");
 		restart = new JButton("restart");	
 		confirm = new JButton("confirm");
-		
+
 		start.setEnabled(false);
 		restart.setEnabled(false);
 		stop.setEnabled(false);
-				
+
 		buttonsPanel.add(confirm);
 		buttonsPanel.add(start);
 		buttonsPanel.add(stop);
@@ -140,81 +140,81 @@ public class MainWindow {
 		fieldNbEntries.setText("[1,0]");
 		lblNbEntries = new JLabel("Entries: [x,y] ");
 		lblNbEntries.setLabelFor(fieldNbEntries);
-		
+
 		NumberFormat percentFormat = NumberFormat.getNumberInstance();
-        percentFormat.setMinimumFractionDigits(2);
+		percentFormat.setMinimumFractionDigits(2);
 		fieldLambda = new JFormattedTextField(percentFormat);
 		fieldLambda.setValue(lambda);
 		lblLambda = new JLabel("Diagonal movements value: ");
 		lblLambda.setLabelFor(lblLambda);
-				
+
 		newFigure = new JCheckBox();
 		newFigure.setSelected(true);
 		newFigure.setEnabled(false);
 		lblnewFigure = new JLabel("Open a new chart");
 		lblnewFigure.setLabelFor(newFigure);
-		
+
 		nbEntryPanel.add(lblLambda);
 		nbEntryPanel.add(fieldLambda);
 		nbEntryPanel.add(lblNbEntries);
 		nbEntryPanel.add(fieldNbEntries);
 		nbEntryPanel.add(lblnewFigure);
 		nbEntryPanel.add(newFigure);
-		
+
 		// taille de la grille 
 		Integer[] size = new Integer[SIZE_MAX];
-		
+
 		for(int i = 1; i <= SIZE_MAX ; i++) size[i - 1] = i;
-		
+
 		cbNbLigne = new JComboBox(size);
 		cbNbCol = new JComboBox(size);
 		lblSize = new JLabel("Grid size");
 		cbNbLigne.setSelectedIndex(nbLigneGrille-1);
 		cbNbCol.setSelectedIndex(nbColGrille-1);
-		
+
 		JLabel lblligne = new JLabel("lines");
 		JLabel lblcol = new JLabel("columns");
-		
+
 		sizePanel.add(lblSize);	
 		sizePanel.add(cbNbLigne);
 		sizePanel.add(lblligne);
 		sizePanel.add(cbNbCol);
 		sizePanel.add(lblcol);
-		
+
 		// Obstacles et Personnes
 		lblObstacles = new JLabel("Obstacles ([xStart,yStart;xEnd,yEnd]");
 		lblPersonnes = new JLabel("Persons ([x,y])");
 		fieldObstacles = new JTextField();
-		
+
 		fieldObstacles.setText("[2,2;4,2][7,2;8,2][2,4;4,4][7,4;8,4][2,6;4,6][7,6;8,6][5,8;6,8]");	
 		fieldObstacles.setMaximumSize(new Dimension(50, 30));
 		fieldPersonnes = new JTextField();
 		fieldPersonnes.setText("[2,1][3,1][4,1][7,1][8,1][2,3][3,3][4,3][7,3][8,3][2,5][3,5][4,5][7,5][8,5][6,9]");
 		lblObstacles.setLabelFor(fieldObstacles);
 		lblPersonnes.setLabelFor(fieldPersonnes);
-		
+
 		obsAndPersPanel.add(lblObstacles);
 		obsAndPersPanel.add(fieldObstacles);
 		obsAndPersPanel.add(lblPersonnes);
 		obsAndPersPanel.add(fieldPersonnes);
-		
+
 		uiPanel.add(sizePanel);
 		uiPanel.add(obsAndPersPanel);
 		uiPanel.add(nbEntryPanel);
 		uiPanel.add(posEntryPanel);
 		uiPanel.add(buttonsPanel);
-		
+
 		// Ajout du panel à la frame + dessin + affichage
 		frame.add("Center",backgroundPanel);
 		frame.add("East",uiPanel);
-		
+
 		frame.pack();
 		frame.setVisible(true);
 
 		/**
 		 * Definition des actions liées aux boutons
 		 */
-		
+
 		/**
 		 * Permet de confirmer que la grille a créer est bien conforme
 		 */
@@ -222,10 +222,10 @@ public class MainWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {						
-				
+
 				nbLigneGrille = cbNbLigne.getSelectedIndex() + 1;
 				nbColGrille = (Integer) cbNbCol.getItemAt(cbNbCol.getSelectedIndex());
-				
+
 				setEntries();
 				setPersonnes();
 				setObstacles();
@@ -239,9 +239,9 @@ public class MainWindow {
 							if(controlleur != null){
 								backgroundPanel.remove(controlleur.getDrawArea());
 							}
-							
+
 							lambda = Float.parseFloat(fieldLambda.getText().replace(",","."));
-							
+
 							if(newFigure.isSelected())
 							{
 								chartline = new ChartLine("Sortie des personnes");
@@ -326,7 +326,7 @@ public class MainWindow {
 		});
 
 	}
-	
+
 	/**
 	 * Valide la position des obstacles sur la grille
 	 * @return true si la position est correcte, false sinon
@@ -351,7 +351,7 @@ public class MainWindow {
 			{
 				answer = false;
 			}
-			
+
 		}
 		return answer;
 	}
@@ -390,19 +390,19 @@ public class MainWindow {
 				}
 			}
 		}
-		
+
 		return answer;
 	}
-	
+
 	/**
 	 * Récupère la configuration saisie par l'utilisateur pour
 	 * créer les obstacles
 	 */
 	private void setObstacles() {		
 		List<Obstacle> obstacles = new ArrayList<Obstacle>();
-		
+
 		String obstacle = fieldObstacles.getText();
-		
+
 		Pattern p = Pattern.compile(patternObstacle);
 		Matcher m = p.matcher(obstacle);
 		while (m.find())
@@ -415,7 +415,7 @@ public class MainWindow {
 					Integer.parseInt(m.group(2)) + ";" +
 					Integer.parseInt(m.group(3)) + "," +
 					Integer.parseInt(m.group(4))+ "]");*/
-			
+
 		}		
 		this.obstacles = obstacles;
 	}
@@ -425,11 +425,11 @@ public class MainWindow {
 	 * créer les personnes
 	 */
 	private void setPersonnes() {
-		
+
 		List<Integer[]> listPersonnes = new ArrayList<Integer[]>();
-		
+
 		String personne = fieldPersonnes.getText();
-		
+
 		Pattern p = Pattern.compile(patternPersonne);
 		Matcher m = p.matcher(personne);
 		while (m.find())
@@ -439,20 +439,20 @@ public class MainWindow {
 			person[1] = Integer.parseInt(m.group(2));
 			listPersonnes.add(person);
 		}	
-		
+
 		this.personnes = listPersonnes;
 	}
-	
+
 	/**
 	 * Récupère la configuration saisie par l'utilisateur pour
 	 * créer les sorties
 	 */
 	private void setEntries() {
-		
+
 		List<Integer[]> listEntries = new ArrayList<Integer[]>();
-		
+
 		String entries = fieldNbEntries.getText();
-		
+
 		Pattern p = Pattern.compile(patternEntries);
 		Matcher m = p.matcher(entries);
 		while (m.find())
@@ -462,7 +462,7 @@ public class MainWindow {
 			entry[1] = Integer.parseInt(m.group(2));
 			listEntries.add(entry);
 		}	
-		
+
 		tabX = new int[listEntries.size()];
 		tabY = new int[listEntries.size()];
 		int i = 0;
@@ -472,7 +472,7 @@ public class MainWindow {
 			tabY[i] = entry[1];
 			i++;
 		}
-		
+
 	}
 
 	/**
@@ -504,7 +504,7 @@ public class MainWindow {
 			{
 				answer = false;
 			}
-			
+
 			// centre
 			if(tabX[i] != 0 && tabX[i] != nbLigneGrille-1 && tabY[i] != 0 && tabY[i] != nbColGrille-1) 
 			{
@@ -513,7 +513,7 @@ public class MainWindow {
 		}
 		return answer;
 	}
-	
+
 	/**
 	 * @param args
 	 */

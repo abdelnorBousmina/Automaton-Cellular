@@ -13,27 +13,27 @@ public class PersonUI extends Canvas {
 	 * La couleur
 	 */
 	private Color color;
-	
+
 	/**
 	 * La partie graphique sur laquelle dessiner cette personne
 	 */
 	private GridUI gridUI;
-	
+
 	/**
 	 * La personne liée à cette instance
 	 */
 	private Person person;
-	
+
 	/**
 	 * La position en x
 	 */
 	private Integer x;
-	
+
 	/**
 	 * La position en y
 	 */
 	private Integer y;
-	
+
 	/**
 	 * Automatically added
 	 */
@@ -43,7 +43,7 @@ public class PersonUI extends Canvas {
 	 * Constructeur par défaut. Crée une couleur aléatoire pour cette personne
 	 */
 	public PersonUI() {
-		
+
 		// Random color
 		Random randomGenerator = new Random();
 		int red = randomGenerator.nextInt(255);
@@ -51,23 +51,23 @@ public class PersonUI extends Canvas {
 		int blue = randomGenerator.nextInt(255);
 
 		color = new Color(red,green,blue);
-		
+
 	}
-	
+
 	/**
 	 * @return la couleur
 	 */
 	public Color getColor() {
 		return color;
 	}
-	
+
 	/**
 	 * @return la partie graphique liée à cette instance
 	 */
 	public GridUI getGridUI() {
 		return gridUI;
 	}
-	
+
 	/**
 	 * @return la personne liée à cette instance
 	 */
@@ -81,7 +81,7 @@ public class PersonUI extends Canvas {
 	{
 		update(g);
 	} 
-	
+
 	/**
 	 * @param color la couleur de cette personne
 	 */
@@ -95,14 +95,14 @@ public class PersonUI extends Canvas {
 	public void setGridUI(GridUI gUi) {
 		this.gridUI = gUi;
 	}
-	
+
 	/**
 	 * @param person la personne à lier à cette instance
 	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
+
 	/**
 	 * Met à jour la position de cette instance par rapport à la personne à laquelle
 	 * elle est liée.
@@ -112,7 +112,7 @@ public class PersonUI extends Canvas {
 		this.x = gridUI.getX() + gridUI.getWdOfRow() * person.getColonne() + 8;
 		this.y = gridUI.getY() + gridUI.getHtOfRow() * person.getLine() + 8;
 	}
-	
+
 	/**
 	 * Dessine cette personne.
 	 * @see javax.swing.JFrame#update(java.awt.Graphics)

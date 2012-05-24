@@ -8,17 +8,17 @@ public class Grid {
 	 * La grille
 	 */
 	private float[][] grid;
-	
+
 	/**
 	 * Le nombre de lignes de la grille
 	 */
 	private int nbLines;
-	
+
 	/**
 	 * Le nombre de colonnes de la grille
 	 */
 	private int nbColumns;
-	
+
 	/**
 	 * @return the nbLignes
 	 */
@@ -34,7 +34,7 @@ public class Grid {
 	}
 
 	private int tabxExit[];
-	
+
 	private int nbExit;
 	/**
 	 * @return the nbExit
@@ -63,7 +63,7 @@ public class Grid {
 		this.tabxExit = letabxExit;
 		this.tabyExit = letabyExit;		
 		this.nbExit = letabxExit.length;
-		
+
 		grid = new float[nbLines][nbColumns];
 
 		// Init murs verticaux

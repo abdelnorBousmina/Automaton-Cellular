@@ -13,7 +13,7 @@ public class Obstacle {
 	private int yStart;
 	private int xEnd;
 	private int yEnd;
-	
+
 	/**
 	 * @param xStart
 	 * @param yStart
@@ -74,5 +74,5 @@ public class Obstacle {
 	public void setyEnd(int yEnd) {
 		this.yEnd = yEnd;
 	}
-	
+
 }

@@ -12,37 +12,37 @@ import java.util.Random;
  *
  */
 public class Neighborhood {
-	
+
 	/**
 	 * Nombre de lignes d'un voisinage
 	 */
 	public static final Integer NB_LIGNES = 3;
-	
+
 	/**
 	 * Nombre de colonnes d'un voisinage
 	 */
 	public static final Integer NB_COLONNES = 3;
-	
+
 	/**
 	 * Position en x de la case à valeur minimum de ce voisinage
 	 */
 	private int miniX;
-	
+
 	/**
 	 * Position en y de la case à valeur minimum de ce voisinage
 	 */
 	private int miniY;
-	
+
 	/**
 	 * La personne dont on considère le voisinage
 	 */
 	private Person person;
-	
+
 	/**
 	 * Le voisinage
 	 */
 	private Float[][] voisinage;
-	
+
 	/**
 	 * Constructeur. Ce constructeur construit le voisinage en fonction de la grille
 	 * et de la personne passés en paramètres.
@@ -53,19 +53,19 @@ public class Neighborhood {
 		this.person = person;
 		buildNeighborhood(person.getGrid());
 	}
-	
+
 	/**
 	 * Affiche le voisinage dans la console
 	 */
 	public void showNeighborhood()
 	{
 		int ligne,colonne;
-		
+
 		for(ligne=0; ligne < NB_LIGNES; ligne++)
-		//for(ligne=NB_LIGNES-1; ligne >= 0 ; ligne--)
+			//for(ligne=NB_LIGNES-1; ligne >= 0 ; ligne--)
 		{
 			for(colonne=0; colonne < NB_COLONNES; colonne++)
-			//for(colonne=NB_COLONNES-1; colonne >= 0 ; colonne--)
+				//for(colonne=NB_COLONNES-1; colonne >= 0 ; colonne--)
 			{
 				System.out.print(voisinage[ligne][colonne]);
 				System.out.print("     ");
@@ -73,7 +73,7 @@ public class Neighborhood {
 			System.out.println();
 		}
 	}
-	
+
 	/**
 	 * Construit le voisinage en fonction de l'attribut person
 	 * @param grille La grille dans laquelle on recherche le voisinage
@@ -84,14 +84,14 @@ public class Neighborhood {
 		voisinage = new Float[NB_LIGNES][NB_COLONNES];
 		miniX = 0;
 		miniY = 0;
-		
+
 		for(ligne=0; ligne < NB_LIGNES; ligne++)
 		{
 			for(colonne=0; colonne < NB_COLONNES; colonne++)
 			{
 				voisinage[ligne][colonne] = 
 						grille.getValue(person.getLine() + (ligne - 1), person.getColonne() + (colonne - 1));
-								
+
 				if(voisinage[ligne][colonne].compareTo(voisinage[miniX][miniY]) < 0)
 				{
 					miniX = ligne;
@@ -100,18 +100,18 @@ public class Neighborhood {
 				else if(voisinage[ligne][colonne].compareTo(voisinage[miniX][miniY]) == 0)
 				{
 					double rnd = Math.random();
-					
+
 					if(rnd > 0.5)
 					{
 						miniX = ligne;
 						miniY = colonne;
 					}
 				}
-				
+
 			}			
 		}
 	}
-	
+
 	/**
 	 * Retourne la position minimum de ce voisinage
 	 * @return la position minimum de ce voisinage dans un tableau ayant cette forme :
@@ -125,7 +125,7 @@ public class Neighborhood {
 		pos[1] = miniY;
 		return pos;
 	}
-	
+
 	/**
 	 * @return la personne concernée par ce voisinage
 	 */
@@ -133,7 +133,7 @@ public class Neighborhood {
 	{
 		return person;
 	}
-	
+
 	/**
 	 * Retourne la distance de la sortie de la case (x,y)
 	 * @param x Coordonnée en x de la case
@@ -143,16 +143,16 @@ public class Neighborhood {
 	public Float getValue(Integer x, Integer y)
 	{
 		Float retour = -1.0f;
-		
+
 		if(x <= NB_LIGNES && y <= NB_COLONNES)
 		{
 			retour = voisinage[x][y];
 		}
-		
+
 		return retour;
-		
+
 	}
-	
+
 
 	/**
 	 * @return le voisinage

@@ -2,7 +2,7 @@ package model;
 
 
 public class MathModel {
-	
+
 	/**
 	 * Probabilité de panique des personnes dans le système
 	 */
@@ -19,7 +19,7 @@ public class MathModel {
 	{
 		Integer[] retour = new Integer[2];
 		int[] miniPos = new int[2];
-		
+
 		if(panic.compareTo(Math.random()) < 0)
 		{		
 			miniPos = voisinage.getMinPosition();
@@ -30,11 +30,11 @@ public class MathModel {
 			miniPos[1] = 1;
 			//System.out.println("panic :s :s :s :s");
 		}
-		
+
 		retour[0] = miniPos[0] - 1;
 		retour[1] = miniPos[1] - 1;
-		
+
 		return retour;
-		
+
 	}
 }

@@ -12,37 +12,37 @@ public class GridUI extends Canvas {
 	 * Automatically added
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Nombre de colonnes
 	 */
 	private int cols;
-	
+
 	/**
 	 * La grille liée à cette UI
 	 */
 	private Grid grid;
-	
+
 	/**
 	 * Hauteur de la grille
 	 */
 	private int height;
-	
+
 	/**
 	 * Hauteur d'une case
 	 */
 	private int htOfRow;
-	
+
 	/**
 	 * Nombre de lignes
 	 */
 	private int rows;
-	
+
 	/**
 	 * Largeur d'une case
 	 */
 	private int wdOfRow;
-	
+
 	/**
 	 * Largeur de la grille
 	 */
@@ -58,10 +58,10 @@ public class GridUI extends Canvas {
 	public GridUI(int w, int h, int r, int c)
 	{
 		this.setPreferredSize(new Dimension(w, h));
-        width = w;
-        height = h;
+		width = w;
+		height = h;
 		rows = r;
-        cols = c;
+		cols = c;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class GridUI extends Canvas {
 		rows = grille.getNbLines();
 		cols = grille.getNbColumns();
 	}
-	
+
 	/**
 	 * Dessine les obstacles sur la grille
 	 * @param g Objet graphique à utiliser pour le dessin
@@ -83,7 +83,7 @@ public class GridUI extends Canvas {
 	private void fillObstacles(Graphics g)
 	{
 		int x,y;
-		
+
 		for(x=0; x<rows; x++)
 		{
 			for(y=0; y<cols; y++)
@@ -96,7 +96,7 @@ public class GridUI extends Canvas {
 			}
 		}
 	}
-	
+
 	/**
 	 * @return la hauteur d'une ligne
 	 */
@@ -110,20 +110,20 @@ public class GridUI extends Canvas {
 	public int getWdOfRow() {
 		return wdOfRow;
 	}
-	
+
 	@Override
 	/**
 	 * Dessine la grille : les lignes puis les obstacles
 	 */
 	public void paint(Graphics g) {
-		
+
 		g.clearRect(this.getX(), this.getY(), width, height);
-		
+
 		paintLines(g);
 		fillObstacles(g);
-	
+
 	}
-	
+
 	/**
 	 * Dessine les lignes de la grille
 	 * @param g Objet graphique à utiliser pour le dessin
@@ -133,19 +133,18 @@ public class GridUI extends Canvas {
 		int k;
 		width = this.getPreferredSize().width;
 		height = this.getPreferredSize().height;
-		
+
 		htOfRow = height / (rows); // Définition de la hauteur d'une ligne
-		
+
 		for (k = 0; k <= rows; k++) {
-		    g.drawLine(0, k * htOfRow, width, k * htOfRow);
+			g.drawLine(0, k * htOfRow, width, k * htOfRow);
 		}
-		
+
 		wdOfRow = width / (cols); // Définition de la largeur d'une ligne
-		
+
 		for (k = 0; k <= cols; k++) {
-			    g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
+			g.drawLine(k * wdOfRow, 0, k * wdOfRow, height);
 		}
 	}
-	
+
 }
- 

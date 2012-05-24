@@ -14,22 +14,22 @@ public class DrawAreaUI extends JPanel {
 	 * Automatically added
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * La grille contenue dans cette zone de dessin
 	 */
 	private Grid grid;
-	
+
 	/**
 	 * La partie graphique de la grille contenue dans cette zone de dessin
 	 */
 	private GridUI gridUi;
-	
+
 	/**
 	 * Liste des parties graphiques des personnes à dessiner
 	 */
 	private ArrayList<PersonUI> personsUi;
-	
+
 	/**
 	 * Un voisinage
 	 */
@@ -43,7 +43,7 @@ public class DrawAreaUI extends JPanel {
 	{
 		personsUi = new ArrayList<PersonUI>();
 	}
-	
+
 
 	/**
 	 * Ajoute la partie graphique d'une personne à dessiner dans liste
@@ -54,35 +54,35 @@ public class DrawAreaUI extends JPanel {
 		pUi.setVisible(true);
 		personsUi.add(pUi);
 	}
-	
+
 	/**
 	 * @return la grille
 	 */
 	public Grid getGrid() {
 		return grid;
 	}
-	
+
 	/**
 	 * @return la partie graphique grille
 	 */
 	public GridUI getGridUi() {
 		return gridUi;
 	}
-	
+
 	/**
 	 * @return le voisinage
 	 */
 	public Neighborhood getNbh() {
 		return nbh;
 	}
-	
+
 	/**
 	 * @return la liste des personnes à dessiner
 	 */
 	public ArrayList<PersonUI> getPersonsUi() {
 		return personsUi;
 	}
-	
+
 	/**
 	 * Custom painting. Repaint la grille, puis mets à jour les positions
 	 * des parties graphiques des personnes à dessiner, puis les dessine.
@@ -90,13 +90,13 @@ public class DrawAreaUI extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		gridUi.paint(g);
-		
+
 		for (PersonUI p : personsUi) {
 			p.updatePosition();
 			p.paint(g);
 		}
 	}
-	
+
 	/**
 	 * Affiche la grille
 	 */
@@ -104,7 +104,7 @@ public class DrawAreaUI extends JPanel {
 	{
 		gridUi.setVisible(true);
 	}
-	
+
 	/**
 	 * Retire la partie graphique d'une personne à dessiner dans liste
 	 * @param pUi La partie graphique de la personne à retirer
@@ -114,7 +114,7 @@ public class DrawAreaUI extends JPanel {
 		pUi.setVisible(false);
 		personsUi.remove(pUi);
 	}
-	
+
 	/**
 	 * @param grille la grille
 	 */
@@ -135,14 +135,14 @@ public class DrawAreaUI extends JPanel {
 	public void setNbh(Neighborhood nbh) {
 		this.nbh = nbh;
 	}
-	
+
 	/**
 	 * @param personsUi la liste des personnes à dessiner à utiliser
 	 */
 	public void setPersonsUi(ArrayList<PersonUI> personsUi) {
 		this.personsUi = personsUi;
 	}
-	
+
 	/**
 	 * Redessine toutes les personnes à dessiner
 	 */
