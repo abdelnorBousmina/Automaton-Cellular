@@ -3,8 +3,8 @@
  */
 package model;
 
-import controlleur.Controlleur;
-import vue.PersonUI;
+import controller.Controller;
+import view.PersonUI;
 
 /**
  * @author albin
@@ -20,7 +20,7 @@ public class Person implements Cloneable {
 	/**
 	 * Le Controlleur qui gère cette instance
 	 */
-	private Controlleur controlleur;
+	private Controller controlleur;
 	
 	/**
 	 * Distance à rajouter lors du parcours d'une diagonale
@@ -40,7 +40,7 @@ public class Person implements Cloneable {
 	/**
 	 * Ligne
 	 */
-	private Integer ligne;
+	private Integer line;
 	
 	/**
 	 * Modèle mathématique
@@ -77,9 +77,9 @@ public class Person implements Cloneable {
 	 * @param y La position en y
 	 * @param c Le controlleur
 	 */
-	public Person(int id, int x, int y, Controlleur c) {
+	public Person(int id, int x, int y, Controller c) {
 		this.id = id;
-		ligne = x;
+		line = x;
 		colonne = y;
 		posPrec = new Integer[2];
 		posPrec[0] = x;
@@ -112,7 +112,7 @@ public class Person implements Cloneable {
 	/**
 	 * @return le controlleur de cette personne
 	 */
-	public Controlleur getControlleur() {
+	public Controller getControlleur() {
 		return controlleur;
 	}
 	
@@ -126,8 +126,8 @@ public class Person implements Cloneable {
 	/**
 	 * @return la grille où se trouve cette personne
 	 */
-	public Grille getGrille() {
-		return controlleur.getGrille();
+	public Grid getGrid() {
+		return controlleur.getGrid();
 	}
 	
 	/**
@@ -140,8 +140,8 @@ public class Person implements Cloneable {
 	/**
 	 * @return le x de cette personne
 	 */
-	public Integer getLigne() {
-		return ligne;
+	public Integer getLine() {
+		return line;
 	}
 	
 	/**
@@ -168,14 +168,14 @@ public class Person implements Cloneable {
 	/**
 	 * @param y le y à définir
 	 */
-	public void setColonne(Integer y) {
+	public void setColumn(Integer y) {
 		this.colonne = y;
 	}
 	
 	/**
 	 * @param controlleur le controlleur à définir
 	 */
-	public void setControlleur(Controlleur controlleur) {
+	public void setController(Controller controlleur) {
 		this.controlleur = controlleur;
 	}
 	
@@ -189,8 +189,8 @@ public class Person implements Cloneable {
 	/**
 	 * @param x le x à définir
 	 */
-	public void setLigne(Integer x) {
-		this.ligne = x;
+	public void setLine(Integer x) {
+		this.line = x;
 	}
 	
 	/**
@@ -221,7 +221,7 @@ public class Person implements Cloneable {
 	 */
 	public void update(Person p)
 	{
-		this.ligne = p.ligne;
+		this.line = p.line;
 		this.colonne = p.colonne;
 		this.distance = p.distance;
 	}
@@ -236,23 +236,23 @@ public class Person implements Cloneable {
 		Boolean retour = true;
 
 		// Choix de la nouvelle position
-		Integer[] mvt = model.bouger(new Neighborhood(this));
+		Integer[] mvt = model.move(new Neighborhood(this));
 		
 		// Définition des variables pour la nouvelle position
 		Integer[] nextPos = new Integer[3];
-		nextPos[0] = ligne + mvt[0];
+		nextPos[0] = line + mvt[0];
 		nextPos[1] = colonne + mvt[1];
 		nextPos[2] = id;
 		
 		// On vérifie si la case est libre
 		if(!controlleur.isOccupied(nextPos))
 		{
-			ligne += mvt[0];
+			line += mvt[0];
 			colonne += mvt[1];
 			
 			// Si la prochaine case n'est pas dans le système
-			if( ligne < 0 || ligne > getGrille().getNbLignes() - 1 || 
-					colonne < 0 || colonne > getGrille().getNbColonnes() - 1 )
+			if( line < 0 || line > getGrid().getNbLines() - 1 || 
+					colonne < 0 || colonne > getGrid().getNbColumns() - 1 )
 			{
 				retour = false;
 			}

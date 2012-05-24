@@ -9,70 +9,70 @@ package model;
  */
 public class Obstacle {
 
-	private int xDebut;
-	private int yDebut;
-	private int xFin;
-	private int yFin;
+	private int xStart;
+	private int yStart;
+	private int xEnd;
+	private int yEnd;
 	
 	/**
-	 * @param xDebut
-	 * @param yDebut
-	 * @param xFin
-	 * @param yFin
+	 * @param xStart
+	 * @param yStart
+	 * @param xEnd
+	 * @param yEnd
 	 */
-	public Obstacle(int xDebut, int yDebut, int xFin, int yFin) {
-		this.xDebut = xDebut;
-		this.yDebut = yDebut;
-		this.xFin = xFin;
-		this.yFin = yFin;
+	public Obstacle(int xStart, int yStart, int xEnd, int yEnd) {
+		this.xStart = xStart;
+		this.yStart = yStart;
+		this.xEnd = xEnd;
+		this.yEnd = yEnd;
 	}
 	/**
-	 * @return the xDebut
+	 * @return the xStart
 	 */
-	public int getxDebut() {
-		return xDebut;
+	public int getxStart() {
+		return xStart;
 	}
 	/**
-	 * @param xDebut the xDebut to set
+	 * @param xStart the xStart to set
 	 */
-	public void setxDebut(int xDebut) {
-		this.xDebut = xDebut;
+	public void setxStart(int xStart) {
+		this.xStart = xStart;
 	}
 	/**
-	 * @return the yDebut
+	 * @return the yStart
 	 */
-	public int getyDebut() {
-		return yDebut;
+	public int getyStart() {
+		return yStart;
 	}
 	/**
-	 * @param yDebut the yDebut to set
+	 * @param yStart the yDebut to set
 	 */
-	public void setyDebut(int yDebut) {
-		this.yDebut = yDebut;
+	public void setyStart(int yStart) {
+		this.yStart = yStart;
 	}
 	/**
-	 * @return the xFin
+	 * @return the xEnd
 	 */
-	public int getxFin() {
-		return xFin;
+	public int getxEnd() {
+		return xEnd;
 	}
 	/**
-	 * @param xFin the xFin to set
+	 * @param xEnd the xEnd to set
 	 */
-	public void setxFin(int xFin) {
-		this.xFin = xFin;
+	public void setxEnd(int xEnd) {
+		this.xEnd = xEnd;
 	}
 	/**
-	 * @return the yFin
+	 * @return the yEnd
 	 */
-	public int getyFin() {
-		return yFin;
+	public int getyEnd() {
+		return yEnd;
 	}
 	/**
-	 * @param yFin the yFin to set
+	 * @param yEnd the yEnd to set
 	 */
-	public void setyFin(int yFin) {
-		this.yFin = yFin;
+	public void setyEnd(int yEnd) {
+		this.yEnd = yEnd;
 	}
 	
 }

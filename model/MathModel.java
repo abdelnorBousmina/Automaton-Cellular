@@ -15,14 +15,14 @@ public class MathModel {
 	 * 		tab[0] la valeur à ajouter à x pour atteindre la prochaine position
 	 *		tab[1] la valeur à ajouter à y pour atteindre la prochaine position
 	 */
-	public Integer[] bouger(Neighborhood voisinage)
+	public Integer[] move(Neighborhood voisinage)
 	{
 		Integer[] retour = new Integer[2];
 		int[] miniPos = new int[2];
 		
 		if(panic.compareTo(Math.random()) < 0)
 		{		
-			miniPos = voisinage.getMiniPosition();
+			miniPos = voisinage.getMinPosition();
 		}
 		else
 		{

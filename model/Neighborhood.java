@@ -51,13 +51,13 @@ public class Neighborhood {
 	public Neighborhood(Person person)
 	{
 		this.person = person;
-		construireVoisinage(person.getGrille());
+		buildNeighborhood(person.getGrid());
 	}
 	
 	/**
 	 * Affiche le voisinage dans la console
 	 */
-	public void afficherNeighborhood()
+	public void showNeighborhood()
 	{
 		int ligne,colonne;
 		
@@ -78,7 +78,7 @@ public class Neighborhood {
 	 * Construit le voisinage en fonction de l'attribut person
 	 * @param grille La grille dans laquelle on recherche le voisinage
 	 */
-	public void construireVoisinage(Grille grille)
+	public void buildNeighborhood(Grid grille)
 	{
 		int ligne,colonne;
 		voisinage = new Float[NB_LIGNES][NB_COLONNES];
@@ -90,7 +90,7 @@ public class Neighborhood {
 			for(colonne=0; colonne < NB_COLONNES; colonne++)
 			{
 				voisinage[ligne][colonne] = 
-						grille.getValue(person.getLigne() + (ligne - 1), person.getColonne() + (colonne - 1));
+						grille.getValue(person.getLine() + (ligne - 1), person.getColonne() + (colonne - 1));
 								
 				if(voisinage[ligne][colonne].compareTo(voisinage[miniX][miniY]) < 0)
 				{
@@ -118,7 +118,7 @@ public class Neighborhood {
 	 * 	[0] : position en x
 	 * 	[1] : position en y
 	 */
-	public int[] getMiniPosition()
+	public int[] getMinPosition()
 	{
 		int[] pos = new int[2];
 		pos[0] = miniX;
@@ -157,7 +157,7 @@ public class Neighborhood {
 	/**
 	 * @return le voisinage
 	 */
-	public Float[][] getVoisinage()
+	public Float[][] getNeighborhood()
 	{
 		return voisinage;
 	}
