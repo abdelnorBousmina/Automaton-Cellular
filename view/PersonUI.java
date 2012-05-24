@@ -20,7 +20,7 @@ public class PersonUI extends Canvas {
 	private GridUI gridUI;
 
 	/**
-	 * La personne liée à cette instance
+	 * La personne liee a cette instance
 	 */
 	private Person person;
 
@@ -40,7 +40,7 @@ public class PersonUI extends Canvas {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructeur par défaut. Crée une couleur aléatoire pour cette personne
+	 * Constructeur par defaut. Cree une couleur aleatoire pour cette personne
 	 */
 	public PersonUI() {
 
@@ -62,14 +62,14 @@ public class PersonUI extends Canvas {
 	}
 
 	/**
-	 * @return la partie graphique liée à cette instance
+	 * @return la partie graphique liee a cette instance
 	 */
 	public GridUI getGridUI() {
 		return gridUI;
 	}
 
 	/**
-	 * @return la personne liée à cette instance
+	 * @return la personne liee a cette instance
 	 */
 	public Person getPerson() {
 		return person;
@@ -90,22 +90,22 @@ public class PersonUI extends Canvas {
 	}
 
 	/**
-	 * @param gUi la partie graphique d'une grille à lier
+	 * @param gUi la partie graphique d'une grille a lier
 	 */
 	public void setGridUI(GridUI gUi) {
 		this.gridUI = gUi;
 	}
 
 	/**
-	 * @param person la personne à lier à cette instance
+	 * @param person la personne a lier a cette instance
 	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
 
 	/**
-	 * Met à jour la position de cette instance par rapport à la personne à laquelle
-	 * elle est liée.
+	 * Met a jour la position de cette instance par rapport a la personne a laquelle
+	 * elle est liee.
 	 */
 	public void updatePosition()
 	{

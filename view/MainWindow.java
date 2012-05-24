@@ -82,14 +82,14 @@ public class MainWindow {
 		 * Initialisation des elements graphiques
 		 */
 
-		// Définition de la frame
+		// Definition de la frame
 		frame = new JFrame("Automaton cellular");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(1100, 600));
 		frame.setMinimumSize(new Dimension(1100, 600));
 		frame.setResizable(false);
 
-		// Création du panel contenant la grille
+		// Creation du panel contenant la grille
 		backgroundPanel = new JPanel();	
 		backgroundPanel.setLayout(new BorderLayout());
 		backgroundPanel.setBorder(new EmptyBorder(30,30,30,30));
@@ -109,11 +109,11 @@ public class MainWindow {
 		obsAndPersPanel = new JPanel();
 		obsAndPersPanel.setLayout(new GridLayout(3,2));
 
-		// Panel choix nombre d'entrée
+		// Panel choix nombre d'entree
 		nbEntryPanel = new JPanel();
 		nbEntryPanel.setLayout(new GridLayout(3,2));
 
-		// Panel choix du positionnement des entrées
+		// Panel choix du positionnement des entrees
 		posEntryPanel = new JPanel();
 		posEntryPanel.setLayout(new GridLayout(0,4));
 
@@ -204,7 +204,7 @@ public class MainWindow {
 		uiPanel.add(posEntryPanel);
 		uiPanel.add(buttonsPanel);
 
-		// Ajout du panel à la frame + dessin + affichage
+		// Ajout du panel a la frame + dessin + affichage
 		frame.add("Center",backgroundPanel);
 		frame.add("East",uiPanel);
 
@@ -212,11 +212,11 @@ public class MainWindow {
 		frame.setVisible(true);
 
 		/**
-		 * Definition des actions liées aux boutons
+		 * Definition des actions liees aux boutons
 		 */
 
 		/**
-		 * Permet de confirmer que la grille a créer est bien conforme
+		 * Permet de confirmer que la grille a creer est bien conforme
 		 */
 		confirm.addActionListener(new ActionListener() {
 
@@ -255,7 +255,7 @@ public class MainWindow {
 						}
 						else
 						{
-							JOptionPane.showMessageDialog(frame, "Entrée(s) invalide(s)");
+							JOptionPane.showMessageDialog(frame, "Entree(s) invalide(s)");
 						}
 					}else{
 						JOptionPane.showMessageDialog(frame, "Personne(s) invalide(s)");
@@ -268,7 +268,7 @@ public class MainWindow {
 
 		});
 		/**
-		 * Démarre la simulation
+		 * Demarre la simulation
 		 */
 		start.addActionListener(new ActionListener() {
 
@@ -358,7 +358,7 @@ public class MainWindow {
 
 	/**
 	 * Valide la position des personnes sur la grille
-	 * @return true si les personnes sont correctement placées, false sinon
+	 * @return true si les personnes sont correctement placees, false sinon
 	 */
 	private boolean areValidPersonnes() {
 		boolean answer = true;
@@ -395,8 +395,8 @@ public class MainWindow {
 	}
 
 	/**
-	 * Récupère la configuration saisie par l'utilisateur pour
-	 * créer les obstacles
+	 * Recupere la configuration saisie par l'utilisateur pour
+	 * creer les obstacles
 	 */
 	private void setObstacles() {		
 		List<Obstacle> obstacles = new ArrayList<Obstacle>();
@@ -421,8 +421,8 @@ public class MainWindow {
 	}
 
 	/**
-	 * Récupère la configuration saisie par l'utilisateur pour
-	 * créer les personnes
+	 * Recupere la configuration saisie par l'utilisateur pour
+	 * creer les personnes
 	 */
 	private void setPersonnes() {
 
@@ -444,8 +444,8 @@ public class MainWindow {
 	}
 
 	/**
-	 * Récupère la configuration saisie par l'utilisateur pour
-	 * créer les sorties
+	 * Recupere la configuration saisie par l'utilisateur pour
+	 * creer les sorties
 	 */
 	private void setEntries() {
 
@@ -476,8 +476,8 @@ public class MainWindow {
 	}
 
 	/**
-	 * Permet de s'assurer que les entrées se situent à des endroits cohérents
-	 * @return true si les entrées sont cohérentes
+	 * Permet de s'assurer que les entrees se situent a des endroits coherents
+	 * @return true si les entrees sont coherentes
 	 */
 	private boolean isValidEntry()
 	{

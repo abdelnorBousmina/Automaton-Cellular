@@ -49,11 +49,11 @@ public class Grid {
 	private final int exit = 1;
 
 	/**
-	 * Crée un tableau de float à 2 dimensions représentant une salle
+	 * Cree un tableau de float a 2 dimensions representant une salle
 	 * @param lignes nombre de ligne
 	 * @param colonnes nombre de colonne
-	 * @param letabxExit les numéros de ligne des sorties
-	 * @param letabyExit les numéros de colonne des sorties
+	 * @param letabxExit les numeros de ligne des sorties
+	 * @param letabyExit les numeros de colonne des sorties
 	 * @param lambda la valeur de lambda
 	 * @param obstacles la liste des obstacles
 	 */
@@ -149,8 +149,8 @@ public class Grid {
 	}
 
 	/**
-	 * Calcul les distances des cases positionnées au dessus et/ou à droite de la case actuelle
-	 * @param x numéro de ligne de la case actuelle
+	 * Calcul les distances des cases positionnees au dessus et/ou a droite de la case actuelle
+	 * @param x numero de ligne de la case actuelle
 	 * @param y indice de colonne de la actuelle
 	 */
 	private void initGridTopRight(int x,int y)
@@ -200,8 +200,8 @@ public class Grid {
 	}
 
 	/**
-	 * Calcul les distances des cases positionnées en dessous et/ou à droite de la case actuelle
-	 * @param x numéro de ligne de la case actuelle
+	 * Calcul les distances des cases positionnees en dessous et/ou a droite de la case actuelle
+	 * @param x numero de ligne de la case actuelle
 	 * @param y indice de colonne de la actuelle
 	 */
 	private void initGridBottomRight(int x, int y)
@@ -253,8 +253,8 @@ public class Grid {
 	}
 
 	/**
-	 * Calcul les distances des cases positionnées au dessus et/ou à gauche de la case actuelle
-	 * @param x numéro de ligne de la case actuelle
+	 * Calcul les distances des cases positionnees au dessus et/ou a gauche de la case actuelle
+	 * @param x numero de ligne de la case actuelle
 	 * @param y indice de colonne de la actuelle
 	 */
 	private void initGrilleTopLeft(int x,int y)
@@ -304,8 +304,8 @@ public class Grid {
 	}
 
 	/**
-	 * Calcul les distances des cases positionnées en dessous et/ou à gauche de la case actuelle
-	 * @param x numéro de ligne de la case actuelle
+	 * Calcul les distances des cases positionnees en dessous et/ou a gauche de la case actuelle
+	 * @param x numero de ligne de la case actuelle
 	 * @param y indice de colonne de la actuelle
 	 */
 	private void initGridBottomLeft(int x, int y)

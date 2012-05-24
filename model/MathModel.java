@@ -4,16 +4,16 @@ package model;
 public class MathModel {
 
 	/**
-	 * Probabilité de panique des personnes dans le système
+	 * Probabilite de panique des personnes dans le systeme
 	 */
 	private static Double panic = 0.05;
 
 	/**
-	 * Définit la prochaine position dans le voisinage de la case centrale du voisinage
-	 * @param voisinage Le voisinage de la personne qui doit se déplacer
+	 * Definit la prochaine position dans le voisinage de la case centrale du voisinage
+	 * @param voisinage Le voisinage de la personne qui doit se deplacer
 	 * @return Un tableau de la forme :
-	 * 		tab[0] la valeur à ajouter à x pour atteindre la prochaine position
-	 *		tab[1] la valeur à ajouter à y pour atteindre la prochaine position
+	 * 		tab[0] la valeur a ajouter a x pour atteindre la prochaine position
+	 *		tab[1] la valeur a ajouter a y pour atteindre la prochaine position
 	 */
 	public Integer[] move(Neighborhood voisinage)
 	{

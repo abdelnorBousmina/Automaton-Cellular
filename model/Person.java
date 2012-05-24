@@ -18,12 +18,12 @@ public class Person implements Cloneable {
 	private Integer colonne;
 
 	/**
-	 * Le Controlleur qui gère cette instance
+	 * Le Controlleur qui gere cette instance
 	 */
 	private Controller controlleur;
 
 	/**
-	 * Distance à rajouter lors du parcours d'une diagonale
+	 * Distance a rajouter lors du parcours d'une diagonale
 	 */
 	private static int diagonalLength = 0;
 
@@ -43,12 +43,12 @@ public class Person implements Cloneable {
 	private Integer line;
 
 	/**
-	 * Modèle mathématique
+	 * Modele mathematique
 	 */
 	private MathModel model;
 
 	/**
-	 * Position précédente
+	 * Position precedente
 	 */
 	private Integer[] posPrec;
 
@@ -58,8 +58,8 @@ public class Person implements Cloneable {
 	private PersonUI ui;
 
 	/**
-	 * Constructeur par défaut. Instancie la position précédente et le modèle 
-	 * mathématique. L'id est mis à -1.
+	 * Constructeur par defaut. Instancie la position precedente et le modele 
+	 * mathematique. L'id est mis a -1.
 	 */
 	public Person() {
 		//ui = new PersonUI();
@@ -70,9 +70,9 @@ public class Person implements Cloneable {
 	}
 
 	/**
-	 * Constructeur surchargé. Définit l'id, la position et le controlleur selon les
-	 * paramètres. Instancie la position précédente et le modèle mathématique.
-	 * @param id L'id à définir
+	 * Constructeur surcharge. Definit l'id, la position et le controlleur selon les
+	 * parametres. Instancie la position precedente et le modele mathematique.
+	 * @param id L'id a definir
 	 * @param x La position en x
 	 * @param y La position en y
 	 * @param c Le controlleur
@@ -124,7 +124,7 @@ public class Person implements Cloneable {
 	}
 
 	/**
-	 * @return la grille où se trouve cette personne
+	 * @return la grille ou se trouve cette personne
 	 */
 	public Grid getGrid() {
 		return controlleur.getGrid();
@@ -152,7 +152,7 @@ public class Person implements Cloneable {
 	}
 
 	/**
-	 * @return la position précédente de cette personne
+	 * @return la position precedente de cette personne
 	 */
 	public Integer[] getPosPrec() {
 		return posPrec;
@@ -166,14 +166,14 @@ public class Person implements Cloneable {
 	}
 
 	/**
-	 * @param y le y à définir
+	 * @param y le y a definir
 	 */
 	public void setColumn(Integer y) {
 		this.colonne = y;
 	}
 
 	/**
-	 * @param controlleur le controlleur à définir
+	 * @param controlleur le controlleur a definir
 	 */
 	public void setController(Controller controlleur) {
 		this.controlleur = controlleur;
@@ -187,37 +187,37 @@ public class Person implements Cloneable {
 	}
 
 	/**
-	 * @param x le x à définir
+	 * @param x le x a definir
 	 */
 	public void setLine(Integer x) {
 		this.line = x;
 	}
 
 	/**
-	 * @param model le model à définir
+	 * @param model le model a definir
 	 */
 	public void setModel(MathModel model) {
 		this.model = model;
 	}
 
 	/**
-	 * @param posPrec la position précédente à définir
+	 * @param posPrec la position precedente a definir
 	 */
 	public void setPosPrec(Integer[] posPrec) {
 		this.posPrec = posPrec;
 	}
 
 	/**
-	 * @param ui le ui à définir
+	 * @param ui le ui a definir
 	 */
 	public void setUi(PersonUI ui) {
 		this.ui = ui;
 	}
 
 	/**
-	 * Mets à jour les coordoonées de cette instance
-	 * par rapport à celle donnée en paramètre
-	 * @param p L'instance dont on souhaite copier les coordonnées
+	 * Mets a jour les coordoonees de cette instance
+	 * par rapport a celle donnee en parametre
+	 * @param p L'instance dont on souhaite copier les coordonnees
 	 */
 	public void update(Person p)
 	{
@@ -227,7 +227,7 @@ public class Person implements Cloneable {
 	}
 
 	/**
-	 * Mets à jour la position de la personne
+	 * Mets a jour la position de la personne
 	 * @return True si la personne est encore dans le grille, False sinon
 	 */
 	public Boolean updatePosition()
@@ -237,19 +237,19 @@ public class Person implements Cloneable {
 		// Choix de la nouvelle position
 		Integer[] mvt = model.move(new Neighborhood(this));
 
-		// Définition des variables pour la nouvelle position
+		// Definition des variables pour la nouvelle position
 		Integer[] nextPos = new Integer[3];
 		nextPos[0] = line + mvt[0];
 		nextPos[1] = colonne + mvt[1];
 		nextPos[2] = id;
 
-		// On vérifie si la case est libre
+		// On verifie si la case est libre
 		if(!controlleur.isOccupied(nextPos))
 		{
 			line += mvt[0];
 			colonne += mvt[1];
 
-			// Si la prochaine case n'est pas dans le système
+			// Si la prochaine case n'est pas dans le systeme
 			if( line < 0 || line > getGrid().getNbLines() - 1 || 
 					colonne < 0 || colonne > getGrid().getNbColumns() - 1 )
 			{
@@ -257,13 +257,13 @@ public class Person implements Cloneable {
 			}
 			else
 			{
-				// Si la personne ne s'est pas déplacée en diagonale, on augmente la distance
+				// Si la personne ne s'est pas deplacee en diagonale, on augmente la distance
 				if(Math.abs(mvt[0] + mvt[1]) == 1)
 				{					
 					//System.out.println("Depla. ligne - " + distance);
 					distance = distance + 1;
 				}
-				// Si elle déplacée en diagonale, on change l'opération
+				// Si elle deplacee en diagonale, on change l'operation
 				else if(mvt[0] != 0 && mvt[1] != 0)
 				{
 					//System.out.println("Depla. diag - " + distance);

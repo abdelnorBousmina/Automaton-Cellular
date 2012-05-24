@@ -30,7 +30,7 @@ public class ChartLine extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Dataset à afficher
+	 * Dataset a afficher
 	 */
 	private DefaultCategoryDataset dataset;
 
@@ -40,7 +40,7 @@ public class ChartLine extends JFrame {
 	private String chartTitle;
 
 	/**
-	 * Constructeur. Définit le titre de la fenêtre et du Chart
+	 * Constructeur. Definit le titre de la fenêtre et du Chart
 	 * @param title  le titre
 	 */
 	public ChartLine(final String title) {
@@ -68,8 +68,8 @@ public class ChartLine extends JFrame {
 	/**
 	 * Ajout d'un point au Chart
 	 * @param val valeur du point
-	 * @param serie série du point
-	 * @param cat catégorie du point
+	 * @param serie serie du point
+	 * @param cat categorie du point
 	 */
 	public void addPoint(double val, String serie, String cat)
 	{
@@ -78,8 +78,8 @@ public class ChartLine extends JFrame {
 
 	/**
 	 * Instancie le Chart
-	 * @param dataset le dataset d'entrée
-	 * @return Le Chart nouvellement créé
+	 * @param dataset le dataset d'entree
+	 * @return Le Chart nouvellement cree
 	 */
 	private JFreeChart createChart(final CategoryDataset dataset) {
 

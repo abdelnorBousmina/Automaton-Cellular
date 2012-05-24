@@ -20,17 +20,17 @@ public class Neighborhood {
 	public static final Integer NB_COLONNES = 3;
 
 	/**
-	 * Position en x de la case à valeur minimum de ce voisinage
+	 * Position en x de la case a valeur minimum de ce voisinage
 	 */
 	private int miniX;
 
 	/**
-	 * Position en y de la case à valeur minimum de ce voisinage
+	 * Position en y de la case a valeur minimum de ce voisinage
 	 */
 	private int miniY;
 
 	/**
-	 * La personne dont on considère le voisinage
+	 * La personne dont on considere le voisinage
 	 */
 	private Person person;
 
@@ -41,7 +41,7 @@ public class Neighborhood {
 
 	/**
 	 * Constructeur. Ce constructeur construit le voisinage en fonction de la grille
-	 * et de la personne passés en paramètres.
+	 * et de la personne passes en parametres.
 	 * @param person La personne dont on cherche le voisinage
 	 */
 	public Neighborhood(Person person)
@@ -123,7 +123,7 @@ public class Neighborhood {
 	}
 
 	/**
-	 * @return la personne concernée par ce voisinage
+	 * @return la personne concernee par ce voisinage
 	 */
 	public Person getPerson()
 	{
@@ -132,9 +132,9 @@ public class Neighborhood {
 
 	/**
 	 * Retourne la distance de la sortie de la case (x,y)
-	 * @param x Coordonnée en x de la case
-	 * @param y Coordonnée en y de la case
-	 * @return La distance de la sortie par rapport à la case (x,y) ou -1 si la case n'existe pas
+	 * @param x Coordonnee en x de la case
+	 * @param y Coordonnee en y de la case
+	 * @return La distance de la sortie par rapport a la case (x,y) ou -1 si la case n'existe pas
 	 */
 	public Float getValue(Integer x, Integer y)
 	{

@@ -26,7 +26,7 @@ public class DrawAreaUI extends JPanel {
 	private GridUI gridUi;
 
 	/**
-	 * Liste des parties graphiques des personnes à dessiner
+	 * Liste des parties graphiques des personnes a dessiner
 	 */
 	private ArrayList<PersonUI> personsUi;
 
@@ -36,8 +36,8 @@ public class DrawAreaUI extends JPanel {
 	private Neighborhood nbh;
 
 	/**
-	 * Constructeur par défaut. Instancie une nouvelle liste de personnes
-	 * à dessiner.
+	 * Constructeur par defaut. Instancie une nouvelle liste de personnes
+	 * a dessiner.
 	 */
 	public DrawAreaUI() 
 	{
@@ -46,8 +46,8 @@ public class DrawAreaUI extends JPanel {
 
 
 	/**
-	 * Ajoute la partie graphique d'une personne à dessiner dans liste
-	 * @param pUi La partie graphique de la personne à ajouter
+	 * Ajoute la partie graphique d'une personne a dessiner dans liste
+	 * @param pUi La partie graphique de la personne a ajouter
 	 */
 	public void addPersonUi(PersonUI pUi)
 	{
@@ -77,15 +77,15 @@ public class DrawAreaUI extends JPanel {
 	}
 
 	/**
-	 * @return la liste des personnes à dessiner
+	 * @return la liste des personnes a dessiner
 	 */
 	public ArrayList<PersonUI> getPersonsUi() {
 		return personsUi;
 	}
 
 	/**
-	 * Custom painting. Repaint la grille, puis mets à jour les positions
-	 * des parties graphiques des personnes à dessiner, puis les dessine.
+	 * Custom painting. Repaint la grille, puis mets a jour les positions
+	 * des parties graphiques des personnes a dessiner, puis les dessine.
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -106,8 +106,8 @@ public class DrawAreaUI extends JPanel {
 	}
 
 	/**
-	 * Retire la partie graphique d'une personne à dessiner dans liste
-	 * @param pUi La partie graphique de la personne à retirer
+	 * Retire la partie graphique d'une personne a dessiner dans liste
+	 * @param pUi La partie graphique de la personne a retirer
 	 */
 	public void removePersonUi(PersonUI pUi)
 	{
@@ -123,28 +123,28 @@ public class DrawAreaUI extends JPanel {
 	}
 
 	/**
-	 * @param grilleUi la partie graphique grille à utiliser
+	 * @param grilleUi la partie graphique grille a utiliser
 	 */
 	public void setGridUi(GridUI grilleUi) {
 		this.gridUi = grilleUi;
 	}
 
 	/**
-	 * @param nbh le voisinage à utiliser
+	 * @param nbh le voisinage a utiliser
 	 */
 	public void setNbh(Neighborhood nbh) {
 		this.nbh = nbh;
 	}
 
 	/**
-	 * @param personsUi la liste des personnes à dessiner à utiliser
+	 * @param personsUi la liste des personnes a dessiner a utiliser
 	 */
 	public void setPersonsUi(ArrayList<PersonUI> personsUi) {
 		this.personsUi = personsUi;
 	}
 
 	/**
-	 * Redessine toutes les personnes à dessiner
+	 * Redessine toutes les personnes a dessiner
 	 */
 	public void updateItems()
 	{
